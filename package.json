@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\" && pnpm lint:fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
@@ -68,6 +70,7 @@
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.2",
+    "husky": "^8.0.0"
   }
 }
