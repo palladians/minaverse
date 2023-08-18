@@ -1,5 +1,8 @@
 import './globals.css'
 
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -9,6 +12,9 @@ import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
 
 const inter = Inter({ subsets: ['latin'] })
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 export const metadata: Metadata = {
   title: 'Create Next App',

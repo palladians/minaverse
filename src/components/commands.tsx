@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronRightIcon } from 'lucide-react'
-import * as React from 'react'
+import React from 'react'
 
 import {
   CommandDialog,
@@ -11,15 +11,17 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command'
+import { useAppStore } from '@/store/app'
 
 export const Commands = () => {
-  const [open, setOpen] = React.useState(false)
+  const commandsOpen = useAppStore((state) => state.commandsOpen)
+  const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        setOpen((open) => !open)
+        setCommandsOpen(!commandsOpen)
       }
     }
 
@@ -28,7 +30,7 @@ export const Commands = () => {
   }, [])
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>

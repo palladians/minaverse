@@ -33,8 +33,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { useAppStore } from '@/store/app'
 
 export const Navbar = () => {
+  const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
   const { setTheme } = useTheme()
   return (
     <div className="flex md:grid grid-cols-[1fr,2fr,1fr] gap-2 justify-between items-center py-2">
@@ -118,7 +120,7 @@ export const Navbar = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button variant="outline">
+        <Button variant="outline" onClick={() => setCommandsOpen(true)}>
           <SearchIcon size={16} className="mr-2" />
           <CommandIcon size={16} />
           <span>K</span>
