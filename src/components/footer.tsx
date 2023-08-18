@@ -43,7 +43,7 @@ export const Footer = () => {
         </a>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="icon" asChild>
+        <Button variant="outline" size="icon" title="Github" asChild>
           <a
             href="https://github.com/palladians/minaverse"
             target="_blank"
@@ -52,7 +52,7 @@ export const Footer = () => {
             <GithubIcon size={20} />
           </a>
         </Button>
-        <Button variant="outline" size="icon" asChild>
+        <Button variant="outline" size="icon" title="Twitter" asChild>
           <a
             href="https://twitter.com/palladians_xyz"
             target="_blank"
@@ -61,7 +61,7 @@ export const Footer = () => {
             <TwitterIcon size={20} />
           </a>
         </Button>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" title="Discord" size="icon">
           <NextImage
             src="/discord.svg"
             alt="Discord"
@@ -72,7 +72,7 @@ export const Footer = () => {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" title="Theme">
               <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>

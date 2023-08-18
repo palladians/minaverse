@@ -8,7 +8,6 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarTrigger
 } from '@/components/ui/menubar'
 import {
@@ -58,24 +57,8 @@ export const Navbar = () => {
             <MenubarContent>
               <MenubarItem>Current epoch</MenubarItem>
               <MenubarItem>Next epoch</MenubarItem>
-              <MenubarSeparator />
               <MenubarItem>Top epoch stakers</MenubarItem>
-              <MenubarSeparator />
               <MenubarItem>All ledgers</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>
-              <span>zkApps</span>
-              <ChevronDownIcon size={16} />
-            </MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>All SNARKs</MenubarItem>
-              <MenubarItem>SNARK fees</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>SNARK producers</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Snarketplace</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
           <MenubarMenu>
@@ -106,7 +89,11 @@ export const Navbar = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button variant="outline" onClick={() => setCommandsOpen(true)}>
+        <Button
+          variant="outline"
+          onClick={() => setCommandsOpen(true)}
+          title="Search"
+        >
           <SearchIcon size={16} className="mr-2" />
           <CommandIcon size={16} />
           <span>K</span>
