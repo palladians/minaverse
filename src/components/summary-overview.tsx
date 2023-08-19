@@ -4,28 +4,26 @@ import { formatCurrencyCompact } from '@/lib/currency'
 
 export const SummaryOverview = async () => {
   const summaryData = await fetchSummary()
+  const DATA_ENTRIES = [
+    { label: 'Epoch', value: summaryData.epoch },
+    { label: 'Slot', value: summaryData.slot },
+    {
+      label: 'Circulating Supply',
+      value: formatCurrencyCompact(summaryData.circulatingSupply)
+    },
+    {
+      label: 'Total Currency',
+      value: formatCurrencyCompact(summaryData.totalCurrency)
+    }
+  ]
   return (
-    <div className="flex gap-8">
-      <Card className="flex flex-col gap-1 flex-1 p-4">
-        <h3 className="text-sm">Epoch</h3>
-        <p className="text-2xl">{summaryData.epoch}</p>
-      </Card>
-      <Card className="flex flex-col gap-1 flex-1 p-4">
-        <h3 className="text-sm">Slot</h3>
-        <p className="text-2xl">{summaryData.slot}</p>
-      </Card>
-      <Card className="flex flex-col gap-1 flex-1 p-4">
-        <h3 className="text-sm">Circulating Supply</h3>
-        <p className="text-2xl">
-          {formatCurrencyCompact(summaryData.circulatingSupply)}
-        </p>
-      </Card>
-      <Card className="flex flex-col gap-1 flex-1 p-4">
-        <h3 className="text-sm">Total Currency</h3>
-        <p className="text-2xl">
-          {formatCurrencyCompact(summaryData.totalCurrency)}
-        </p>
-      </Card>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+      {DATA_ENTRIES.map((entry, i) => (
+        <Card key={i} className="flex flex-col gap-1 flex-1 p-4">
+          <h3 className="text-sm">{entry.label}</h3>
+          <p className="text-2xl">{entry.value}</p>
+        </Card>
+      ))}
     </div>
   )
 }

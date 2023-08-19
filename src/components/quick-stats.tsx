@@ -23,7 +23,7 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
     Math.abs(Number(marketCaps[6].cap) - Number(marketCaps[5].cap)) /
       Number(marketCaps[6].cap)
   return (
-    <div className="flex gap-8 md:flex-row flex-col">
+    <div className="flex gap-4 md:gap-8 md:flex-row flex-col">
       <Card className="flex flex-col flex-1 gap-4 p-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-1">
