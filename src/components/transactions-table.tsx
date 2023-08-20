@@ -1,6 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
+import dayjs from 'dayjs'
 import { ChevronDown, EyeIcon } from 'lucide-react'
 import React from 'react'
 
@@ -21,29 +22,29 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { AccountShort } from '@/data/accounts'
+import { Transaction } from '@/data/transactions'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
-export const AccountsTable = ({
+export const TransactionsTable = ({
   data,
-  accountsCount,
+  transactionsCount,
   currentPage,
   pagesCount
 }: {
-  data: AccountShort[]
-  accountsCount: number
+  data: Transaction[]
+  transactionsCount: number
   currentPage: number
   pagesCount: number
 }) => {
-  const setCurrentAccountPublicKey = useAppStore(
-    (state) => state.setCurrentAccountPublicKey
+  const setCurrentTransactionHash = useAppStore(
+    (state) => state.setCurrentTransactionHash
   )
 
-  const columns: ColumnDef<AccountShort>[] = [
+  const columns: ColumnDef<Transaction>[] = [
     {
       id: 'select',
       header: ({ table }) => (
@@ -64,16 +65,16 @@ export const AccountsTable = ({
       enableHiding: false
     },
     {
-      accessorKey: 'public_key',
-      header: 'Public Key',
+      accessorKey: 'hash',
+      header: 'Hash',
       cell: ({ row }) => (
         <Button
           variant="link"
           className="capitalize p-0 h-auto"
-          onClick={() => setCurrentAccountPublicKey(row.getValue('public_key'))}
+          onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
         >
           {truncateString({
-            value: row.getValue('public_key'),
+            value: row.getValue('hash'),
             firstCharCount: 7,
             endCharCount: 6
           })}
@@ -81,12 +82,12 @@ export const AccountsTable = ({
       )
     },
     {
-      accessorKey: 'delegate',
-      header: 'Delegate',
+      accessorKey: 'from',
+      header: 'From',
       cell: ({ row }) => (
         <div>
           {truncateString({
-            value: row.getValue('delegate'),
+            value: row.getValue('from'),
             firstCharCount: 7,
             endCharCount: 6
           })}
@@ -94,23 +95,35 @@ export const AccountsTable = ({
       )
     },
     {
-      accessorKey: 'username',
-      header: 'Username',
-      cell: ({ row }) => <div>{row.getValue('username')}</div>
+      accessorKey: 'to',
+      header: 'To',
+      cell: ({ row }) => (
+        <div>
+          {truncateString({
+            value: row.getValue('to'),
+            firstCharCount: 7,
+            endCharCount: 6
+          })}
+        </div>
+      )
     },
     {
-      accessorKey: 'nonce',
-      header: 'Nonce',
-      cell: ({ row }) => <div>{row.getValue('nonce')}</div>
-    },
-    {
-      accessorKey: 'balance',
-      header: 'Balance',
+      accessorKey: 'amount',
+      header: 'Amount',
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue('balance'))
+        const amount = parseFloat(row.getValue('amount'))
         const formatted = new Intl.NumberFormat('en-US').format(amount)
         return <div>{formatted} MINA</div>
       }
+    },
+    {
+      accessorKey: 'dateTime',
+      header: 'Date',
+      cell: ({ row }) => (
+        <div>
+          {dayjs(row.getValue('dateTime')).format('DD MMM YYYY hh:mma')}
+        </div>
+      )
     },
     {
       accessorKey: 'actions',
@@ -121,9 +134,7 @@ export const AccountsTable = ({
             <Button
               variant="outline"
               size="icon"
-              onClick={() =>
-                setCurrentAccountPublicKey(row.getValue('public_key'))
-              }
+              onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
             >
               <EyeIcon size={16} />
             </Button>
@@ -138,7 +149,9 @@ export const AccountsTable = ({
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
+        <h1 className="text-2xl">
+          Transactions ({formatNumber(transactionsCount)})
+        </h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="hidden md:flex">
@@ -232,7 +245,7 @@ export const AccountsTable = ({
       <Pagination
         currentPage={currentPage}
         pagesCount={pagesCount}
-        resource="accounts"
+        resource="transactions"
       />
     </div>
   )
