@@ -101,10 +101,13 @@ export const Navbar = () => {
           variant="outline"
           onClick={() => setCommandsOpen(true)}
           title="Search"
+          className="flex items-center justify-center"
         >
-          <SearchIcon size={16} className="mr-2" />
-          <CommandIcon size={12} />
-          <span>K</span>
+          <SearchIcon size={16} />
+          <div className="flex items-center hidden md:flex ml-2">
+            <CommandIcon size={12} />
+            <span>K</span>
+          </div>
         </Button>
       </div>
     </div>

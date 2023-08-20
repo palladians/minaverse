@@ -47,7 +47,7 @@ export const AccountSheet = () => {
       open={Boolean(currentAccountPublicKey)}
       onOpenChange={() => setCurrentAccountPublicKey(null)}
     >
-      <SheetContent className="flex flex-col gap-4 max-w-[64rem] sm:max-w-[40rem]">
+      <SheetContent className="flex flex-col gap-4 w-full max-w-[64rem] sm:max-w-[40rem]">
         <SheetHeader>
           <SheetTitle>Account Overview</SheetTitle>
         </SheetHeader>

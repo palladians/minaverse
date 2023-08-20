@@ -41,6 +41,7 @@ import {
 import { AccountShort } from '@/data/accounts'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
+import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
 export const AccountsTable = ({
@@ -107,7 +108,7 @@ export const AccountsTable = ({
       accessorKey: 'delegate',
       header: 'Delegate',
       cell: ({ row }) => (
-        <div className="capitalize">
+        <div>
           {truncateString({
             value: row.getValue('delegate'),
             firstCharCount: 7,
@@ -119,24 +120,20 @@ export const AccountsTable = ({
     {
       accessorKey: 'username',
       header: 'Username',
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('username')}</div>
-      )
+      cell: ({ row }) => <div>{row.getValue('username')}</div>
     },
     {
       accessorKey: 'nonce',
       header: 'Nonce',
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue('nonce')}</div>
-      )
+      cell: ({ row }) => <div>{row.getValue('nonce')}</div>
     },
     {
       accessorKey: 'balance',
-      header: () => <div>Balance</div>,
+      header: 'Balance',
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue('balance'))
         const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div className="font-medium">{formatted} MINA</div>
+        return <div>{formatted} MINA</div>
       }
     },
     {
@@ -182,11 +179,11 @@ export const AccountsTable = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-center py-4">
+      <div className="flex justify-between items-center">
         <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">
+            <Button variant="outline" className="hidden md:flex">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -214,9 +211,17 @@ export const AccountsTable = ({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, i) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={cn([
+                        'md:auto',
+                        [0, 1, 6].includes(i)
+                          ? 'table-cell'
+                          : 'hidden md:table-cell'
+                      ])}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -236,8 +241,15 @@ export const AccountsTable = ({
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                  {row.getVisibleCells().map((cell, i) => (
+                    <TableCell
+                      key={cell.id}
+                      className={cn([
+                        [0, 1, 6].includes(i)
+                          ? 'table-cell'
+                          : 'hidden md:table-cell'
+                      ])}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
