@@ -1,10 +1,13 @@
-import { NextPage } from 'next'
+import { Metadata, NextPage } from 'next'
 
 import { TransactionsTable } from '@/components/transactions-table'
-// import { AccountSheet } from '@/components/account-sheet'
 import { fetchTransactions } from '@/data/transactions'
 
 const PAGE_LENGTH = 20
+
+export const metadata: Metadata = {
+  title: 'Transactions - Minaverse'
+}
 
 interface TransactionsPageProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -15,9 +18,11 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
 }) => {
   const page = Number(searchParams.page) || 0
   const start = page * PAGE_LENGTH
+  const search = searchParams.search ? String(searchParams.search) : null
   const transactionsData = await fetchTransactions({
     length: PAGE_LENGTH,
-    start
+    start,
+    search
   })
   const pagesCount = Math.ceil(transactionsData.recordsTotal / PAGE_LENGTH)
   return (
@@ -28,6 +33,7 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
         transactionsCount={transactionsData.recordsTotal}
         currentPage={page}
         pagesCount={pagesCount}
+        query={search}
       />
     </main>
   )

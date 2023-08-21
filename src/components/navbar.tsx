@@ -1,5 +1,5 @@
 'use client'
-import { ChevronDownIcon, CommandIcon, SearchIcon } from 'lucide-react'
+import { ChevronDownIcon, CommandIcon, MenuIcon } from 'lucide-react'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -48,7 +48,11 @@ export const Navbar = () => {
           >
             <NextLink href="/accounts">Accounts</NextLink>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
+          <Button
+            variant={pathname === '/transactions' ? 'secondary' : 'ghost'}
+            size="sm"
+            asChild
+          >
             <NextLink href="/transactions">Transactions</NextLink>
           </Button>
           <MenubarMenu>
@@ -103,7 +107,7 @@ export const Navbar = () => {
           title="Search"
           className="flex items-center justify-center"
         >
-          <SearchIcon size={16} />
+          <MenuIcon size={16} />
           <div className="flex items-center hidden md:flex ml-2">
             <CommandIcon size={12} />
             <span>K</span>

@@ -1,10 +1,11 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
-import dayjs from 'dayjs'
-import { ChevronDown, EyeIcon } from 'lucide-react'
-import React from 'react'
+import { ChevronDown, ExternalLinkIcon, EyeIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import React, { FormEvent, useState } from 'react'
 
+import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -14,6 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -22,7 +24,13 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
 import { Transaction } from '@/data/transactions'
+import { formatDate } from '@/lib/date'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
@@ -33,15 +41,22 @@ export const TransactionsTable = ({
   data,
   transactionsCount,
   currentPage,
-  pagesCount
+  pagesCount,
+  query
 }: {
   data: Transaction[]
   transactionsCount: number
   currentPage: number
   pagesCount: number
+  query: string | null
 }) => {
+  const [innerQuery, setInnerQuery] = useState(query)
+  const router = useRouter()
   const setCurrentTransactionHash = useAppStore(
     (state) => state.setCurrentTransactionHash
+  )
+  const setCurrentAccountPublicKey = useAppStore(
+    (state) => state.setCurrentAccountPublicKey
   )
 
   const columns: ColumnDef<Transaction>[] = [
@@ -68,43 +83,72 @@ export const TransactionsTable = ({
       accessorKey: 'hash',
       header: 'Hash',
       cell: ({ row }) => (
-        <Button
-          variant="link"
-          className="capitalize p-0 h-auto"
-          onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
-        >
-          {truncateString({
-            value: row.getValue('hash'),
-            firstCharCount: 7,
-            endCharCount: 6
-          })}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="link"
+              className="capitalize p-0 h-auto"
+              onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
+            >
+              {truncateString({
+                value: row.getValue('hash'),
+                firstCharCount: 7,
+                endCharCount: 6
+              })}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex">
+            <CopyValue value={row.getValue('hash')} />
+          </TooltipContent>
+        </Tooltip>
       )
     },
     {
       accessorKey: 'from',
       header: 'From',
       cell: ({ row }) => (
-        <div>
-          {truncateString({
-            value: row.getValue('from'),
-            firstCharCount: 7,
-            endCharCount: 6
-          })}
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="link"
+              className="capitalize p-0 h-auto"
+              onClick={() => setCurrentAccountPublicKey(row.getValue('from'))}
+            >
+              {truncateString({
+                value: row.getValue('from'),
+                firstCharCount: 7,
+                endCharCount: 6
+              })}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex">
+            <CopyValue value={row.getValue('from')} />
+          </TooltipContent>
+        </Tooltip>
       )
     },
     {
       accessorKey: 'to',
       header: 'To',
       cell: ({ row }) => (
-        <div>
-          {truncateString({
-            value: row.getValue('to'),
-            firstCharCount: 7,
-            endCharCount: 6
-          })}
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="link"
+              className="capitalize p-0 h-auto"
+              onClick={() => setCurrentAccountPublicKey(row.getValue('to'))}
+            >
+              {truncateString({
+                value: row.getValue('to'),
+                firstCharCount: 7,
+                endCharCount: 6
+              })}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex">
+            <CopyValue value={row.getValue('to')} />
+          </TooltipContent>
+        </Tooltip>
       )
     },
     {
@@ -119,24 +163,29 @@ export const TransactionsTable = ({
     {
       accessorKey: 'dateTime',
       header: 'Date',
-      cell: ({ row }) => (
-        <div>
-          {dayjs(row.getValue('dateTime')).format('DD MMM YYYY hh:mma')}
-        </div>
-      )
+      cell: ({ row }) => <div>{formatDate(row.getValue('dateTime'))}</div>
     },
     {
       accessorKey: 'actions',
       header: () => <div className="text-right">Actions</div>,
       cell: ({ row }) => {
         return (
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
             <Button
               variant="outline"
               size="icon"
               onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
             >
               <EyeIcon size={16} />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                router.push(`/transactions/${row.getValue('hash')}`)
+              }
+            >
+              <ExternalLinkIcon size={16} />
             </Button>
           </div>
         )
@@ -146,36 +195,52 @@ export const TransactionsTable = ({
 
   const table = useCommonTable({ columns, data })
 
+  const handleQuerySubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    router.push(`/transactions?search=${innerQuery}`)
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">
           Transactions ({formatNumber(transactionsCount)})
         </h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="hidden md:flex">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-2">
+          <form onSubmit={handleQuerySubmit}>
+            <Input
+              placeholder="Search with hash"
+              defaultValue={innerQuery || ''}
+              onChange={(event) => setInnerQuery(event.target.value)}
+            />
+          </form>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="hidden md:flex">
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>

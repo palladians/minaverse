@@ -1,6 +1,7 @@
 'use client'
 
 import { ChevronRightIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 import {
@@ -14,6 +15,7 @@ import {
 import { useAppStore } from '@/store/app'
 
 export const Commands = () => {
+  const router = useRouter()
   const commandsOpen = useAppStore((state) => state.commandsOpen)
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
 
@@ -29,27 +31,32 @@ export const Commands = () => {
     return () => document.removeEventListener('keydown', down)
   }, [])
 
+  const handleSelect = (cb: () => void) => {
+    cb()
+    setCommandsOpen(false)
+  }
+
   return (
     <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Accounts">
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>All accounts</span>
-          </CommandItem>
-        </CommandGroup>
-        <CommandGroup heading="Transactions">
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>All transactions</span>
-          </CommandItem>
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>Pending transactions</span>
-          </CommandItem>
-        </CommandGroup>
+        <CommandItem onSelect={() => handleSelect(() => router.push('/'))}>
+          <ChevronRightIcon className="mr-2 h-4 w-4" />
+          <span>Dashboard</span>
+        </CommandItem>
+        <CommandItem
+          onSelect={() => handleSelect(() => router.push('/accounts'))}
+        >
+          <ChevronRightIcon className="mr-2 h-4 w-4" />
+          <span>Accounts</span>
+        </CommandItem>
+        <CommandItem
+          onSelect={() => handleSelect(() => router.push('/transactions'))}
+        >
+          <ChevronRightIcon className="mr-2 h-4 w-4" />
+          <span>Transactions</span>
+        </CommandItem>
         <CommandGroup heading="Staking">
           <CommandItem>
             <ChevronRightIcon className="mr-2 h-4 w-4" />

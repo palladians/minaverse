@@ -31,7 +31,7 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
             <p className="text-xl">{formatCurrency(Number(prices[6].price))}</p>
           </div>
           <Badge variant="outline">
-            {Number(priceDelta) > 0 ? '+' : '-'}
+            {prices[6].price > prices[5].price ? '+' : '-'}
             {toPercent(priceDelta || 0)}
           </Badge>
         </div>
@@ -39,7 +39,7 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
           data={prices}
           categories={['price']}
           index="date"
-          colors={['pink']}
+          colors={['fuchsia']}
           valueFormatter={formatCurrency}
           showLegend={false}
         />
@@ -53,7 +53,7 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
             </p>
           </div>
           <Badge variant="outline">
-            {Number(capDelta) > 0 ? '+' : '-'}
+            {marketCaps[6].cap > marketCaps[5].cap ? '+' : '-'}
             {toPercent(capDelta || 0)}
           </Badge>
         </div>
@@ -61,7 +61,7 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
           data={marketCaps}
           categories={['cap']}
           index="date"
-          colors={['yellow']}
+          colors={['teal']}
           valueFormatter={formatCurrencyCompact}
           showLegend={false}
         />

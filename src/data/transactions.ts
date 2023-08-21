@@ -1,3 +1,28 @@
+import { gql, request } from 'graphql-request'
+
+import { env } from '@/env.mjs'
+
+const transactionQuery = gql`
+  query Transaction($hash: String!) {
+    transaction(query: { hash: $hash }) {
+      hash
+      amount
+      blockHeight
+      canonical
+      dateTime
+      fee
+      from
+      to
+      isDelegation
+      kind
+      memo
+      nonce
+      token
+      failureReason
+    }
+  }
+`
+
 export type Transaction = {
   amount: number
   fee: number
@@ -47,15 +72,51 @@ export type TransactionsResponse = {
 interface FetchTransactionsProps {
   length?: number
   start?: number
+  search: string | null
+}
+
+export type GraphqlTransaction = {
+  amount: number
+  blockHeight: number
+  canonical: boolean
+  dateTime: string
+  failureReason: string | null
+  fee: number
+  from: string
+  hash: string
+  isDelegation: boolean
+  kind: string
+  memo: string
+  nonce: number
+  to: string
+  token: number
+}
+
+export type TransactionResponse = {
+  transaction: GraphqlTransaction
 }
 
 export const fetchTransactions = async ({
   length,
-  start
+  start,
+  search
 }: FetchTransactionsProps): Promise<TransactionsResponse> => {
   const transactionsUrl = new URL('https://minaexplorer.com/all-transactions')
   transactionsUrl.searchParams.set('length', String(length || 20))
   transactionsUrl.searchParams.set('start', String(start || 0))
+  if (search) {
+    transactionsUrl.searchParams.set('search[value]', search)
+  }
+  console.log('>>>URL', transactionsUrl)
   const transactionsRequest = await fetch(transactionsUrl)
   return transactionsRequest.json() as Promise<TransactionsResponse>
+}
+
+export const fetchTransaction = async ({ hash }: { hash: string }) => {
+  const response = (await request(
+    env.NEXT_PUBLIC_MAINNET_GQL_URL,
+    transactionQuery,
+    { hash }
+  )) as TransactionResponse
+  return response.transaction
 }

@@ -1,6 +1,12 @@
+import { Metadata } from 'next'
+
 import { QuickStats } from '@/components/quick-stats'
 import { SummaryOverview } from '@/components/summary-overview'
 import { fetchCoinData } from '@/data/coin'
+
+export const metadata: Metadata = {
+  title: 'The universe of Mina Protocol - Minaverse'
+}
 
 const HomePage = async () => {
   const coinData = await fetchCoinData()

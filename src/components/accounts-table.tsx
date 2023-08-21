@@ -1,9 +1,11 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
-import { ChevronDown, EyeIcon } from 'lucide-react'
-import React from 'react'
+import { ChevronDown, ExternalLinkIcon, EyeIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import React, { FormEvent, useState } from 'react'
 
+import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,6 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -21,6 +24,11 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
 import { AccountShort } from '@/data/accounts'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
@@ -32,13 +40,17 @@ export const AccountsTable = ({
   data,
   accountsCount,
   currentPage,
-  pagesCount
+  pagesCount,
+  query
 }: {
   data: AccountShort[]
   accountsCount: number
   currentPage: number
   pagesCount: number
+  query: string | null
 }) => {
+  const router = useRouter()
+  const [innerQuery, setInnerQuery] = useState(query)
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
@@ -67,30 +79,52 @@ export const AccountsTable = ({
       accessorKey: 'public_key',
       header: 'Public Key',
       cell: ({ row }) => (
-        <Button
-          variant="link"
-          className="capitalize p-0 h-auto"
-          onClick={() => setCurrentAccountPublicKey(row.getValue('public_key'))}
-        >
-          {truncateString({
-            value: row.getValue('public_key'),
-            firstCharCount: 7,
-            endCharCount: 6
-          })}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="link"
+              className="capitalize p-0 h-auto"
+              onClick={() =>
+                setCurrentAccountPublicKey(row.getValue('public_key'))
+              }
+            >
+              {truncateString({
+                value: row.getValue('public_key'),
+                firstCharCount: 7,
+                endCharCount: 6
+              })}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex">
+            <CopyValue value={row.getValue('public_key')} />
+          </TooltipContent>
+        </Tooltip>
       )
     },
     {
       accessorKey: 'delegate',
       header: 'Delegate',
       cell: ({ row }) => (
-        <div>
-          {truncateString({
-            value: row.getValue('delegate'),
-            firstCharCount: 7,
-            endCharCount: 6
-          })}
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="link"
+              className="capitalize p-0 h-auto"
+              onClick={() =>
+                setCurrentAccountPublicKey(row.getValue('delegate'))
+              }
+            >
+              {truncateString({
+                value: row.getValue('delegate'),
+                firstCharCount: 7,
+                endCharCount: 6
+              })}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex">
+            <CopyValue value={row.getValue('delegate')} />
+          </TooltipContent>
+        </Tooltip>
       )
     },
     {
@@ -117,7 +151,7 @@ export const AccountsTable = ({
       header: () => <div className="text-right">Actions</div>,
       cell: ({ row }) => {
         return (
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
             <Button
               variant="outline"
               size="icon"
@@ -127,6 +161,15 @@ export const AccountsTable = ({
             >
               <EyeIcon size={16} />
             </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                router.push(`/accounts/${row.getValue('public_key')}`)
+              }
+            >
+              <ExternalLinkIcon size={16} />
+            </Button>
           </div>
         )
       }
@@ -135,34 +178,50 @@ export const AccountsTable = ({
 
   const table = useCommonTable({ columns, data })
 
+  const handleQuerySubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    router.push(`/accounts?search=${innerQuery}`)
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="hidden md:flex">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex gap-2">
+          <form onSubmit={handleQuerySubmit}>
+            <Input
+              placeholder="Search with public key"
+              defaultValue={innerQuery || ''}
+              onChange={(event) => setInnerQuery(event.target.value)}
+            />
+          </form>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="hidden md:flex">
+                Columns <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
