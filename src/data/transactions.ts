@@ -104,6 +104,8 @@ export const fetchTransactions = async ({
   const transactionsUrl = new URL('https://minaexplorer.com/all-transactions')
   transactionsUrl.searchParams.set('length', String(length || 20))
   transactionsUrl.searchParams.set('start', String(start || 0))
+  transactionsUrl.searchParams.set('columns[0][data]', 'dateTime')
+  transactionsUrl.searchParams.set('columns[0][orderable]', 'true')
   if (search) {
     transactionsUrl.searchParams.set('search[value]', search)
   }
