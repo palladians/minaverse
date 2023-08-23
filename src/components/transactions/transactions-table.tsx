@@ -30,6 +30,8 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { Transaction } from '@/data/transactions'
+import { env } from '@/env.mjs'
+import { useClipboard } from '@/lib/clipboard'
 import { formatDate } from '@/lib/date'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
@@ -58,6 +60,7 @@ export const TransactionsTable = ({
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
+  const { copyValue } = useClipboard()
 
   const columns: ColumnDef<Transaction>[] = [
     {
@@ -187,7 +190,17 @@ export const TransactionsTable = ({
             >
               <ExternalLinkIcon size={16} />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                copyValue({
+                  value: `${
+                    env.NEXT_PUBLIC_APP_URL
+                  }/transactions/${row.getValue('hash')}`
+                })
+              }
+            >
               <LinkIcon size={16} />
             </Button>
           </div>

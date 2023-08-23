@@ -30,6 +30,8 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { AccountShort } from '@/data/accounts'
+import { env } from '@/env.mjs'
+import { useClipboard } from '@/lib/clipboard'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
@@ -54,6 +56,7 @@ export const AccountsTable = ({
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
+  const { copyValue } = useClipboard()
 
   const columns: ColumnDef<AccountShort>[] = [
     {
@@ -170,7 +173,17 @@ export const AccountsTable = ({
             >
               <ExternalLinkIcon size={16} />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                copyValue({
+                  value: `${env.NEXT_PUBLIC_APP_URL}/accounts/${row.getValue(
+                    'public_key'
+                  )}`
+                })
+              }
+            >
               <LinkIcon size={16} />
             </Button>
           </div>

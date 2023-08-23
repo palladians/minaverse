@@ -30,6 +30,8 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { Pool } from '@/data/staking'
+import { env } from '@/env.mjs'
+import { useClipboard } from '@/lib/clipboard'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
@@ -56,6 +58,7 @@ export const StakingTable = ({
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
+  const { copyValue } = useClipboard()
 
   const columns: ColumnDef<Pool>[] = [
     {
@@ -156,7 +159,17 @@ export const StakingTable = ({
             >
               <ExternalLinkIcon size={16} />
             </Button>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() =>
+                copyValue({
+                  value: `${env.NEXT_PUBLIC_APP_URL}/accounts/${row.getValue(
+                    'publicKey'
+                  )}`
+                })
+              }
+            >
               <LinkIcon size={16} />
             </Button>
           </div>

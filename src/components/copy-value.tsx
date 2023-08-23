@@ -8,11 +8,11 @@ interface CopyValueProps {
 }
 
 export const CopyValue = ({ value }: CopyValueProps) => {
-  const { copyValue } = useClipboard({ value })
+  const { copyValue } = useClipboard()
   return (
     <div className="flex gap-1 items-center">
       <p>{value}</p>
-      <Button variant="link" size="icon" onClick={copyValue}>
+      <Button variant="link" size="icon" onClick={() => copyValue({ value })}>
         <CopyIcon size={16} />
       </Button>
     </div>
