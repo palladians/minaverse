@@ -1,23 +1,4 @@
-import { gql, request } from 'graphql-request'
-
-import { ExplorerUrl, Network, ProxyUrl } from '@/data/api'
-
-const accountQuery = gql`
-  query Account($publicKey: PublicKey!) {
-    account(publicKey: $publicKey) {
-      balance {
-        total
-      }
-      publicKey
-      token
-      nonce
-      stakingActive
-      epochDelegateAccount {
-        publicKey
-      }
-    }
-  }
-`
+import { ExplorerUrl, Network } from '@/data/api'
 
 export type AccountShort = {
   pk: string
@@ -84,13 +65,8 @@ export const fetchAccounts = async ({
   return accountsRequest.json() as Promise<AccountsResponse>
 }
 
-export const fetchAccount = async ({
-  publicKey,
-  network
-}: FetchAccountProps) => {
-  const proxyUrl = ProxyUrl[network]
-  const response = (await request(proxyUrl, accountQuery, {
-    publicKey
-  })) as ProxyAccountResponse
+export const fetchAccount = async ({ publicKey }: FetchAccountProps) => {
+  const request = await fetch(`/api/accounts/${publicKey}`)
+  const response = (await request.json()) as ProxyAccountResponse
   return response.account
 }

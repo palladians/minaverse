@@ -1,27 +1,4 @@
-import { gql, request } from 'graphql-request'
-
-import { ExplorerUrl, GqlUrl, Network } from '@/data/api'
-
-const transactionQuery = gql`
-  query Transaction($hash: String!) {
-    transaction(query: { hash: $hash }) {
-      hash
-      amount
-      blockHeight
-      canonical
-      dateTime
-      fee
-      from
-      to
-      isDelegation
-      kind
-      memo
-      nonce
-      token
-      failureReason
-    }
-  }
-`
+import { ExplorerUrl, Network } from '@/data/api'
 
 export type Transaction = {
   amount: number
@@ -121,13 +98,8 @@ export const fetchTransactions = async ({
   return transactionsRequest.json() as Promise<TransactionsResponse>
 }
 
-export const fetchTransaction = async ({
-  hash,
-  network
-}: FetchTransactionProps) => {
-  const gqlUrl = GqlUrl[network]
-  const response = (await request(gqlUrl, transactionQuery, {
-    hash
-  })) as TransactionResponse
+export const fetchTransaction = async ({ hash }: FetchTransactionProps) => {
+  const request = await fetch(`/api/transactions/${hash}`)
+  const response = (await request.json()) as TransactionResponse
   return response.transaction
 }
