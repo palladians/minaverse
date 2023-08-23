@@ -1,13 +1,13 @@
 import { Metadata, NextPage } from 'next'
 
-import { AccountsTable } from '@/components/accounts/accounts-table'
-import { fetchAccounts } from '@/data/accounts'
+import { StakingTable } from '@/components/staking/staking-table'
 import { getNetwork } from '@/data/network'
+import { fetchStaking } from '@/data/staking'
 
 const PAGE_LENGTH = 20
 
 export const metadata: Metadata = {
-  title: 'Accounts - Minaverse'
+  title: 'Staking - Minaverse'
 }
 
 interface AccountsPageProps {
@@ -19,18 +19,22 @@ const AccountsPage: NextPage<AccountsPageProps> = async ({ searchParams }) => {
   const start = page * PAGE_LENGTH
   const search = searchParams.search ? String(searchParams.search) : null
   const network = getNetwork()
-  const accountsData = await fetchAccounts({
+  const stakingData = await fetchStaking({
     length: PAGE_LENGTH,
     start,
     search,
     network
   })
-  const pagesCount = Math.ceil(accountsData.recordsTotal / PAGE_LENGTH)
+  const pools = stakingData.data.map((pool) => ({
+    ...pool,
+    publicKey: pool._id.delegate
+  }))
+  const pagesCount = Math.ceil(stakingData.recordsTotal / PAGE_LENGTH)
   return (
     <main className="flex-1 flex flex-col">
-      <AccountsTable
-        data={accountsData.data}
-        accountsCount={accountsData.recordsTotal}
+      <StakingTable
+        data={pools}
+        poolsCount={stakingData.recordsTotal}
         currentPage={page}
         pagesCount={pagesCount}
         query={search}

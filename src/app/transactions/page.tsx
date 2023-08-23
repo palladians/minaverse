@@ -1,6 +1,7 @@
 import { Metadata, NextPage } from 'next'
 
-import { TransactionsTable } from '@/components/transactions-table'
+import { TransactionsTable } from '@/components/transactions/transactions-table'
+import { getNetwork } from '@/data/network'
 import { fetchTransactions } from '@/data/transactions'
 
 const PAGE_LENGTH = 20
@@ -19,10 +20,12 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
   const page = Number(searchParams.page) || 0
   const start = page * PAGE_LENGTH
   const search = searchParams.search ? String(searchParams.search) : null
+  const network = getNetwork()
   const transactionsData = await fetchTransactions({
     length: PAGE_LENGTH,
     start,
-    search
+    search,
+    network
   })
   const pagesCount = Math.ceil(transactionsData.recordsTotal / PAGE_LENGTH)
   return (

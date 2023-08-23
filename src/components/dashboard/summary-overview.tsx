@@ -1,3 +1,4 @@
+import { EpochProgress } from '@/components/epoch-progress'
 import { Card } from '@/components/ui/card'
 import { fetchSummary } from '@/data/summary'
 import { formatCurrencyCompact } from '@/lib/currency'
@@ -22,6 +23,7 @@ export const SummaryOverview = async () => {
         <Card key={i} className="flex flex-col gap-1 flex-1 p-4">
           <h3 className="text-sm">{entry.label}</h3>
           <p className="text-2xl">{entry.value}</p>
+          <EpochProgress />
         </Card>
       ))}
     </div>

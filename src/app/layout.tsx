@@ -8,12 +8,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import React from 'react'
 
-import { AccountSheet } from '@/components/account-sheet'
+import { AccountSheet } from '@/components/accounts/account-sheet'
 import { Commands } from '@/components/commands'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
-import { TransactionSheet } from '@/components/transaction-sheet'
+import { TransactionSheet } from '@/components/transactions/transaction-sheet'
 import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,7 +24,7 @@ dayjs.extend(timezone)
 export const metadata: Metadata = {
   title: 'Minaverse',
   description:
-    'The truly open Mina Explorer. Get insight into the Mina protocol.'
+    'The truly open Mina Explorer. Get insight into the Mina Protocol.'
 }
 
 export default function RootLayout({

@@ -1,4 +1,5 @@
-const SUMMARY_URL = 'https://api.minaexplorer.com/summary'
+import { ExplorerApiUrl } from '@/data/api'
+import { getNetwork } from '@/data/network'
 
 type Summary = {
   epoch: number
@@ -8,6 +9,7 @@ type Summary = {
 }
 
 export const fetchSummary = async () => {
-  const summaryRequest = await fetch(SUMMARY_URL)
+  const explorerApiUrl = ExplorerApiUrl[getNetwork()]
+  const summaryRequest = await fetch(`${explorerApiUrl}/summary`)
   return summaryRequest.json() as Promise<Summary>
 }

@@ -1,6 +1,6 @@
 import { gql, request } from 'graphql-request'
 
-import { env } from '@/env.mjs'
+import { ExplorerUrl, Network, ProxyUrl } from '@/data/api'
 
 const accountQuery = gql`
   query Account($publicKey: PublicKey!) {
@@ -59,14 +59,22 @@ interface FetchAccountsProps {
   length?: number
   start?: number
   search: string | null
+  network: Network
+}
+
+interface FetchAccountProps {
+  publicKey: string
+  network: Network
 }
 
 export const fetchAccounts = async ({
   length,
   start,
-  search
+  search,
+  network
 }: FetchAccountsProps): Promise<AccountsResponse> => {
-  const accountsUrl = new URL('https://minaexplorer.com/all-accounts')
+  const explorerUrl = ExplorerUrl[network]
+  const accountsUrl = new URL(`${explorerUrl}/all-accounts`)
   accountsUrl.searchParams.set('length', String(length || 20))
   accountsUrl.searchParams.set('start', String(start || 0))
   if (search) {
@@ -76,11 +84,13 @@ export const fetchAccounts = async ({
   return accountsRequest.json() as Promise<AccountsResponse>
 }
 
-export const fetchAccount = async ({ publicKey }: { publicKey: string }) => {
-  const response = (await request(
-    env.NEXT_PUBLIC_MAINNET_PROXY_URL,
-    accountQuery,
-    { publicKey }
-  )) as ProxyAccountResponse
+export const fetchAccount = async ({
+  publicKey,
+  network
+}: FetchAccountProps) => {
+  const proxyUrl = ProxyUrl[network]
+  const response = (await request(proxyUrl, accountQuery, {
+    publicKey
+  })) as ProxyAccountResponse
   return response.account
 }

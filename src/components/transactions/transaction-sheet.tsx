@@ -5,9 +5,10 @@ import useSWR from 'swr'
 
 import { SheetHeading } from '@/components/sheet-heading'
 import { SimpleSkeleton } from '@/components/simple-skeleton'
-import { TransactionDetails } from '@/components/transaction-details'
+import { TransactionDetails } from '@/components/transactions/transaction-details'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useToast } from '@/components/ui/use-toast'
+import { useNetworkClientSide } from '@/data/client-network'
 import { fetchTransaction } from '@/data/transactions'
 import { env } from '@/env.mjs'
 import { useAppStore } from '@/store/app'
@@ -15,6 +16,7 @@ import { useAppStore } from '@/store/app'
 export const TransactionSheet = () => {
   const router = useRouter()
   const { toast } = useToast()
+  const { network } = useNetworkClientSide()
   const currentTransactionHash = useAppStore(
     (state) => state.currentTransactionHash
   )
@@ -25,7 +27,7 @@ export const TransactionSheet = () => {
     currentTransactionHash ? ['transaction', currentTransactionHash] : null,
     () =>
       currentTransactionHash
-        ? fetchTransaction({ hash: currentTransactionHash })
+        ? network && fetchTransaction({ hash: currentTransactionHash, network })
         : null
   )
   const handleOpenExtended = () => {

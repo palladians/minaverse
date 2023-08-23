@@ -24,7 +24,7 @@ export const Footer = () => {
           alt="Logo"
           className="dark:invert opacity-50"
         />
-        <p className="text-sm opacity-50">Truly open Mina Explorer.</p>
+        <p className="text-sm opacity-50">The truly open Mina Explorer.</p>
         <a
           href="https://palladians.xyz"
           target="_blank"
@@ -39,7 +39,7 @@ export const Footer = () => {
           rel="noopener noreferrer"
           className="text-sm opacity-50"
         >
-          Pssst, need a Mina wallet? Check out Pallad.
+          Need a Mina wallet? Pallad 🦋 is coming soon.
         </a>
       </div>
       <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export const Footer = () => {
         </Button>
         <Button variant="outline" size="icon" title="Twitter" asChild>
           <a
-            href="https://twitter.com/palladians_xyz"
+            href="https://twitter.com/minaverse_xyz"
             target="_blank"
             rel="noreferrer noopener"
           >

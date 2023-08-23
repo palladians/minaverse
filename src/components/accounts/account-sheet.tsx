@@ -3,17 +3,19 @@
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
-import { AccountDetails } from '@/components/account-details'
+import { AccountDetails } from '@/components/accounts/account-details'
 import { SheetHeading } from '@/components/sheet-heading'
 import { SimpleSkeleton } from '@/components/simple-skeleton'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useToast } from '@/components/ui/use-toast'
 import { fetchAccount } from '@/data/accounts'
+import { useNetworkClientSide } from '@/data/client-network'
 import { env } from '@/env.mjs'
 import { useAppStore } from '@/store/app'
 
 export const AccountSheet = () => {
   const router = useRouter()
+  const { network } = useNetworkClientSide()
   const { toast } = useToast()
   const currentAccountPublicKey = useAppStore(
     (state) => state.currentAccountPublicKey
@@ -25,7 +27,8 @@ export const AccountSheet = () => {
     currentAccountPublicKey ? ['account', currentAccountPublicKey] : null,
     () =>
       currentAccountPublicKey
-        ? fetchAccount({ publicKey: currentAccountPublicKey })
+        ? network &&
+          fetchAccount({ publicKey: currentAccountPublicKey, network })
         : null
   )
   const handleOpenExtended = () => {

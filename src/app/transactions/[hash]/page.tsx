@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
-import { TransactionDetails } from '@/components/transaction-details'
+import { TransactionDetails } from '@/components/transactions/transaction-details'
+import { getNetwork } from '@/data/network'
 import { fetchTransaction } from '@/data/transactions'
 
 export const metadata: Metadata = {
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
 }
 
 const TransactionPage = async ({ params }: { params: { hash: string } }) => {
-  const transactionData = await fetchTransaction({ hash: params.hash })
+  const network = getNetwork()
+  const transactionData = await fetchTransaction({ hash: params.hash, network })
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl">Transaction Details</h1>

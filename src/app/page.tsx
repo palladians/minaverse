@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
-import { QuickStats } from '@/components/quick-stats'
-import { SummaryOverview } from '@/components/summary-overview'
+import { QuickStats } from '@/components/dashboard/quick-stats'
+import { SummaryOverview } from '@/components/dashboard/summary-overview'
 import { fetchCoinData } from '@/data/coin'
 
 export const metadata: Metadata = {

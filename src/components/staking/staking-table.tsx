@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
-import { ChevronDown, ExternalLinkIcon, EyeIcon } from 'lucide-react'
+import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
 
@@ -29,22 +29,24 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { AccountShort } from '@/data/accounts'
+import { Pool } from '@/data/staking'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
-export const AccountsTable = ({
+type ExtendedPool = Pool & { publicKey: string }
+
+export const StakingTable = ({
   data,
-  accountsCount,
+  poolsCount,
   currentPage,
   pagesCount,
   query
 }: {
-  data: AccountShort[]
-  accountsCount: number
+  data: ExtendedPool[]
+  poolsCount: number
   currentPage: number
   pagesCount: number
   query: string | null
@@ -55,7 +57,7 @@ export const AccountsTable = ({
     (state) => state.setCurrentAccountPublicKey
   )
 
-  const columns: ColumnDef<AccountShort>[] = [
+  const columns: ColumnDef<Pool>[] = [
     {
       id: 'select',
       header: ({ table }) => (
@@ -76,33 +78,7 @@ export const AccountsTable = ({
       enableHiding: false
     },
     {
-      accessorKey: 'public_key',
-      header: 'Public Key',
-      cell: ({ row }) => (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="link"
-              className="capitalize p-0 h-auto"
-              onClick={() =>
-                setCurrentAccountPublicKey(row.getValue('public_key'))
-              }
-            >
-              {truncateString({
-                value: row.getValue('public_key'),
-                firstCharCount: 7,
-                endCharCount: 6
-              })}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="flex">
-            <CopyValue value={row.getValue('public_key')} />
-          </TooltipContent>
-        </Tooltip>
-      )
-    },
-    {
-      accessorKey: 'delegate',
+      accessorKey: 'publicKey',
       header: 'Delegate',
       cell: ({ row }) => (
         <Tooltip>
@@ -111,44 +87,54 @@ export const AccountsTable = ({
               variant="link"
               className="capitalize p-0 h-auto"
               onClick={() =>
-                setCurrentAccountPublicKey(row.getValue('delegate'))
+                setCurrentAccountPublicKey(row.getValue('publicKey'))
               }
             >
               {truncateString({
-                value: row.getValue('delegate'),
+                value: row.getValue('publicKey'),
                 firstCharCount: 7,
                 endCharCount: 6
               })}
             </Button>
           </TooltipTrigger>
           <TooltipContent className="flex">
-            <CopyValue value={row.getValue('delegate')} />
+            <CopyValue value={row.getValue('publicKey')} />
           </TooltipContent>
         </Tooltip>
       )
     },
     {
-      accessorKey: 'username',
-      header: 'Username',
-      cell: ({ row }) => <div>{row.getValue('username')}</div>
+      accessorKey: 'name',
+      header: 'Name',
+      cell: ({ row }) => <div>{row.getValue('name')}</div>
     },
     {
-      accessorKey: 'nonce',
-      header: 'Nonce',
-      cell: ({ row }) => <div>{row.getValue('nonce')}</div>
+      accessorKey: 'delegates',
+      header: 'Delegates',
+      cell: ({ row }) => <div>{row.getValue('delegates')}</div>
     },
     {
-      accessorKey: 'balance',
-      header: 'Balance',
+      accessorKey: 'blockChance',
+      header: 'Chance',
+      cell: ({ row }) => <div>{row.getValue('blockChance')}</div>
+    },
+    {
+      accessorKey: 'percentOfStake',
+      header: '% of stake',
+      cell: ({ row }) => <div>{row.getValue('percentOfStake')}</div>
+    },
+    {
+      accessorKey: 'stake',
+      header: 'Stake',
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue('balance'))
+        const amount = parseFloat(row.getValue('stake'))
         const formatted = new Intl.NumberFormat('en-US').format(amount)
         return <div>{formatted} MINA</div>
       }
     },
     {
       accessorKey: 'actions',
-      header: () => <div className="text-right">Actions</div>,
+      header: () => null,
       cell: ({ row }) => {
         return (
           <div className="flex justify-end gap-2">
@@ -156,7 +142,7 @@ export const AccountsTable = ({
               variant="outline"
               size="icon"
               onClick={() =>
-                setCurrentAccountPublicKey(row.getValue('public_key'))
+                setCurrentAccountPublicKey(row.getValue('publicKey'))
               }
             >
               <EyeIcon size={16} />
@@ -165,10 +151,13 @@ export const AccountsTable = ({
               variant="outline"
               size="icon"
               onClick={() =>
-                router.push(`/accounts/${row.getValue('public_key')}`)
+                router.push(`/accounts/${row.getValue('publicKey')}`)
               }
             >
               <ExternalLinkIcon size={16} />
+            </Button>
+            <Button variant="outline" size="icon">
+              <LinkIcon size={16} />
             </Button>
           </div>
         )
@@ -180,13 +169,13 @@ export const AccountsTable = ({
 
   const handleQuerySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/accounts?search=${innerQuery}`)
+    router.push(`/staking?search=${innerQuery}`)
   }
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
+        <h1 className="text-2xl">Staking ({formatNumber(poolsCount)})</h1>
         <div className="flex gap-2">
           <form onSubmit={handleQuerySubmit}>
             <Input
@@ -291,7 +280,7 @@ export const AccountsTable = ({
       <Pagination
         currentPage={currentPage}
         pagesCount={pagesCount}
-        resource="accounts"
+        resource="staking"
       />
     </div>
   )

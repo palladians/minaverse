@@ -1,6 +1,6 @@
 import { gql, request } from 'graphql-request'
 
-import { env } from '@/env.mjs'
+import { ExplorerUrl, GqlUrl, Network } from '@/data/api'
 
 const transactionQuery = gql`
   query Transaction($hash: String!) {
@@ -73,6 +73,12 @@ interface FetchTransactionsProps {
   length?: number
   start?: number
   search: string | null
+  network: Network
+}
+
+interface FetchTransactionProps {
+  hash: string
+  network: Network
 }
 
 export type GraphqlTransaction = {
@@ -99,9 +105,11 @@ export type TransactionResponse = {
 export const fetchTransactions = async ({
   length,
   start,
-  search
+  search,
+  network
 }: FetchTransactionsProps): Promise<TransactionsResponse> => {
-  const transactionsUrl = new URL('https://minaexplorer.com/all-transactions')
+  const explorerUrl = ExplorerUrl[network]
+  const transactionsUrl = new URL(`${explorerUrl}/all-transactions`)
   transactionsUrl.searchParams.set('length', String(length || 20))
   transactionsUrl.searchParams.set('start', String(start || 0))
   transactionsUrl.searchParams.set('columns[0][data]', 'dateTime')
@@ -109,16 +117,17 @@ export const fetchTransactions = async ({
   if (search) {
     transactionsUrl.searchParams.set('search[value]', search)
   }
-  console.log('>>>URL', transactionsUrl)
   const transactionsRequest = await fetch(transactionsUrl)
   return transactionsRequest.json() as Promise<TransactionsResponse>
 }
 
-export const fetchTransaction = async ({ hash }: { hash: string }) => {
-  const response = (await request(
-    env.NEXT_PUBLIC_MAINNET_GQL_URL,
-    transactionQuery,
-    { hash }
-  )) as TransactionResponse
+export const fetchTransaction = async ({
+  hash,
+  network
+}: FetchTransactionProps) => {
+  const gqlUrl = GqlUrl[network]
+  const response = (await request(gqlUrl, transactionQuery, {
+    hash
+  })) as TransactionResponse
   return response.transaction
 }

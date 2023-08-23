@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
-import { ChevronDown, ExternalLinkIcon, EyeIcon } from 'lucide-react'
+import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
 
@@ -29,37 +29,33 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { Transaction } from '@/data/transactions'
-import { formatDate } from '@/lib/date'
+import { AccountShort } from '@/data/accounts'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
-export const TransactionsTable = ({
+export const AccountsTable = ({
   data,
-  transactionsCount,
+  accountsCount,
   currentPage,
   pagesCount,
   query
 }: {
-  data: Transaction[]
-  transactionsCount: number
+  data: AccountShort[]
+  accountsCount: number
   currentPage: number
   pagesCount: number
   query: string | null
 }) => {
-  const [innerQuery, setInnerQuery] = useState(query)
   const router = useRouter()
-  const setCurrentTransactionHash = useAppStore(
-    (state) => state.setCurrentTransactionHash
-  )
+  const [innerQuery, setInnerQuery] = useState(query)
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
 
-  const columns: ColumnDef<Transaction>[] = [
+  const columns: ColumnDef<AccountShort>[] = [
     {
       id: 'select',
       header: ({ table }) => (
@@ -80,101 +76,88 @@ export const TransactionsTable = ({
       enableHiding: false
     },
     {
-      accessorKey: 'hash',
-      header: 'Hash',
+      accessorKey: 'public_key',
+      header: 'Public Key',
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="link"
               className="capitalize p-0 h-auto"
-              onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
+              onClick={() =>
+                setCurrentAccountPublicKey(row.getValue('public_key'))
+              }
             >
               {truncateString({
-                value: row.getValue('hash'),
+                value: row.getValue('public_key'),
                 firstCharCount: 7,
                 endCharCount: 6
               })}
             </Button>
           </TooltipTrigger>
           <TooltipContent className="flex">
-            <CopyValue value={row.getValue('hash')} />
+            <CopyValue value={row.getValue('public_key')} />
           </TooltipContent>
         </Tooltip>
       )
     },
     {
-      accessorKey: 'from',
-      header: 'From',
+      accessorKey: 'delegate',
+      header: 'Delegate',
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="link"
               className="capitalize p-0 h-auto"
-              onClick={() => setCurrentAccountPublicKey(row.getValue('from'))}
+              onClick={() =>
+                setCurrentAccountPublicKey(row.getValue('delegate'))
+              }
             >
               {truncateString({
-                value: row.getValue('from'),
+                value: row.getValue('delegate'),
                 firstCharCount: 7,
                 endCharCount: 6
               })}
             </Button>
           </TooltipTrigger>
           <TooltipContent className="flex">
-            <CopyValue value={row.getValue('from')} />
+            <CopyValue value={row.getValue('delegate')} />
           </TooltipContent>
         </Tooltip>
       )
     },
     {
-      accessorKey: 'to',
-      header: 'To',
-      cell: ({ row }) => (
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="link"
-              className="capitalize p-0 h-auto"
-              onClick={() => setCurrentAccountPublicKey(row.getValue('to'))}
-            >
-              {truncateString({
-                value: row.getValue('to'),
-                firstCharCount: 7,
-                endCharCount: 6
-              })}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent className="flex">
-            <CopyValue value={row.getValue('to')} />
-          </TooltipContent>
-        </Tooltip>
-      )
+      accessorKey: 'username',
+      header: 'Username',
+      cell: ({ row }) => <div>{row.getValue('username')}</div>
     },
     {
-      accessorKey: 'amount',
-      header: 'Amount',
+      accessorKey: 'nonce',
+      header: 'Nonce',
+      cell: ({ row }) => <div>{row.getValue('nonce')}</div>
+    },
+    {
+      accessorKey: 'balance',
+      header: 'Balance',
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue('amount'))
+        const amount = parseFloat(row.getValue('balance'))
         const formatted = new Intl.NumberFormat('en-US').format(amount)
         return <div>{formatted} MINA</div>
       }
     },
     {
-      accessorKey: 'dateTime',
-      header: 'Date',
-      cell: ({ row }) => <div>{formatDate(row.getValue('dateTime'))}</div>
-    },
-    {
       accessorKey: 'actions',
-      header: () => <div className="text-right">Actions</div>,
+      header: () => null,
       cell: ({ row }) => {
         return (
           <div className="flex justify-end gap-2">
             <Button
               variant="outline"
               size="icon"
-              onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
+              onClick={() =>
+                setCurrentAccountPublicKey(row.getValue('public_key'))
+              }
             >
               <EyeIcon size={16} />
             </Button>
@@ -182,10 +165,13 @@ export const TransactionsTable = ({
               variant="outline"
               size="icon"
               onClick={() =>
-                router.push(`/transactions/${row.getValue('hash')}`)
+                router.push(`/accounts/${row.getValue('public_key')}`)
               }
             >
               <ExternalLinkIcon size={16} />
+            </Button>
+            <Button variant="outline" size="icon">
+              <LinkIcon size={16} />
             </Button>
           </div>
         )
@@ -197,19 +183,17 @@ export const TransactionsTable = ({
 
   const handleQuerySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/transactions?search=${innerQuery}`)
+    router.push(`/accounts?search=${innerQuery}`)
   }
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl">
-          Transactions ({formatNumber(transactionsCount)})
-        </h1>
+        <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
         <div className="flex gap-2">
           <form onSubmit={handleQuerySubmit}>
             <Input
-              placeholder="Search with hash"
+              placeholder="Search with public key"
               defaultValue={innerQuery || ''}
               onChange={(event) => setInnerQuery(event.target.value)}
             />
@@ -310,7 +294,7 @@ export const TransactionsTable = ({
       <Pagination
         currentPage={currentPage}
         pagesCount={pagesCount}
-        resource="transactions"
+        resource="accounts"
       />
     </div>
   )
