@@ -15,7 +15,11 @@ export const Navbar = () => {
   return (
     <div className="flex md:grid grid-cols-[1fr,2fr,1fr] gap-2 justify-between items-center py-2">
       <div className="text-slate-900 dark:text-slate-50">
-        <NextLink href="/" className="flex items-center">
+        <NextLink
+          href="/"
+          className="flex items-center"
+          data-testid="navigation__dashboard"
+        >
           <div className="hidden md:flex">
             <NextImage
               src="/logo-dark.svg"
@@ -47,6 +51,7 @@ export const Navbar = () => {
             variant={pathname === '/accounts' ? 'secondary' : 'ghost'}
             size="sm"
             asChild
+            data-testid="navigation__accounts"
           >
             <NextLink href="/accounts">Accounts</NextLink>
           </Button>
@@ -54,6 +59,7 @@ export const Navbar = () => {
             variant={pathname === '/transactions' ? 'secondary' : 'ghost'}
             size="sm"
             asChild
+            data-testid="navigation__transactions"
           >
             <NextLink href="/transactions">Transactions</NextLink>
           </Button>
@@ -61,6 +67,7 @@ export const Navbar = () => {
             variant={pathname === '/staking' ? 'secondary' : 'ghost'}
             size="sm"
             asChild
+            data-testid="navigation__staking"
           >
             <NextLink href="/staking">Staking</NextLink>
           </Button>
@@ -75,6 +82,7 @@ export const Navbar = () => {
           onClick={() => setCommandsOpen(true)}
           title="Search"
           className="flex items-center justify-center"
+          data-testid="navigation__commands"
         >
           <MenuIcon size={16} />
           <div className="flex items-center hidden md:flex ml-2">

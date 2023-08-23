@@ -30,7 +30,6 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
   const pagesCount = Math.ceil(transactionsData.recordsTotal / PAGE_LENGTH)
   return (
     <main className="flex-1 flex flex-col">
-      {/*<AccountSheet />*/}
       <TransactionsTable
         data={transactionsData.data}
         transactionsCount={transactionsData.recordsTotal}

@@ -202,7 +202,9 @@ export const AccountsTable = ({
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl">Accounts ({formatNumber(accountsCount)})</h1>
+        <h1 className="text-2xl" data-testid="accounts__header">
+          Accounts ({formatNumber(accountsCount)})
+        </h1>
         <div className="flex gap-2">
           <form onSubmit={handleQuerySubmit}>
             <Input

@@ -13,7 +13,9 @@ const HomePage = async () => {
   return (
     <main className="flex-1 flex flex-col">
       <div className="flex flex-col gap-4 md:gap-8">
-        <h2 className="text-2xl">Quick Stats</h2>
+        <h2 className="text-2xl" data-testid="dashboard__header">
+          Quick Stats
+        </h2>
         <SummaryOverview />
         <QuickStats prices={coinData.prices} marketCaps={coinData.marketCaps} />
       </div>

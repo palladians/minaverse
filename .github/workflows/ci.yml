@@ -1,0 +1,30 @@
+name: Minaverse CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build_and_test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Build app
+      run: pnpm build
+    - name: Install Playwright Browsers
+      run: pnpm exec playwright install --with-deps chromium
+    - name: Run Playwright tests
+      run: pnpm test:e2e
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
