@@ -206,7 +206,7 @@ export const AccountsTable = ({
     <div className="flex flex-col gap-8">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <h1 className="text-2xl" data-testid="staking__header">
+          <h1 className="text-2xl" data-testid="accounts__header">
             Accounts
           </h1>
           <p className="text-sm">({formatNumber(accountsCount)})</p>

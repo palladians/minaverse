@@ -2,6 +2,12 @@
 
 Explore the universe of Mina Protocol.
 
+## Stack
+
+- Next.js 13.4 & React Server Components
+- [Tremor](https://www.tremor.so/components), [shadcn/ui](https://ui.shadcn.com/), Tailwind
+- Playwright
+
 ## Getting Started
 
 ### Dev server

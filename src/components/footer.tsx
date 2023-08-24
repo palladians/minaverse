@@ -62,13 +62,19 @@ export const Footer = () => {
           </a>
         </Button>
         <Button variant="outline" title="Discord" size="icon">
-          <NextImage
-            src="/discord.svg"
-            alt="Discord"
-            width={20}
-            height={20}
-            className="dark:invert"
-          />
+          <a
+            href="https://discord.gg/ExzzfTGUnB"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <NextImage
+              src="/discord.svg"
+              alt="Discord"
+              width={20}
+              height={20}
+              className="dark:invert"
+            />
+          </a>
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
