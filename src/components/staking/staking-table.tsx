@@ -2,6 +2,7 @@
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
+import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
 
@@ -154,12 +155,11 @@ export const StakingTable = ({
             <Button
               variant="outline"
               size="icon"
-              onClick={() =>
-                router.push(`/accounts/${row.getValue('publicKey')}`)
-              }
               data-testid="staking__openExtended"
             >
-              <ExternalLinkIcon size={16} />
+              <NextLink href={`/accounts/${row.getValue('publicKey')}`}>
+                <ExternalLinkIcon size={16} />
+              </NextLink>
             </Button>
             <Button
               variant="outline"

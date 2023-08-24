@@ -2,6 +2,7 @@
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
+import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FormEvent, useState } from 'react'
 
@@ -185,12 +186,12 @@ export const TransactionsTable = ({
             <Button
               variant="outline"
               size="icon"
-              onClick={() =>
-                router.push(`/transactions/${row.getValue('hash')}`)
-              }
               data-testid="transactions__openExtended"
+              asChild
             >
-              <ExternalLinkIcon size={16} />
+              <NextLink href={`/transactions/${row.getValue('hash')}`}>
+                <ExternalLinkIcon size={16} />
+              </NextLink>
             </Button>
             <Button
               variant="outline"

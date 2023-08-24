@@ -1,4 +1,5 @@
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
+import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -22,16 +23,14 @@ export const Pagination = ({
       <Button
         variant={currentPage === 0 ? 'secondary' : 'outline'}
         size="sm"
-        onClick={() => router.push(`/${resource}?page=0`)}
+        asChild
       >
-        1
+        <NextLink href={`/${resource}?page=0`}>1</NextLink>
       </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => router.push(`/${resource}?page=${currentPage - 1}`)}
-      >
-        <ArrowLeftIcon size={16} />
+      <Button variant="outline" size="sm" asChild>
+        <NextLink href={`/${resource}?page=${currentPage - 1}`}>
+          <ArrowLeftIcon size={16} />
+        </NextLink>
       </Button>
       <Input
         className="w-24 h-9"
@@ -41,19 +40,19 @@ export const Pagination = ({
           router.push(`/${resource}?page=${nextPage - 1}`)
         }}
       />
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => router.push(`/${resource}?page=${currentPage + 1}`)}
-      >
-        <ArrowRightIcon size={16} />
+      <Button variant="outline" size="sm" asChild>
+        <NextLink href={`/${resource}?page=${currentPage + 1}`}>
+          <ArrowRightIcon size={16} />
+        </NextLink>
       </Button>
       <Button
         size="sm"
         variant={currentPage === pagesCount - 1 ? 'secondary' : 'outline'}
-        onClick={() => router.push(`/${resource}?page=${pagesCount - 1}`)}
+        asChild
       >
-        {pagesCount}
+        <NextLink href={`/${resource}?page=${pagesCount - 1}`}>
+          {pagesCount}
+        </NextLink>
       </Button>
     </div>
   )

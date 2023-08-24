@@ -7,7 +7,6 @@ import React from 'react'
 import {
   CommandDialog,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList
@@ -46,35 +45,23 @@ export const Commands = () => {
           <span>Dashboard</span>
         </CommandItem>
         <CommandItem
-          onSelect={() => handleSelect(() => router.push('/account'))}
+          onSelect={() => handleSelect(() => router.push('/accounts'))}
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Accounts</span>
         </CommandItem>
         <CommandItem
-          onSelect={() => handleSelect(() => router.push('/transaction'))}
+          onSelect={() => handleSelect(() => router.push('/transactions'))}
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Transactions</span>
         </CommandItem>
-        <CommandGroup heading="Staking">
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>Current epoch</span>
-          </CommandItem>
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>Next epoch</span>
-          </CommandItem>
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>Top epoch stakers</span>
-          </CommandItem>
-          <CommandItem>
-            <ChevronRightIcon className="mr-2 h-4 w-4" />
-            <span>All ledgers</span>
-          </CommandItem>
-        </CommandGroup>
+        <CommandItem
+          onSelect={() => handleSelect(() => router.push('/staking'))}
+        >
+          <ChevronRightIcon className="mr-2 h-4 w-4" />
+          <span>Staking</span>
+        </CommandItem>
       </CommandList>
     </CommandDialog>
   )
