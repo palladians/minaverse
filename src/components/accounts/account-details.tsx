@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { FieldGrid } from '@/components/field-grid'
 import { ProxyAccount } from '@/data/accounts'
 import { formatNumber } from '@/lib/number'
 
@@ -29,17 +30,5 @@ export const AccountDetails = ({ accountData }: AccountDetailsProps) => {
     ],
     [accountData]
   )
-  return (
-    <div className="grid gap-4 py-4">
-      {fields.map((field) => (
-        <div
-          className="grid grid-cols-5 items-center gap-8"
-          data-testid={field.testId}
-        >
-          <p className="text-right text-sm">{field.label}</p>
-          <p className="col-span-4 break-all leading-8">{field.value}</p>
-        </div>
-      ))}
-    </div>
-  )
+  return <FieldGrid fields={fields} />
 }
