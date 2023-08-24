@@ -1,4 +1,5 @@
 import { ExplorerUrl, Network } from '@/data/api'
+import { env } from '@/env.mjs'
 
 export type AccountShort = {
   pk: string
@@ -66,7 +67,9 @@ export const fetchAccounts = async ({
 }
 
 export const fetchAccount = async ({ publicKey }: FetchAccountProps) => {
-  const request = await fetch(`/api/accounts/${publicKey}`)
+  const request = await fetch(
+    `${env.NEXT_PUBLIC_APP_URL}/api/accounts/${publicKey}`
+  )
   const response = (await request.json()) as ProxyAccountResponse
   return response.account
 }

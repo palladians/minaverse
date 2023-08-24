@@ -1,4 +1,5 @@
 import { ExplorerUrl, Network } from '@/data/api'
+import { env } from '@/env.mjs'
 
 export type Transaction = {
   amount: number
@@ -99,7 +100,9 @@ export const fetchTransactions = async ({
 }
 
 export const fetchTransaction = async ({ hash }: FetchTransactionProps) => {
-  const request = await fetch(`/api/transactions/${hash}`)
+  const request = await fetch(
+    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${hash}`
+  )
   const response = (await request.json()) as TransactionResponse
   return response.transaction
 }
