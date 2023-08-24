@@ -7,25 +7,25 @@ export enum Network {
 }
 
 export const ExplorerUrl = {
-  [Network.MAINNET]: env.NEXT_PUBLIC_MAINNET_EXPLORER_URL,
-  [Network.DEVNET]: env.NEXT_PUBLIC_DEVNET_EXPLORER_URL,
-  [Network.BERKELEY]: env.NEXT_PUBLIC_BERKELEY_EXPLORER_URL
+  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/me`,
+  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/me`,
+  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/me`
 }
 
 export const ExplorerApiUrl = {
-  [Network.MAINNET]: env.NEXT_PUBLIC_MAINNET_EXPLORER_API_URL,
-  [Network.DEVNET]: env.NEXT_PUBLIC_DEVNET_EXPLORER_API_URL,
-  [Network.BERKELEY]: env.NEXT_PUBLIC_BERKELEY_EXPLORER_API_URL
+  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/me/api`,
+  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/me/api`,
+  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/me/api`
 }
 
 export const GqlUrl = {
-  [Network.MAINNET]: env.NEXT_PUBLIC_MAINNET_GQL_URL,
-  [Network.DEVNET]: env.NEXT_PUBLIC_DEVNET_GQL_URL,
-  [Network.BERKELEY]: env.NEXT_PUBLIC_BERKELEY_GQL_URL
+  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/gql`,
+  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/gql`,
+  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/gql`
 }
 
 export const ProxyUrl = {
-  [Network.MAINNET]: env.NEXT_PUBLIC_MAINNET_PROXY_URL,
-  [Network.DEVNET]: env.NEXT_PUBLIC_DEVNET_PROXY_URL,
-  [Network.BERKELEY]: env.NEXT_PUBLIC_BERKELEY_PROXY_URL
+  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/proxy`,
+  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/proxy`,
+  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/proxy`
 }

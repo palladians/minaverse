@@ -147,6 +147,7 @@ export const StakingTable = ({
               onClick={() =>
                 setCurrentAccountPublicKey(row.getValue('publicKey'))
               }
+              data-testid="staking__showPreview"
             >
               <EyeIcon size={16} />
             </Button>
@@ -156,6 +157,7 @@ export const StakingTable = ({
               onClick={() =>
                 router.push(`/accounts/${row.getValue('publicKey')}`)
               }
+              data-testid="staking__openExtended"
             >
               <ExternalLinkIcon size={16} />
             </Button>
@@ -169,6 +171,7 @@ export const StakingTable = ({
                   )}`
                 })
               }
+              data-testid="staking__copyLink"
             >
               <LinkIcon size={16} />
             </Button>

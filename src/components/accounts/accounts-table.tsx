@@ -161,6 +161,7 @@ export const AccountsTable = ({
               onClick={() =>
                 setCurrentAccountPublicKey(row.getValue('public_key'))
               }
+              data-testid="accounts__showPreview"
             >
               <EyeIcon size={16} />
             </Button>
@@ -170,6 +171,7 @@ export const AccountsTable = ({
               onClick={() =>
                 router.push(`/accounts/${row.getValue('public_key')}`)
               }
+              data-testid="accounts__openExtended"
             >
               <ExternalLinkIcon size={16} />
             </Button>
@@ -183,6 +185,7 @@ export const AccountsTable = ({
                   )}`
                 })
               }
+              data-testid="accounts__copyLink"
             >
               <LinkIcon size={16} />
             </Button>

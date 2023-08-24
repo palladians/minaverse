@@ -9,7 +9,7 @@ export const useNetworkClientSide = () => {
   const [network, setNetwork] = useState<Network | null>(null)
   useEffect(() => {
     const savedNetwork = getCookie('minaverse-network') as Network
-    setNetwork(savedNetwork)
+    setNetwork(savedNetwork || Network.MAINNET)
   }, [])
   return { network }
 }

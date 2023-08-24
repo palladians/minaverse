@@ -178,6 +178,7 @@ export const TransactionsTable = ({
               variant="outline"
               size="icon"
               onClick={() => setCurrentTransactionHash(row.getValue('hash'))}
+              data-testid="transactions__showPreview"
             >
               <EyeIcon size={16} />
             </Button>
@@ -187,6 +188,7 @@ export const TransactionsTable = ({
               onClick={() =>
                 router.push(`/transactions/${row.getValue('hash')}`)
               }
+              data-testid="transactions__openExtended"
             >
               <ExternalLinkIcon size={16} />
             </Button>
@@ -200,6 +202,7 @@ export const TransactionsTable = ({
                   }/transactions/${row.getValue('hash')}`
                 })
               }
+              data-testid="transactions__copyLink"
             >
               <LinkIcon size={16} />
             </Button>
