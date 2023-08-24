@@ -101,7 +101,7 @@ export const fetchTransactions = async ({
 
 export const fetchTransaction = async ({ hash }: FetchTransactionProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${hash}`
+    `${env.NEXT_PUBLIC_APP_URL}/api/transaction/${hash}`
   )
   const response = (await request.json()) as TransactionResponse
   return response.transaction

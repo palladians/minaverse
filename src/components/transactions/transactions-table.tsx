@@ -158,7 +158,7 @@ export const TransactionsTable = ({
       accessorKey: 'amount',
       header: 'Amount',
       cell: ({ row }) => {
-        const amount = parseFloat(row.getValue('amount'))
+        const amount = Number(row.getValue('amount')) / 1_000_000_000
         const formatted = new Intl.NumberFormat('en-US').format(amount)
         return <div>{formatted} MINA</div>
       }

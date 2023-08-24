@@ -46,13 +46,13 @@ export const Commands = () => {
           <span>Dashboard</span>
         </CommandItem>
         <CommandItem
-          onSelect={() => handleSelect(() => router.push('/accounts'))}
+          onSelect={() => handleSelect(() => router.push('/account'))}
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Accounts</span>
         </CommandItem>
         <CommandItem
-          onSelect={() => handleSelect(() => router.push('/transactions'))}
+          onSelect={() => handleSelect(() => router.push('/transaction'))}
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Transactions</span>

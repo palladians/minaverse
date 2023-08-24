@@ -27,7 +27,9 @@ export const TransactionDetails = ({
       { label: 'To', value: transactionData?.to, testId: 'transaction__to' },
       {
         label: 'Amount',
-        value: formatNumber(transactionData?.amount || 0),
+        value: `${formatNumber(
+          Number(transactionData?.amount) / 1_000_000_000
+        )} MINA`,
         testId: 'transaction__amount'
       },
       {

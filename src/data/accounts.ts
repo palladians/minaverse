@@ -13,6 +13,20 @@ export type AccountShort = {
   username: string
 }
 
+export type TransactionShort = {
+  amount: number
+  blockHeight: number
+  dateTime: string
+  failureReason: null | string
+  fee: number
+  from: string
+  hash: string
+  isDelegation: boolean
+  kind: string
+  to: string
+  token: number
+}
+
 export type ProxyAccount = {
   balance: {
     total: string
@@ -28,6 +42,10 @@ export type ProxyAccount = {
 
 export type ProxyAccountResponse = {
   account: ProxyAccount
+}
+
+export type AccountTransactionsResponse = {
+  transactions: TransactionShort[]
 }
 
 export type AccountsResponse = {
@@ -68,8 +86,18 @@ export const fetchAccounts = async ({
 
 export const fetchAccount = async ({ publicKey }: FetchAccountProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/accounts/${publicKey}`
+    `${env.NEXT_PUBLIC_APP_URL}/api/account/${publicKey}`
   )
   const response = (await request.json()) as ProxyAccountResponse
   return response.account
+}
+
+export const fetchAccountTransactions = async ({
+  publicKey
+}: FetchAccountProps) => {
+  const request = await fetch(
+    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${publicKey}`
+  )
+  const response = (await request.json()) as AccountTransactionsResponse
+  return response.transactions
 }

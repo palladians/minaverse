@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 import { AccountDetails } from '@/components/accounts/account-details'
+import { AccountTransactions } from '@/components/accounts/account-transactions'
 import { fetchAccount } from '@/data/accounts'
 import { getNetwork } from '@/data/network'
 
@@ -15,9 +16,10 @@ const AccountPage = async ({ params }: { params: { publicKey: string } }) => {
     network
   })
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 flex-1">
       <h1 className="text-2xl">Account Overview</h1>
       {accountData && <AccountDetails accountData={accountData} />}
+      <AccountTransactions publicKey={params.publicKey} />
     </div>
   )
 }

@@ -18,7 +18,9 @@ export const AccountDetails = ({ accountData }: AccountDetailsProps) => {
       },
       {
         label: 'Balance',
-        value: formatNumber(Number(accountData?.balance.total)),
+        value: `${formatNumber(
+          Number(accountData?.balance.total) / 1_000_000_000
+        )} MINA`,
         testId: 'account__balance'
       },
       { label: 'Nonce', value: accountData?.nonce, testId: 'account__nonce' },
