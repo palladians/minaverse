@@ -36,6 +36,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="favicon.svg" />
+        <script
+          async
+          src="https://ackee.sh.palladians.xyz/tracker.js"
+          data-ackee-server="https://ackee.sh.palladians.xyz"
+          data-ackee-domain-id="a9e7a3ac-8c7c-4f25-91b8-34975a33b9e7"
+        />
       </head>
       <body className={inter.className}>
         <Commands />
