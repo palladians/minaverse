@@ -1,8 +1,6 @@
 'use client'
 
-import { get as getCookie } from 'es-cookie'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 import {
   Select,
@@ -24,8 +22,8 @@ const NETWORKS = [
 
 export const NetworkChoice = () => {
   const router = useRouter()
+  const network = useAppStore((state) => state.network)
   const setNetwork = useAppStore((state) => state.setNetwork)
-  const [defaultNetwork, setDefaultNetwork] = useState<string | null>(null)
   const handleNetworkChange = async (network: string) => {
     setNetwork(network as Network)
     await fetch('/setNetwork', {
@@ -38,15 +36,10 @@ export const NetworkChoice = () => {
     router.refresh()
   }
 
-  useEffect(() => {
-    const network = getCookie('minaverse-network') || 'mainnet'
-    setDefaultNetwork(network)
-  }, [])
-
-  if (!defaultNetwork) return null
+  if (!network) return null
 
   return (
-    <Select defaultValue={defaultNetwork} onValueChange={handleNetworkChange}>
+    <Select value={network} onValueChange={handleNetworkChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Environment" />
       </SelectTrigger>

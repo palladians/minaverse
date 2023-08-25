@@ -25,7 +25,8 @@ const Providers = ({ children }: { children: ReactNode }) => {
     setCurrentAccountPublicKey(null)
   }, [pathname])
   useEffect(() => {
-    const persistedNetwork = getCookie('minaverse-network') as Network
+    const persistedNetwork =
+      (getCookie('minaverse-network') as Network) || Network.MAINNET
     setNetwork(persistedNetwork)
   }, [])
   return (
