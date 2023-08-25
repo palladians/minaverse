@@ -1,3 +1,5 @@
+'use client'
+
 import { get as getCookie } from 'es-cookie'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -11,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { Network } from '@/data/api'
+import { useAppStore } from '@/store/app'
 
 const NETWORKS = [
   { label: 'Mainnet', value: 'mainnet' },
@@ -20,8 +24,10 @@ const NETWORKS = [
 
 export const NetworkChoice = () => {
   const router = useRouter()
+  const setNetwork = useAppStore((state) => state.setNetwork)
   const [defaultNetwork, setDefaultNetwork] = useState<string | null>(null)
   const handleNetworkChange = async (network: string) => {
+    setNetwork(network as Network)
     await fetch('/setNetwork', {
       method: 'PATCH',
       body: JSON.stringify({

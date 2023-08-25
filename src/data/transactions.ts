@@ -99,9 +99,13 @@ export const fetchTransactions = async ({
   return transactionsRequest.json() as Promise<TransactionsResponse>
 }
 
-export const fetchTransaction = async ({ hash }: FetchTransactionProps) => {
+export const fetchTransaction = async ({
+  hash,
+  network
+}: FetchTransactionProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/transaction/${hash}`
+    `${env.NEXT_PUBLIC_APP_URL}/api/transaction/${hash}`,
+    { headers: { 'minaverse-network': network } }
   )
   const response = (await request.json()) as TransactionResponse
   return response.transaction

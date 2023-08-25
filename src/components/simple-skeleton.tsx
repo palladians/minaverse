@@ -6,6 +6,7 @@ export const SimpleSkeleton = () => {
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
     </div>
   )
 }

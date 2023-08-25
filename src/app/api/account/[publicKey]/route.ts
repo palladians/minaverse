@@ -1,8 +1,7 @@
-import { gql, request } from 'graphql-request'
+import { gql, request as gqlRequest } from 'graphql-request'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { ProxyUrl } from '@/data/api'
-import { getNetwork } from '@/data/network'
+import { Network, ProxyUrl } from '@/data/api'
 
 const accountQuery = gql`
   query Account($publicKey: PublicKey!) {
@@ -22,12 +21,12 @@ const accountQuery = gql`
 `
 
 export async function GET(
-  _: NextRequest,
+  request: NextRequest,
   { params }: { params: { publicKey: string } }
 ) {
-  const network = getNetwork()
-  const proxyUrl = ProxyUrl[network]
-  const response = await request(proxyUrl, accountQuery, {
+  const network = request.headers.get('minaverse-network') || Network.MAINNET
+  const proxyUrl = ProxyUrl[network as Network]
+  const response = await gqlRequest(proxyUrl, accountQuery, {
     publicKey: params.publicKey
   })
   return NextResponse.json(response)

@@ -18,7 +18,7 @@ const AccountPage = async ({ params }: { params: { publicKey: string } }) => {
   return (
     <div className="flex flex-col gap-4 flex-1">
       <h1 className="text-2xl">Account Overview</h1>
-      {accountData && <AccountDetails accountData={accountData} />}
+      <AccountDetails accountData={accountData} />
       <AccountTransactions publicKey={params.publicKey} />
     </div>
   )

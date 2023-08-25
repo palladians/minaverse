@@ -64,7 +64,13 @@ interface FetchAccountsProps {
 
 interface FetchAccountProps {
   publicKey: string
-  network: Network
+  network: string
+}
+
+interface FetchAccountTransactionsProps {
+  publicKey: string
+  limit?: number
+  network: string
 }
 
 export const fetchAccounts = async ({
@@ -84,19 +90,28 @@ export const fetchAccounts = async ({
   return accountsRequest.json() as Promise<AccountsResponse>
 }
 
-export const fetchAccount = async ({ publicKey }: FetchAccountProps) => {
+export const fetchAccount = async ({
+  publicKey,
+  network
+}: FetchAccountProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/account/${publicKey}`
+    `${env.NEXT_PUBLIC_APP_URL}/api/account/${publicKey}`,
+    { headers: { 'minaverse-network': network } }
   )
   const response = (await request.json()) as ProxyAccountResponse
   return response.account
 }
 
 export const fetchAccountTransactions = async ({
-  publicKey
-}: FetchAccountProps) => {
+  publicKey,
+  limit = 100,
+  network
+}: FetchAccountTransactionsProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${publicKey}`
+    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${publicKey}?limit=${String(
+      limit
+    )}`,
+    { headers: { 'minaverse-network': network } }
   )
   const response = (await request.json()) as AccountTransactionsResponse
   return response.transactions

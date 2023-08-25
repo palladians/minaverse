@@ -1,8 +1,7 @@
-import { gql, request } from 'graphql-request'
+import { gql, request as gqlRequest } from 'graphql-request'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { GqlUrl } from '@/data/api'
-import { getNetwork } from '@/data/network'
+import { GqlUrl, Network } from '@/data/api'
 
 const transactionsQuery = gql`
   query Transactions($publicKey: String!, $limit: Int) {
@@ -27,14 +26,16 @@ const transactionsQuery = gql`
 `
 
 export async function GET(
-  _: NextRequest,
+  request: NextRequest,
   { params }: { params: { publicKey: string } }
 ) {
-  const network = getNetwork()
-  const explorerUrl = GqlUrl[network]
-  const response = await request(explorerUrl, transactionsQuery, {
+  const network = request.headers.get('minaverse-network') || Network.MAINNET
+  const { searchParams } = new URL(request.url)
+  const limit = searchParams.get('limit')
+  const explorerUrl = GqlUrl[network as Network]
+  const response = await gqlRequest(explorerUrl, transactionsQuery, {
     publicKey: params.publicKey,
-    limit: 100
+    limit: limit || 100
   })
   return NextResponse.json(response)
 }

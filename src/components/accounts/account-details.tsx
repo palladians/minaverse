@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { useMemo } from 'react'
 
 import { FieldGrid } from '@/components/field-grid'
@@ -13,7 +14,11 @@ export const AccountDetails = ({ accountData }: AccountDetailsProps) => {
     () => [
       {
         label: 'Public Key',
-        value: accountData?.publicKey,
+        value: (
+          <NextLink href={`/accounts/${accountData?.publicKey}`}>
+            {accountData?.publicKey}
+          </NextLink>
+        ),
         testId: 'account__publicKey'
       },
       {
@@ -26,7 +31,13 @@ export const AccountDetails = ({ accountData }: AccountDetailsProps) => {
       { label: 'Nonce', value: accountData?.nonce, testId: 'account__nonce' },
       {
         label: 'Delegate',
-        value: accountData?.epochDelegateAccount.publicKey,
+        value: (
+          <NextLink
+            href={`/accounts/${accountData?.epochDelegateAccount?.publicKey}`}
+          >
+            {accountData?.epochDelegateAccount?.publicKey}
+          </NextLink>
+        ),
         testId: 'account__delegate'
       }
     ],

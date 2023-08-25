@@ -1,46 +1,34 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import useSWR from 'swr'
+import { ExternalLinkIcon, LinkIcon } from 'lucide-react'
+import NextLink from 'next/link'
+import React from 'react'
 
 import { SheetHeading } from '@/components/sheet-heading'
 import { SimpleSkeleton } from '@/components/simple-skeleton'
 import { TransactionDetails } from '@/components/transactions/transaction-details'
+import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { useToast } from '@/components/ui/use-toast'
-import { useNetworkClientSide } from '@/data/client-network'
-import { fetchTransaction } from '@/data/transactions'
+import { useTransactionDetails } from '@/data/hooks'
 import { env } from '@/env.mjs'
+import { useClipboard } from '@/lib/clipboard'
 import { useAppStore } from '@/store/app'
 
 export const TransactionSheet = () => {
-  const router = useRouter()
-  const { toast } = useToast()
-  const { network } = useNetworkClientSide()
+  const { copyValue } = useClipboard()
   const currentTransactionHash = useAppStore(
     (state) => state.currentTransactionHash
   )
   const setCurrentTransactionHash = useAppStore(
     (state) => state.setCurrentTransactionHash
   )
-  const { data: transactionData, isLoading: transactionLoading } = useSWR(
-    currentTransactionHash ? ['transaction', currentTransactionHash] : null,
-    () =>
-      currentTransactionHash
-        ? network && fetchTransaction({ hash: currentTransactionHash, network })
-        : null
-  )
-  const handleOpenExtended = () => {
-    if (!transactionData?.hash) return
-    setCurrentTransactionHash(null)
-    router.push(`/transactions/${transactionData.hash}`)
-  }
+  const { data: transactionData, isLoading: transactionLoading } =
+    useTransactionDetails({ hash: currentTransactionHash })
   const handleCopy = () => {
     if (!transactionData?.hash) return
-    navigator.clipboard.writeText(
-      `${env.NEXT_PUBLIC_APP_URL}/transactions/${transactionData.hash}`
-    )
-    toast({ title: 'A link to the transaction was copied.' })
+    return copyValue({
+      value: `${env.NEXT_PUBLIC_APP_URL}/transactions/${transactionData.hash}`
+    })
   }
   return (
     <Sheet
@@ -50,8 +38,18 @@ export const TransactionSheet = () => {
       <SheetContent className="flex flex-col gap-4 w-full max-w-[64rem] sm:max-w-[40rem]">
         <SheetHeading
           title="Transaction Details"
-          onCopy={handleCopy}
-          onOpenExtended={handleOpenExtended}
+          addons={
+            <>
+              <Button size="icon" variant="ghost" asChild>
+                <NextLink href={`/transactions/${transactionData?.hash}`}>
+                  <ExternalLinkIcon size={20} />
+                </NextLink>
+              </Button>
+              <Button size="icon" variant="ghost" onClick={handleCopy}>
+                <LinkIcon size={20} />
+              </Button>
+            </>
+          }
         />
         {transactionLoading ? (
           <SimpleSkeleton />

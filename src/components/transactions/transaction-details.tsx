@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { useMemo } from 'react'
 
 import { FieldGrid } from '@/components/field-grid'
@@ -16,15 +17,36 @@ export const TransactionDetails = ({
     () => [
       {
         label: 'Hash',
-        value: transactionData?.hash,
+        value: (
+          <NextLink href={`/transactions/${transactionData?.hash}`}>
+            {transactionData?.hash}
+          </NextLink>
+        ),
         testId: 'transaction__hash'
       },
       {
+        label: 'Kind',
+        value: transactionData?.kind,
+        testId: 'transaction__side'
+      },
+      {
         label: 'From',
-        value: transactionData?.from,
+        value: (
+          <NextLink href={`/accounts/${transactionData?.from}`}>
+            {transactionData?.from}
+          </NextLink>
+        ),
         testId: 'transaction__from'
       },
-      { label: 'To', value: transactionData?.to, testId: 'transaction__to' },
+      {
+        label: 'To',
+        value: (
+          <NextLink href={`/accounts/${transactionData?.to}`}>
+            {transactionData?.to}
+          </NextLink>
+        ),
+        testId: 'transaction__to'
+      },
       {
         label: 'Amount',
         value: `${formatNumber(

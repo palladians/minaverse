@@ -1,6 +1,8 @@
+import React from 'react'
+
 type Field = {
   label: string
-  value: string
+  value?: React.ReactNode
   testId: string
 }
 
@@ -10,7 +12,7 @@ interface FieldGridProps {
 
 export const FieldGrid = ({ fields }: FieldGridProps) => {
   return (
-    <div className="grid border rounded-lg">
+    <div className="grid border rounded-md">
       {fields.map((field) => (
         <div
           key={field.label}
