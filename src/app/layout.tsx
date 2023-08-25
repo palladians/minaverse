@@ -38,8 +38,9 @@ export default function RootLayout({
         <link rel="icon" href="favicon.svg" />
         <script
           async
-          src="https://umami.sh.palladians.xyz/script.js"
-          data-website-id="e72cea82-2e0f-4429-adb9-2a4bef3d3b13"
+          src="https://ackee.sh.palladians.xyz/tracker.js"
+          data-ackee-server="https://ackee.sh.palladians.xyz"
+          data-ackee-domain-id="a9e7a3ac-8c7c-4f25-91b8-34975a33b9e7"
         />
       </head>
       <body className={inter.className}>
