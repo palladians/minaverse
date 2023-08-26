@@ -42,6 +42,11 @@ export default function RootLayout({
           data-ackee-server="https://ackee.sh.palladians.xyz"
           data-ackee-domain-id="a9e7a3ac-8c7c-4f25-91b8-34975a33b9e7"
         />
+        <meta property="og:image" content="/og.jpg" />
+        <meta property="og:image:alt" content="About Acme" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
       </head>
       <body className={inter.className}>
         <Commands />
