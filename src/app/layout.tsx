@@ -24,7 +24,9 @@ dayjs.extend(timezone)
 export const metadata: Metadata = {
   title: 'Minaverse',
   description:
-    'The truly open Mina Explorer. Get insight into the Mina Protocol.'
+    'The truly open Mina Explorer. Get insight into the Mina Protocol.',
+  manifest: '/manifest.json',
+  themeColor: '#737AF0'
 }
 
 export default function RootLayout({
