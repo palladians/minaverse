@@ -40,7 +40,9 @@ export const AccountTransactions = async ({
       : '100+'
   return (
     <div className="flex flex-col gap-4 mt-4 text-lg">
-      <h2>Transactions ({transactionsCount})</h2>
+      <h2 className="text-xl text-semibold">
+        Transactions ({transactionsCount})
+      </h2>
       <div className="border rounded-md">
         <Table>
           <TableHeader>
