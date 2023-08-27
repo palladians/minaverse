@@ -3,10 +3,8 @@
 import { get as getCookie } from 'es-cookie'
 import { usePathname } from 'next/navigation'
 import { ThemeProvider } from 'next-themes'
-import { Next13ProgressBar } from 'next13-progressbar'
 import React, { ReactNode, useEffect } from 'react'
 
-import { TooltipProvider } from '@/components/ui/tooltip'
 import { Network } from '@/data/api'
 import { useAppStore } from '@/store/app'
 
@@ -31,10 +29,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
   }, [])
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <Next13ProgressBar color="#C873F0" options={{ showSpinner: false }} />
-        {children}
-      </TooltipProvider>
+      {children}
     </ThemeProvider>
   )
 }

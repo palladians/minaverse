@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
+import React, { Suspense } from 'react'
 
 import { QuickStats } from '@/components/dashboard/quick-stats'
 import { SummaryOverview } from '@/components/dashboard/summary-overview'
+import { Skeleton } from '@/components/ui/skeleton'
 import { fetchCoinData } from '@/data/coin'
 
 export const metadata: Metadata = {
@@ -17,7 +19,12 @@ const HomePage = async () => {
           Quick Stats
         </h2>
         <SummaryOverview />
-        <QuickStats prices={coinData.prices} marketCaps={coinData.marketCaps} />
+        <Suspense fallback={<Skeleton className="w-full h-4" />}>
+          <QuickStats
+            prices={coinData.prices}
+            marketCaps={coinData.marketCaps}
+          />
+        </Suspense>
       </div>
     </main>
   )
