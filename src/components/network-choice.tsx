@@ -40,7 +40,7 @@ export const NetworkChoice = () => {
 
   return (
     <Select value={network} onValueChange={handleNetworkChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] h-11">
         <SelectValue placeholder="Select Environment" />
       </SelectTrigger>
       <SelectContent>

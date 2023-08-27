@@ -11,6 +11,7 @@ import React from 'react'
 import { AccountSheet } from '@/components/accounts/account-sheet'
 import { Commands } from '@/components/commands'
 import { Footer } from '@/components/footer'
+import { MobileNavigation } from '@/components/mobile-navigation'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
 import { TransactionSheet } from '@/components/transactions/transaction-sheet'
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   description:
     'The truly open Mina Explorer. Get insight into the Mina Protocol.',
   manifest: '/manifest.json',
-  themeColor: '#737AF0'
+  themeColor: '#1e3a8a'
 }
 
 export default function RootLayout({
@@ -53,12 +54,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <Commands />
         <Providers>
-          <div className="flex flex-col container min-h-screen">
+          <div className="flex flex-col container min-h-screen pb-24 md:pb-0">
             <AccountSheet />
             <TransactionSheet />
             <Navbar />
             <div className="flex flex-1 py-8">{children}</div>
             <Footer />
+            <MobileNavigation />
           </div>
           <Toaster />
         </Providers>

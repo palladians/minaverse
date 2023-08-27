@@ -4,8 +4,14 @@ import { TransactionDetails } from '@/components/transactions/transaction-detail
 import { getNetwork } from '@/data/network'
 import { fetchTransaction } from '@/data/transactions'
 
-export const metadata: Metadata = {
-  title: 'Transaction - Minaverse'
+export const generateMetadata = async ({
+  params
+}: {
+  params: { hash: string }
+}): Promise<Metadata> => {
+  return {
+    title: `${params.hash} - Minaverse`
+  }
 }
 
 const TransactionPage = async ({ params }: { params: { hash: string } }) => {

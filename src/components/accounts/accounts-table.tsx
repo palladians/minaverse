@@ -9,7 +9,6 @@ import React, { FormEvent, useState } from 'react'
 import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -60,25 +59,6 @@ export const AccountsTable = ({
   const { copyValue } = useClipboard()
 
   const columns: ColumnDef<AccountShort>[] = [
-    {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false
-    },
     {
       accessorKey: 'public_key',
       header: 'Public Key',
@@ -205,7 +185,7 @@ export const AccountsTable = ({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
         <div className="flex gap-2 items-center">
           <h1 className="text-2xl" data-testid="accounts__header">
             Accounts
@@ -259,7 +239,7 @@ export const AccountsTable = ({
                       key={header.id}
                       className={cn([
                         'md:auto',
-                        [0, 1, 6].includes(i)
+                        [0, 5].includes(i)
                           ? 'table-cell'
                           : 'hidden md:table-cell'
                       ])}
@@ -287,7 +267,7 @@ export const AccountsTable = ({
                     <TableCell
                       key={cell.id}
                       className={cn([
-                        [0, 1, 6].includes(i)
+                        [0, 5].includes(i)
                           ? 'table-cell'
                           : 'hidden md:table-cell'
                       ])}

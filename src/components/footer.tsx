@@ -15,7 +15,7 @@ import {
 export const Footer = () => {
   const { setTheme } = useTheme()
   return (
-    <div className="flex flex-col md:flex-row justify-between md:items-center border-t py-8 gap-8">
+    <div className="hidden md:flex flex-col md:flex-row justify-between md:items-center border-t py-8 gap-8">
       <div className="flex flex-col gap-4">
         <NextImage
           src="/logo.svg"

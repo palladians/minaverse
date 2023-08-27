@@ -5,8 +5,14 @@ import { AccountTransactions } from '@/components/accounts/account-transactions'
 import { fetchAccount } from '@/data/accounts'
 import { getNetwork } from '@/data/network'
 
-export const metadata: Metadata = {
-  title: 'Account - Minaverse'
+export const generateMetadata = async ({
+  params
+}: {
+  params: { publicKey: string }
+}): Promise<Metadata> => {
+  return {
+    title: `${params.publicKey} - Minaverse`
+  }
 }
 
 const AccountPage = async ({ params }: { params: { publicKey: string } }) => {
