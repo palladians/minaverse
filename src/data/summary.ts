@@ -4,8 +4,8 @@ import { getNetwork } from '@/data/network'
 type Summary = {
   epoch: number
   slot: number
-  circulatingSupply: number
-  totalCurrency: number
+  circulatingSupply: string
+  totalCurrency: string
 }
 
 export const fetchSummary = async () => {

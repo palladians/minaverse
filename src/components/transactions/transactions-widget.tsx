@@ -39,7 +39,7 @@ export const TransactionsWidget = () => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Latest transactions</h2>
-        <Button variant="ghost" asChild>
+        <Button variant="outline" asChild>
           <NextLink href={`/accounts/${publicKey}`}>See All</NextLink>
         </Button>
       </div>

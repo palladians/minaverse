@@ -27,7 +27,9 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
       <Card className="flex flex-col flex-1 gap-4 p-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm">Mina Price</h3>
+            <h3 className="text-sm text-semibold text-muted-foreground">
+              Mina Price
+            </h3>
             <p className="text-xl">{formatCurrency(Number(prices[6].price))}</p>
           </div>
           <Badge variant="outline">
@@ -47,7 +49,9 @@ export const QuickStats = ({ prices, marketCaps }: QuickStatsProps) => {
       <Card className="flex flex-col flex-1 gap-4 p-4">
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm">Mina Market Cap</h3>
+            <h3 className="text-sm text-semibold text-muted-foreground">
+              Mina Market Cap
+            </h3>
             <p className="text-xl">
               {formatCurrencyCompact(Number(marketCaps[6].cap))}
             </p>
