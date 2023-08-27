@@ -22,14 +22,14 @@ export const Footer = () => {
           width={120}
           height={20}
           alt="Logo"
-          className="dark:invert opacity-50"
+          className="dark:invert opacity-75"
         />
-        <p className="text-sm opacity-50">The truly open Mina Explorer.</p>
+        <p className="text-sm opacity-75">The truly open Mina Explorer.</p>
         <a
           href="https://palladians.xyz"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm opacity-50"
+          className="text-sm opacity-75"
         >
           Created and maintained by Palladians.
         </a>
@@ -37,7 +37,7 @@ export const Footer = () => {
           href="https://pallad.xyz"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm opacity-50"
+          className="text-sm opacity-75"
         >
           Need a Mina wallet? Pallad 🦋 is coming soon.
         </a>

@@ -19,7 +19,9 @@ export const FieldGrid = ({ fields }: FieldGridProps) => {
           className="grid grid-cols-5 items-center border-b"
           data-testid={field.testId}
         >
-          <p className="text-right text-sm font-semibold p-2">{field.label}</p>
+          <p className="text-right text-sm font-semibold p-2 text-muted-foreground">
+            {field.label}
+          </p>
           <p className="col-span-4 break-all leading-8 border-l p-2">
             {field.value}
           </p>
