@@ -4,7 +4,7 @@ import { SheetTitle } from '@/components/ui/sheet'
 
 interface SheetHeaderProps {
   title: string
-  addons: React.ReactNode
+  addons?: React.ReactNode
 }
 
 export const SheetHeading = ({ title, addons }: SheetHeaderProps) => {

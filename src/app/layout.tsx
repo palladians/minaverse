@@ -14,6 +14,7 @@ import { Footer } from '@/components/footer'
 import { MobileNavigation } from '@/components/mobile-navigation'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
+import { SettingsSheet } from '@/components/settings/settings-sheet'
 import { TransactionSheet } from '@/components/transactions/transaction-sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Toaster } from '@/components/ui/toaster'
@@ -68,6 +69,9 @@ export default function RootLayout({
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <TransactionSheet />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <SettingsSheet />
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Navbar />

@@ -4,7 +4,6 @@ import NextImage from 'next/image'
 import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { NetworkChoice } from '@/components/network-choice'
 import { Button } from '@/components/ui/button'
 import { Menubar } from '@/components/ui/menubar'
 import { useAppStore } from '@/store/app'
@@ -74,9 +73,6 @@ export const Navbar = () => {
         </Menubar>
       </div>
       <div className="flex items-center justify-end gap-2">
-        <div className="hidden lg:flex">
-          <NetworkChoice />
-        </div>
         <Button
           variant="outline"
           onClick={() => setCommandsOpen(true)}

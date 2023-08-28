@@ -1,19 +1,15 @@
 'use client'
 
-import { GithubIcon, MoonIcon, SunIcon, TwitterIcon } from 'lucide-react'
+import { SettingsIcon } from 'lucide-react'
 import NextImage from 'next/image'
-import { useTheme } from 'next-themes'
 
+import { ServiceLinks } from '@/components/service-links'
+import { Socials } from '@/components/socials'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+import { useAppStore } from '@/store/app'
 
 export const Footer = () => {
-  const { setTheme } = useTheme()
+  const setSettingsOpen = useAppStore((state) => state.setSettingsOpen)
   return (
     <div className="hidden md:flex flex-col md:flex-row justify-between md:items-center border-t py-8 gap-8">
       <div className="flex flex-col gap-4">
@@ -44,80 +40,17 @@ export const Footer = () => {
       </div>
       <div className="flex flex-col items-start md:items-end gap-2">
         <div className="flex gap-2">
-          <Button variant="outline" size="icon" title="Github" asChild>
-            <a
-              href="https://github.com/palladians/minaverse"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <GithubIcon size={20} />
-            </a>
-          </Button>
-          <Button variant="outline" size="icon" title="Twitter" asChild>
-            <a
-              href="https://twitter.com/minaverse_xyz"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <TwitterIcon size={20} />
-            </a>
-          </Button>
-          <Button variant="outline" title="Discord" size="icon">
-            <a
-              href="https://discord.gg/ExzzfTGUnB"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <NextImage
-                src="/discord.svg"
-                alt="Discord"
-                width={20}
-                height={20}
-                className="dark:invert"
-              />
-            </a>
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" title="Theme">
-                <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme('light')}>
-                Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('dark')}>
-                Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('system')}>
-                System
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="flex gap-4">
-          <Button variant="link" className="p-0" asChild>
-            <a
-              href="https://palladians.xyz/privacy"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Privacy Policy
-            </a>
-          </Button>
-          <Button variant="link" className="p-0" asChild>
-            <a
-              href="https://palladians.xyz/terms"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Terms and Conditions
-            </a>
+          <Socials />
+          <Button
+            variant="outline"
+            title="Settings"
+            size="icon"
+            onClick={() => setSettingsOpen(true)}
+          >
+            <SettingsIcon size={20} />
           </Button>
         </div>
+        <ServiceLinks />
       </div>
     </div>
   )

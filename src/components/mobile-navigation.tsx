@@ -42,7 +42,12 @@ export const MobileNavigation = () => {
     }
   ]
   return (
-    <div className="fixed flex md:hidden justify-around bg-background bottom-0 left-0 right-0 px-4 py-2 border-t">
+    <div
+      className="fixed flex md:hidden justify-around bg-background bottom-0 left-0 right-0 px-4 pt-2 border-t"
+      style={{
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 1rem) + 0.75rem)'
+      }}
+    >
       {MENU_ITEMS.map((menuItem, i) => {
         const isActive = menuItem.url === pathname
         return (
@@ -51,7 +56,7 @@ export const MobileNavigation = () => {
             variant="link"
             className={cn([
               'flex flex-col h-auto gap-1 py-1 px-2 justify-center items-center rounded-md decoration-transparent',
-              isActive && 'text-blue-300 bg-blue-950'
+              isActive && 'text-blue-800 dark:text-blue-300'
             ])}
             onClick={menuItem.onClick}
           >
