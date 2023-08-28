@@ -1,6 +1,8 @@
 import { Metadata, NextPage } from 'next'
+import React, { Suspense } from 'react'
 
 import { StakingTable } from '@/components/staking/staking-table'
+import { Skeleton } from '@/components/ui/skeleton'
 import { getNetwork } from '@/data/network'
 import { fetchStaking } from '@/data/staking'
 
@@ -32,13 +34,15 @@ const AccountsPage: NextPage<AccountsPageProps> = async ({ searchParams }) => {
   const pagesCount = Math.ceil(stakingData.recordsTotal / PAGE_LENGTH)
   return (
     <main className="flex-1 flex flex-col">
-      <StakingTable
-        data={pools}
-        poolsCount={stakingData.recordsTotal}
-        currentPage={page}
-        pagesCount={pagesCount}
-        query={search}
-      />
+      <Suspense fallback={<Skeleton className="w-full h-4" />}>
+        <StakingTable
+          data={pools}
+          poolsCount={stakingData.recordsTotal}
+          currentPage={page}
+          pagesCount={pagesCount}
+          query={search}
+        />
+      </Suspense>
     </main>
   )
 }

@@ -36,10 +36,11 @@ export const NetworkChoice = () => {
     router.refresh()
   }
 
-  if (!network) return null
-
   return (
-    <Select value={network} onValueChange={handleNetworkChange}>
+    <Select
+      value={network || Network.MAINNET}
+      onValueChange={handleNetworkChange}
+    >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Environment" />
       </SelectTrigger>
