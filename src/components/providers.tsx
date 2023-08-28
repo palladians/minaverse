@@ -6,6 +6,7 @@ import { ThemeProvider } from 'next-themes'
 import React, { ReactNode, useEffect } from 'react'
 
 import { Network } from '@/data/api'
+import { reportError } from '@/data/error'
 import { useAppStore } from '@/store/app'
 
 const Providers = ({ children }: { children: ReactNode }) => {
@@ -26,6 +27,14 @@ const Providers = ({ children }: { children: ReactNode }) => {
     const persistedNetwork =
       (getCookie('minaverse-network') as Network) || Network.MAINNET
     setNetwork(persistedNetwork)
+  }, [])
+  useEffect(() => {
+    window.addEventListener('unhandledrejection', reportError)
+    window.addEventListener('error', reportError)
+    return () => {
+      window.removeEventListener('unhandledrejection', reportError)
+      window.removeEventListener('error', reportError)
+    }
   }, [])
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
