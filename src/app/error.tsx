@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import { env } from '@/env.mjs'
+import { reportError } from '@/data/error'
 
 export default function Error({
   error,
@@ -12,13 +12,7 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
-    fetch(env.NEXT_PUBLIC_ERROR_REPORTING_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        appId: env.NEXT_PUBLIC_ERROR_REPORTING_APP_ID,
-        stacktrace: JSON.stringify(error, Object.getOwnPropertyNames(error))
-      })
-    })
+    reportError(error)
   }, [error])
 
   return (
