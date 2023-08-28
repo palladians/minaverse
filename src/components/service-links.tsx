@@ -21,6 +21,15 @@ export const ServiceLinks = () => {
           Terms and Conditions
         </a>
       </Button>
+      <Button variant="link" className="p-0" asChild>
+        <a
+          href="https://status.palladians.xyz/status/minaverse"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Service Status
+        </a>
+      </Button>
     </div>
   )
 }
