@@ -11,8 +11,10 @@ import React, { Suspense } from 'react'
 import { AccountSheet } from '@/components/accounts/account-sheet'
 import { Commands } from '@/components/commands'
 import { Footer } from '@/components/footer'
+import { MobileNavigation } from '@/components/mobile-navigation'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
+import { SettingsSheet } from '@/components/settings/settings-sheet'
 import { TransactionSheet } from '@/components/transactions/transaction-sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Toaster } from '@/components/ui/toaster'
@@ -25,7 +27,9 @@ dayjs.extend(timezone)
 export const metadata: Metadata = {
   title: 'Minaverse',
   description:
-    'The truly open Mina Explorer. Get insight into the Mina Protocol.'
+    'The truly open Mina Explorer. Get insight into the Mina Protocol.',
+  manifest: '/manifest.json',
+  themeColor: '#1e3a8a'
 }
 
 export default function RootLayout({
@@ -55,7 +59,7 @@ export default function RootLayout({
         <meta property="og:image:height" content="630" />
       </head>
       <body>
-        <div className="flex flex-col container min-h-screen">
+        <div className="flex flex-col container min-h-screen pb-24 md:pb-0">
           <Providers>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Commands />
@@ -67,11 +71,17 @@ export default function RootLayout({
               <TransactionSheet />
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <SettingsSheet />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Navbar />
             </Suspense>
             <div className="flex flex-1 py-8">{children}</div>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Footer />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <MobileNavigation />
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Toaster />

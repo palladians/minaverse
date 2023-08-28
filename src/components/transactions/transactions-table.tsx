@@ -9,7 +9,6 @@ import React, { FormEvent, useState } from 'react'
 import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -65,25 +64,6 @@ export const TransactionsTable = ({
   const { copyValue } = useClipboard()
 
   const columns: ColumnDef<Transaction>[] = [
-    {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false
-    },
     {
       accessorKey: 'hash',
       header: 'Hash',
@@ -224,7 +204,7 @@ export const TransactionsTable = ({
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-8">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
           <div className="flex gap-2 items-center">
             <h1 className="text-2xl" data-testid="transactions__header">
               Transactions
@@ -278,7 +258,7 @@ export const TransactionsTable = ({
                         key={header.id}
                         className={cn([
                           'md:auto',
-                          [0, 1, 6].includes(i)
+                          [0, 5].includes(i)
                             ? 'table-cell'
                             : 'hidden md:table-cell'
                         ])}
@@ -306,7 +286,7 @@ export const TransactionsTable = ({
                       <TableCell
                         key={cell.id}
                         className={cn([
-                          [0, 1, 6].includes(i)
+                          [0, 5].includes(i)
                             ? 'table-cell'
                             : 'hidden md:table-cell'
                         ])}

@@ -41,7 +41,7 @@ export const NetworkChoice = () => {
       value={network || Network.MAINNET}
       onValueChange={handleNetworkChange}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] h-11">
         <SelectValue placeholder="Select Environment" />
       </SelectTrigger>
       <SelectContent>

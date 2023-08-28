@@ -17,6 +17,7 @@ export const Commands = () => {
   const router = useRouter()
   const commandsOpen = useAppStore((state) => state.commandsOpen)
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
+  const setSettingsOpen = useAppStore((state) => state.setSettingsOpen)
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -61,6 +62,10 @@ export const Commands = () => {
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Staking</span>
+        </CommandItem>
+        <CommandItem onSelect={() => handleSelect(() => setSettingsOpen(true))}>
+          <ChevronRightIcon className="mr-2 h-4 w-4" />
+          <span>Settings</span>
         </CommandItem>
       </CommandList>
     </CommandDialog>
