@@ -27,6 +27,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { Pool } from '@/data/staking'
@@ -169,120 +170,122 @@ export const StakingTable = ({
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
-        <div className="flex gap-2 items-center">
-          <h1 className="text-2xl" data-testid="staking__header">
-            Staking
-          </h1>
-          <p className="text-sm">({formatNumber(poolsCount)})</p>
+    <TooltipProvider>
+      <div className="flex flex-col gap-8">
+        <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
+          <div className="flex gap-2 items-center">
+            <h1 className="text-2xl" data-testid="staking__header">
+              Staking
+            </h1>
+            <p className="text-sm">({formatNumber(poolsCount)})</p>
+          </div>
+          <div className="flex gap-2">
+            <form onSubmit={handleQuerySubmit}>
+              <Input
+                placeholder="Search with public key"
+                defaultValue={innerQuery || ''}
+                onChange={(event) => setInnerQuery(event.target.value)}
+              />
+            </form>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="hidden md:flex">
+                  Columns <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(value)
+                        }
+                      >
+                        {column.id}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <form onSubmit={handleQuerySubmit}>
-            <Input
-              placeholder="Search with public key"
-              defaultValue={innerQuery || ''}
-              onChange={(event) => setInnerQuery(event.target.value)}
-            />
-          </form>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="hidden md:flex">
-                Columns <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header, i) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className={cn([
-                        'md:auto',
-                        [0, 6].includes(i)
-                          ? 'table-cell'
-                          : 'hidden md:table-cell'
-                      ])}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map((cell, i) => (
-                    <TableCell
-                      key={cell.id}
-                      className={cn([
-                        [0, 6].includes(i)
-                          ? 'table-cell'
-                          : 'hidden md:table-cell'
-                      ])}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header, i) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className={cn([
+                          'md:auto',
+                          [0, 6].includes(i)
+                            ? 'table-cell'
+                            : 'hidden md:table-cell'
+                        ])}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    )
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map((cell, i) => (
+                      <TableCell
+                        key={cell.id}
+                        className={cn([
+                          [0, 6].includes(i)
+                            ? 'table-cell'
+                            : 'hidden md:table-cell'
+                        ])}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          pagesCount={pagesCount}
+          resource="staking"
+        />
       </div>
-      <Pagination
-        currentPage={currentPage}
-        pagesCount={pagesCount}
-        resource="staking"
-      />
-    </div>
+    </TooltipProvider>
   )
 }

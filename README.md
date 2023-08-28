@@ -1,5 +1,9 @@
 # Minaverse
 
+<a href="https://minaverse.xyz">
+  <img src="https://github.com/palladians/minaverse/blob/main/logo.png" />
+</a>
+
 Explore the universe of Mina Protocol.
 
 ## Stack
@@ -9,6 +13,19 @@ Explore the universe of Mina Protocol.
 - Playwright
 
 ## Getting Started
+
+### Prerequisite
+
+- NVM
+- PNPM
+
+### Prepare
+
+```bash
+cp .env.example .env # copy env variables
+# Adjust ENV variables in .env
+pnpm i # install dependencies
+```
 
 ### Dev server
 

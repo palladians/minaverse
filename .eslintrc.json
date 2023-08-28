@@ -1,5 +1,5 @@
 {
-  "extends": ["plugin:prettier/recommended", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": ["plugin:prettier/recommended", "eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:@next/next/recommended"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
   "root": true,

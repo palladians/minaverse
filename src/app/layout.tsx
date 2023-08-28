@@ -6,7 +6,7 @@ import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { AccountSheet } from '@/components/accounts/account-sheet'
 import { Commands } from '@/components/commands'
@@ -15,6 +15,7 @@ import { MobileNavigation } from '@/components/mobile-navigation'
 import { Navbar } from '@/components/navbar'
 import Providers from '@/components/providers'
 import { TransactionSheet } from '@/components/transactions/transaction-sheet'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -36,7 +37,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      style={{ colorScheme: 'light' }}
+      className={inter.className}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" href="/favicon.svg" />
         <script
@@ -51,19 +57,33 @@ export default function RootLayout({
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </head>
-      <body className={inter.className}>
-        <Commands />
-        <Providers>
-          <div className="flex flex-col container min-h-screen pb-24 md:pb-0">
-            <AccountSheet />
-            <TransactionSheet />
-            <Navbar />
+      <body>
+        <div className="flex flex-col container min-h-screen pb-24 md:pb-0">
+          <Providers>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <Commands />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <AccountSheet />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <TransactionSheet />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <Navbar />
+            </Suspense>
             <div className="flex flex-1 py-8">{children}</div>
-            <Footer />
-            <MobileNavigation />
-          </div>
-          <Toaster />
-        </Providers>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <Footer />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <MobileNavigation />
+            </Suspense>
+            <Suspense fallback={<Skeleton className="w-full h-4" />}>
+              <Toaster />
+            </Suspense>
+          </Providers>
+        </div>
       </body>
     </html>
   )
