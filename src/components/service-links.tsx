@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 
 export const ServiceLinks = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex items-start flex-col md:flex-row gap-0 md:gap-4">
       <Button variant="link" className="p-0" asChild>
         <a
           href="https://palladians.xyz/privacy"
