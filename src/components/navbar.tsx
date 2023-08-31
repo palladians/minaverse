@@ -13,7 +13,7 @@ export const Navbar = () => {
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
   return (
     <div className="hidden md:flex grid-cols-[1fr,2fr,1fr] gap-2 justify-between items-center py-2">
-      <div className="text-slate-900 dark:text-slate-50">
+      <div className="text-slate-900 dark:text-slate-50 flex-1 inline-flex">
         <NextLink
           href="/"
           className="flex items-center"
@@ -72,7 +72,7 @@ export const Navbar = () => {
           </Button>
         </Menubar>
       </div>
-      <div className="flex items-center justify-end gap-2">
+      <div className="flex items-center justify-end gap-2 flex-1">
         <Button
           variant="outline"
           onClick={() => setCommandsOpen(true)}
