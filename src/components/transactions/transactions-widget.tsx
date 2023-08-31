@@ -42,7 +42,12 @@ export const TransactionsWidget = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Latest transactions</h2>
           <Button variant="outline" asChild>
-            <NextLink href={`/accounts/${publicKey}`}>See All</NextLink>
+            <NextLink
+              href={`/accounts/${publicKey}`}
+              data-testid="accountSheet__seeAllTransactions"
+            >
+              See All
+            </NextLink>
           </Button>
         </div>
         <div className="rounded-md border">

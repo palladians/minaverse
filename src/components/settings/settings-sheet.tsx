@@ -22,7 +22,7 @@ export const SettingsSheet = () => {
         <SheetHeading title="Settings" />
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <h2>Network</h2>
+            <h2 data-testid="settings__header">Network</h2>
             <NetworkChoice />
           </div>
           <div className="flex flex-col gap-2">

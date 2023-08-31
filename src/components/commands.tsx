@@ -41,29 +41,38 @@ export const Commands = () => {
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandItem onSelect={() => handleSelect(() => router.push('/'))}>
+        <CommandItem
+          onSelect={() => handleSelect(() => router.push('/'))}
+          data-testid="commands__dashboard"
+        >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Dashboard</span>
         </CommandItem>
         <CommandItem
           onSelect={() => handleSelect(() => router.push('/accounts'))}
+          data-testid="commands__accounts"
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Accounts</span>
         </CommandItem>
         <CommandItem
           onSelect={() => handleSelect(() => router.push('/transactions'))}
+          data-testid="commands__transactions"
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Transactions</span>
         </CommandItem>
         <CommandItem
           onSelect={() => handleSelect(() => router.push('/staking'))}
+          data-testid="commands__staking"
         >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Staking</span>
         </CommandItem>
-        <CommandItem onSelect={() => handleSelect(() => setSettingsOpen(true))}>
+        <CommandItem
+          onSelect={() => handleSelect(() => setSettingsOpen(true))}
+          data-testid="commands__settings"
+        >
           <ChevronRightIcon className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </CommandItem>
