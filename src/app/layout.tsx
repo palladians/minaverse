@@ -20,6 +20,7 @@ import { SettingsSheet } from '@/components/settings/settings-sheet'
 import { TransactionSheet } from '@/components/transactions/transaction-sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Toaster } from '@/components/ui/toaster'
+import { getNetwork } from '@/data/network'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,6 +40,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const network = getNetwork()
   return (
     <html
       lang="en"
@@ -70,7 +72,7 @@ export default function RootLayout({
               <AccountSheet />
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
-              <TransactionSheet />
+              <TransactionSheet network={network} />
             </Suspense>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <SettingsSheet />
