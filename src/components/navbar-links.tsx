@@ -25,7 +25,7 @@ export const NavbarLinks = ({ network = 'mainnet' }: { network: string }) => {
     {
       label: t('common.staking'),
       url: AppUrls.staking({ network }),
-      testId: 'navigation__transactions'
+      testId: 'navigation__staking'
     }
   ]
   return (
