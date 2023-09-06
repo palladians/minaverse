@@ -22,7 +22,7 @@ export const SettingsSheet = () => {
   return (
     <Sheet open={settingsOpen} onOpenChange={() => setSettingsOpen(false)}>
       <SheetContent className="flex flex-col gap-8 w-full max-w-[64rem] sm:max-w-[40rem]">
-        <SheetHeading title="Settings" />
+        <SheetHeading title={t('common.settings')} />
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
             <h2 data-testid="settings__header">{t('common.network')}</h2>
