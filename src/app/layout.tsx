@@ -1,5 +1,7 @@
 import './globals.css'
 import '@total-typescript/ts-reset'
+import 'dayjs/locale/pl'
+import 'dayjs/locale/tr'
 
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'

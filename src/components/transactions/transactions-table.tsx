@@ -8,6 +8,7 @@ import React, { FormEvent, useState } from 'react'
 
 import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
+import { TableSearch } from '@/components/table-search'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,7 +16,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -31,12 +31,13 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { Transaction } from '@/data/transactions'
-import { env } from '@/env.mjs'
 import { useClipboard } from '@/lib/clipboard'
 import { formatDate } from '@/lib/date'
+import { useTranslation } from '@/lib/i18n/client'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
+import { appUrl, AppUrls } from '@/lib/url'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
@@ -45,14 +46,17 @@ export const TransactionsTable = ({
   transactionsCount,
   currentPage,
   pagesCount,
-  query
+  query,
+  network
 }: {
   data: Transaction[]
   transactionsCount: number
   currentPage: number
   pagesCount: number
   query: string | null
+  network: string
 }) => {
+  const { t } = useTranslation()
   const [innerQuery, setInnerQuery] = useState(query)
   const router = useRouter()
   const setCurrentTransactionHash = useAppStore(
@@ -62,11 +66,12 @@ export const TransactionsTable = ({
     (state) => state.setCurrentAccountPublicKey
   )
   const { copyValue } = useClipboard()
+  const transactionsCountFormatted = `(${formatNumber(transactionsCount)})`
 
   const columns: ColumnDef<Transaction>[] = [
     {
       accessorKey: 'hash',
-      header: 'Hash',
+      header: t('common.hash'),
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -90,7 +95,7 @@ export const TransactionsTable = ({
     },
     {
       accessorKey: 'from',
-      header: 'From',
+      header: t('common.from'),
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -114,7 +119,7 @@ export const TransactionsTable = ({
     },
     {
       accessorKey: 'to',
-      header: 'To',
+      header: t('common.to'),
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -138,16 +143,16 @@ export const TransactionsTable = ({
     },
     {
       accessorKey: 'amount',
-      header: 'Amount',
+      header: t('common.amount'),
       cell: ({ row }) => {
         const amount = Number(row.getValue('amount')) / 1_000_000_000
         const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div>{formatted} MINA</div>
+        return <div>{t('common.minaAmount', { amount: formatted })}</div>
       }
     },
     {
       accessorKey: 'dateTime',
-      header: 'Date',
+      header: t('common.date'),
       cell: ({ row }) => <div>{formatDate(row.getValue('dateTime'))}</div>
     },
     {
@@ -170,7 +175,12 @@ export const TransactionsTable = ({
               data-testid="transactions__openExtended"
               asChild
             >
-              <NextLink href={`/transactions/${row.getValue('hash')}`}>
+              <NextLink
+                href={AppUrls.transaction({
+                  network,
+                  id: row.getValue('hash')
+                })}
+              >
                 <ExternalLinkIcon size={16} />
               </NextLink>
             </Button>
@@ -179,9 +189,9 @@ export const TransactionsTable = ({
               size="icon"
               onClick={() =>
                 copyValue({
-                  value: `${
-                    env.NEXT_PUBLIC_APP_URL
-                  }/transactions/${row.getValue('hash')}`
+                  value: appUrl(
+                    AppUrls.transaction({ network, id: row.getValue('hash') })
+                  )
                 })
               }
               data-testid="transactions__copyLink"
@@ -206,23 +216,25 @@ export const TransactionsTable = ({
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
           <div className="flex gap-2 items-center">
-            <h1 className="text-2xl" data-testid="transactions__header">
-              Transactions
+            <h1
+              className="text-2xl font-semibold"
+              data-testid="transactions__header"
+            >
+              {t('common.transactions')}
             </h1>
-            <p className="text-sm">({formatNumber(transactionsCount)})</p>
+            <p className="text-sm">{transactionsCountFormatted}</p>
           </div>
           <div className="flex gap-2">
-            <form onSubmit={handleQuerySubmit}>
-              <Input
-                placeholder="Search with hash"
-                defaultValue={innerQuery || ''}
-                onChange={(event) => setInnerQuery(event.target.value)}
-              />
-            </form>
+            <TableSearch
+              onSubmit={handleQuerySubmit}
+              placeholder={t('common.searchWithHash')}
+              defaultValue={innerQuery || ''}
+              setValue={setInnerQuery}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="hidden md:flex">
-                  Columns <ChevronDown className="ml-2 h-4 w-4" />
+                  {t('common.columns')} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -305,7 +317,7 @@ export const TransactionsTable = ({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {t('common.noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -316,6 +328,7 @@ export const TransactionsTable = ({
           currentPage={currentPage}
           pagesCount={pagesCount}
           resource="transactions"
+          network={network}
         />
       </div>
     </TooltipProvider>

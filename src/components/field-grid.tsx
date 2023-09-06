@@ -13,9 +13,9 @@ interface FieldGridProps {
 export const FieldGrid = ({ fields }: FieldGridProps) => {
   return (
     <div className="grid border rounded-md">
-      {fields.map((field) => (
+      {fields.map((field, i) => (
         <div
-          key={field.label}
+          key={i}
           className="grid grid-cols-5 items-center border-b"
           data-testid={field.testId}
         >

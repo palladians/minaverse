@@ -2,6 +2,25 @@ import './src/env.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/accounts/:path*',
+        destination: '/mainnet/accounts/:path*',
+        permanent: true,
+      },
+      {
+        source: '/staking/:path*',
+        destination: '/mainnet/staking/:path*',
+        permanent: true,
+      },
+      {
+        source: '/transactions/:path*',
+        destination: '/mainnet/transactions/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async rewrites() {
     return [
       {

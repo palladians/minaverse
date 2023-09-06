@@ -12,6 +12,7 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { Network } from '@/data/api'
+import { useTranslation } from '@/lib/i18n/client'
 import { useAppStore } from '@/store/app'
 
 const NETWORKS = [
@@ -21,18 +22,20 @@ const NETWORKS = [
 ]
 
 export const NetworkChoice = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const network = useAppStore((state) => state.network)
   const setNetwork = useAppStore((state) => state.setNetwork)
   const handleNetworkChange = async (network: string) => {
     setNetwork(network as Network)
-    await fetch('/setNetwork', {
+    await fetch('/api/setNetwork', {
       method: 'PATCH',
       body: JSON.stringify({
         network
       }),
       credentials: 'include'
     })
+    router.push('/')
     router.refresh()
   }
 
@@ -46,7 +49,7 @@ export const NetworkChoice = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Environments</SelectLabel>
+          <SelectLabel>{t('common.environments')}</SelectLabel>
           {NETWORKS.map((network) => (
             <SelectItem key={network.value} value={network.value}>
               {network.label}

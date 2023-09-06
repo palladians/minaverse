@@ -12,6 +12,7 @@ import { useAppStore } from '@/store/app'
 const Providers = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname()
   const setNetwork = useAppStore((state) => state.setNetwork)
+  const setLocale = useAppStore((state) => state.setLocale)
   const setCurrentTransactionHash = useAppStore(
     (state) => state.setCurrentTransactionHash
   )
@@ -27,6 +28,10 @@ const Providers = ({ children }: { children: ReactNode }) => {
     const persistedNetwork =
       (getCookie('minaverse-network') as Network) || Network.MAINNET
     setNetwork(persistedNetwork)
+  }, [])
+  useEffect(() => {
+    const persistedLocale = getCookie('minaverse-locale') || 'en'
+    setLocale(persistedLocale)
   }, [])
   useEffect(() => {
     window.addEventListener('unhandledrejection', reportError)
