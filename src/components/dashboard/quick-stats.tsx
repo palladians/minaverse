@@ -2,7 +2,7 @@ import { MarketCapChart } from '@/components/dashboard/market-cap-chart'
 import { PriceChart } from '@/components/dashboard/price-chart'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
-import { formatCurrency, formatCurrencyCompact } from '@/lib/currency'
+import { formatCurrency } from '@/lib/currency'
 import { getT } from '@/lib/i18n/server'
 
 const ONE_DAY_CHANGE = '1d: '
@@ -12,9 +12,14 @@ const toPercent = (value: number) => `${(value * 100).toFixed(2)}%`
 interface QuickStatsProps {
   prices: Record<string, string | number>[]
   marketCaps: Record<string, string | number>[]
+  locale: string
 }
 
-export const QuickStats = async ({ prices, marketCaps }: QuickStatsProps) => {
+export const QuickStats = async ({
+  prices,
+  marketCaps,
+  locale
+}: QuickStatsProps) => {
   const t = await getT()
   const priceDelta =
     prices[6].price &&
@@ -33,7 +38,11 @@ export const QuickStats = async ({ prices, marketCaps }: QuickStatsProps) => {
               {t('dashboard.minaPrice')}
             </h3>
             <p className="text-xl font-semibold">
-              {formatCurrency(Number(prices[6].price))}
+              {formatCurrency({
+                value: Number(prices[6].price),
+                locale,
+                currency: 'USD'
+              })}
             </p>
           </div>
           <Badge variant="outline">
@@ -42,7 +51,7 @@ export const QuickStats = async ({ prices, marketCaps }: QuickStatsProps) => {
             {toPercent(priceDelta || 0)}
           </Badge>
         </div>
-        <PriceChart prices={prices} />
+        <PriceChart prices={prices} locale={locale} />
       </Card>
       <Card className="flex flex-col flex-1 gap-4 p-4">
         <div className="flex justify-between items-center">
@@ -51,7 +60,12 @@ export const QuickStats = async ({ prices, marketCaps }: QuickStatsProps) => {
               {t('dashboard.minaMarketCap')}
             </h3>
             <p className="text-xl font-semibold">
-              {formatCurrencyCompact(Number(marketCaps[6].cap))}
+              {formatCurrency({
+                value: Number(marketCaps[6].cap),
+                locale,
+                compact: true,
+                currency: 'USD'
+              })}
             </p>
           </div>
           <Badge variant="outline">
@@ -60,7 +74,7 @@ export const QuickStats = async ({ prices, marketCaps }: QuickStatsProps) => {
             {toPercent(capDelta || 0)}
           </Badge>
         </div>
-        <MarketCapChart marketCaps={marketCaps} />
+        <MarketCapChart marketCaps={marketCaps} locale={locale} />
       </Card>
     </div>
   )

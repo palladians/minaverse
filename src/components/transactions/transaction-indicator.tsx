@@ -1,3 +1,5 @@
+'use client'
+
 import { ArrowDownLeftIcon, ArrowUpRightIcon, CoinsIcon } from 'lucide-react'
 
 import {
@@ -5,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip'
+import { useTranslation } from '@/lib/i18n/client'
 
 interface TxSideIndicatorProps {
   kind: string
@@ -15,8 +18,13 @@ export const TransactionIndicator = ({
   kind,
   incoming
 }: TxSideIndicatorProps) => {
+  const { t } = useTranslation()
   const label =
-    kind === 'PAYMENT' ? (incoming ? 'Incoming' : 'Outgoing') : 'Staking'
+    kind === 'PAYMENT'
+      ? incoming
+        ? t('common.incoming')
+        : t('common.outgoing')
+      : t('common.staking')
   return (
     <Tooltip>
       <TooltipTrigger>

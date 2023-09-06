@@ -12,21 +12,14 @@ import {
   SelectValue
 } from '@/components/ui/select'
 import { useTranslation } from '@/lib/i18n/client'
+import { setLocale } from '@/lib/i18n/common'
 import { useAppStore } from '@/store/app'
 
 const useSetLanguage = () => {
   const router = useRouter()
-  const setLocale = useAppStore((state) => state.setLocale)
 
   return async (locale: string) => {
-    setLocale(locale)
-    await fetch('/api/setLocale', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        locale
-      }),
-      credentials: 'include'
-    })
+    await setLocale(locale)
     router.refresh()
   }
 }

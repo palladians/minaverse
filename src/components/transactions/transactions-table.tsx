@@ -1,6 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
+import camelcase from 'camelcase'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -47,7 +48,8 @@ export const TransactionsTable = ({
   currentPage,
   pagesCount,
   query,
-  network
+  network,
+  locale
 }: {
   data: Transaction[]
   transactionsCount: number
@@ -55,6 +57,7 @@ export const TransactionsTable = ({
   pagesCount: number
   query: string | null
   network: string
+  locale: string
 }) => {
   const { t } = useTranslation()
   const [innerQuery, setInnerQuery] = useState(query)
@@ -66,7 +69,10 @@ export const TransactionsTable = ({
     (state) => state.setCurrentAccountPublicKey
   )
   const { copyValue } = useClipboard()
-  const transactionsCountFormatted = `(${formatNumber(transactionsCount)})`
+  const transactionsCountFormatted = `(${formatNumber({
+    value: transactionsCount,
+    locale
+  })})`
 
   const columns: ColumnDef<Transaction>[] = [
     {
@@ -146,14 +152,23 @@ export const TransactionsTable = ({
       header: t('common.amount'),
       cell: ({ row }) => {
         const amount = Number(row.getValue('amount')) / 1_000_000_000
-        const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div>{t('common.minaAmount', { amount: formatted })}</div>
+        return (
+          <div>
+            {t('common.minaAmount', {
+              amount: formatNumber({ value: amount, locale })
+            })}
+          </div>
+        )
       }
     },
     {
       accessorKey: 'dateTime',
       header: t('common.date'),
-      cell: ({ row }) => <div>{formatDate(row.getValue('dateTime'))}</div>
+      cell: ({ row }) => (
+        <div>
+          {locale && formatDate({ date: row.getValue('dateTime'), locale })}
+        </div>
+      )
     },
     {
       accessorKey: 'actions',
@@ -251,7 +266,7 @@ export const TransactionsTable = ({
                           column.toggleVisibility(value)
                         }
                       >
-                        {column.id}
+                        {t(`common.${camelcase(column.id)}`)}
                       </DropdownMenuCheckboxItem>
                     )
                   })}

@@ -5,7 +5,7 @@ import { SimpleSkeleton } from '@/components/simple-skeleton'
 import { TransactionsTable } from '@/components/transactions/transactions-table'
 import { Network } from '@/data/api'
 import { fetchTransactions } from '@/data/transactions'
-import { getT } from '@/lib/i18n/server'
+import { getLocale, getT } from '@/lib/i18n/server'
 import { titleTemplate } from '@/lib/metadata'
 
 const PAGE_LENGTH = 20
@@ -26,6 +26,7 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
   searchParams,
   params
 }) => {
+  const locale = getLocale()
   const page = Number(searchParams.page) || 0
   const start = page * PAGE_LENGTH
   const search = searchParams.search ? String(searchParams.search) : null
@@ -46,6 +47,7 @@ const TransactionsPage: NextPage<TransactionsPageProps> = async ({
           pagesCount={pagesCount}
           query={search}
           network={params.network}
+          locale={locale}
         />
       </Suspense>
     </main>

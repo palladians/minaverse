@@ -1,18 +1,29 @@
 'use client'
 
-import { get as getCookie } from 'es-cookie'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ThemeProvider } from 'next-themes'
 import React, { ReactNode, useEffect } from 'react'
 
 import { Network } from '@/data/api'
 import { reportError } from '@/data/error'
+import { setLocale } from '@/lib/i18n/common'
 import { useAppStore } from '@/store/app'
 
-const Providers = ({ children }: { children: ReactNode }) => {
+const Providers = ({
+  children,
+  locale,
+  network
+}: {
+  children: ReactNode
+  locale: string
+  network: string
+}) => {
+  const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const nextLanguage = searchParams.get('lang')
   const setNetwork = useAppStore((state) => state.setNetwork)
-  const setLocale = useAppStore((state) => state.setLocale)
+  const setStoreLocale = useAppStore((state) => state.setLocale)
   const setCurrentTransactionHash = useAppStore(
     (state) => state.setCurrentTransactionHash
   )
@@ -25,14 +36,11 @@ const Providers = ({ children }: { children: ReactNode }) => {
     setCurrentAccountPublicKey(null)
   }, [pathname])
   useEffect(() => {
-    const persistedNetwork =
-      (getCookie('minaverse-network') as Network) || Network.MAINNET
-    setNetwork(persistedNetwork)
-  }, [])
+    setNetwork(network as Network)
+  }, [network])
   useEffect(() => {
-    const persistedLocale = getCookie('minaverse-locale') || 'en'
-    setLocale(persistedLocale)
-  }, [])
+    setStoreLocale(locale)
+  }, [locale])
   useEffect(() => {
     window.addEventListener('unhandledrejection', reportError)
     window.addEventListener('error', reportError)
@@ -41,6 +49,16 @@ const Providers = ({ children }: { children: ReactNode }) => {
       window.removeEventListener('error', reportError)
     }
   }, [])
+  useEffect(() => {
+    const handleLanguageParam = async () => {
+      if (!nextLanguage) return
+      const correctLang = ['en', 'pl'].includes(nextLanguage)
+      if (!correctLang) return
+      await setLocale(nextLanguage)
+      router.refresh()
+    }
+    handleLanguageParam()
+  }, [nextLanguage])
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       {children}

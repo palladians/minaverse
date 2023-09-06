@@ -1,6 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
+import camelcase from 'camelcase'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -48,7 +49,8 @@ export const StakingTable = ({
   currentPage,
   pagesCount,
   query,
-  network
+  network,
+  locale
 }: {
   data: ExtendedPool[]
   poolsCount: number
@@ -56,6 +58,7 @@ export const StakingTable = ({
   pagesCount: number
   query: string | null
   network: string
+  locale: string
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -64,7 +67,7 @@ export const StakingTable = ({
     (state) => state.setCurrentAccountPublicKey
   )
   const { copyValue } = useClipboard()
-  const poolsCountFormatted = `(${formatNumber(poolsCount)})`
+  const poolsCountFormatted = `(${formatNumber({ value: poolsCount, locale })})`
 
   const columns: ColumnDef<Pool>[] = [
     {
@@ -105,7 +108,7 @@ export const StakingTable = ({
     },
     {
       accessorKey: 'blockChance',
-      header: t('common.chance'),
+      header: t('common.blockChance'),
       cell: ({ row }) => <div>{row.getValue('blockChance')}</div>
     },
     {
@@ -118,8 +121,13 @@ export const StakingTable = ({
       header: t('common.stake'),
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue('stake'))
-        const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div>{t('common.minaAmount', { amount: formatted })}</div>
+        return (
+          <div>
+            {t('common.minaAmount', {
+              amount: formatNumber({ value: amount, locale })
+            })}
+          </div>
+        )
       }
     },
     {
@@ -219,7 +227,7 @@ export const StakingTable = ({
                           column.toggleVisibility(value)
                         }
                       >
-                        {column.id}
+                        {t(`common.${camelcase(column.id)}`)}
                       </DropdownMenuCheckboxItem>
                     )
                   })}

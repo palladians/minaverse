@@ -1,11 +1,6 @@
 import './globals.css'
 import '@total-typescript/ts-reset'
-import 'dayjs/locale/pl'
-import 'dayjs/locale/tr'
 
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import React, { Suspense } from 'react'
@@ -21,11 +16,9 @@ import { TransactionSheet } from '@/components/transactions/transaction-sheet'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Toaster } from '@/components/ui/toaster'
 import { getNetwork } from '@/data/network'
+import { getLocale } from '@/lib/i18n/server'
 
 const inter = Inter({ subsets: ['latin'] })
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
 
 export const metadata: Metadata = {
   title: 'Minaverse',
@@ -41,9 +34,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const network = getNetwork()
+  const locale = getLocale()
   return (
     <html
-      lang="en"
+      lang={locale}
       style={{ colorScheme: 'light' }}
       className={inter.className}
       suppressHydrationWarning
@@ -64,7 +58,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="flex flex-col container min-h-screen pb-24 md:pb-0">
-          <Providers>
+          <Providers locale={locale} network={network}>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Commands />
             </Suspense>

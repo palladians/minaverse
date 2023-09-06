@@ -25,6 +25,7 @@ export const AccountSheet = () => {
     (state) => state.setCurrentAccountPublicKey
   )
   const network = useAppStore((state) => state.network) || 'mainnet'
+  const locale = useAppStore((state) => state.locale) || 'en'
   const { copyValue } = useClipboard()
   const { data: accountData, isLoading: accountLoading } = useAccountDetails({
     publicKey: currentAccountPublicKey
@@ -67,7 +68,11 @@ export const AccountSheet = () => {
           <SimpleSkeleton />
         ) : (
           accountData && (
-            <AccountDetails accountData={accountData} network={network} />
+            <AccountDetails
+              accountData={accountData}
+              network={network}
+              locale={locale}
+            />
           )
         )}
         <TransactionsWidget network={network} />

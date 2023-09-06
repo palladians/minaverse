@@ -3,12 +3,16 @@ import { AlertTriangleIcon } from 'lucide-react'
 
 import { Card } from '@/components/ui/card'
 import { fetchSummary } from '@/data/summary'
-import { formatCurrencyCompact } from '@/lib/currency'
+import { formatCurrency } from '@/lib/currency'
 import { getT } from '@/lib/i18n/server'
 
 const OF_7140 = '/7140'
 
-export const SummaryOverview = async () => {
+interface SummaryOverviewProps {
+  locale: string
+}
+
+export const SummaryOverview = async ({ locale }: SummaryOverviewProps) => {
   const t = await getT()
   let fetchingError = false
   let summaryData
@@ -37,11 +41,21 @@ export const SummaryOverview = async () => {
     },
     {
       label: t('dashboard.circulatingSupply'),
-      value: formatCurrencyCompact(Number(summaryData?.circulatingSupply) || 0)
+      value: formatCurrency({
+        value: Number(summaryData?.circulatingSupply) || 0,
+        locale,
+        currency: 'USD',
+        compact: true
+      })
     },
     {
       label: t('dashboard.totalCurrency'),
-      value: formatCurrencyCompact(Number(summaryData?.totalCurrency) || 0)
+      value: formatCurrency({
+        value: Number(summaryData?.totalCurrency) || 0,
+        locale,
+        compact: true,
+        currency: 'USD'
+      })
     }
   ]
   return (

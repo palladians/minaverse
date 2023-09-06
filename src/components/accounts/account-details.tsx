@@ -11,11 +11,13 @@ import { AppUrls } from '@/lib/url'
 interface AccountDetailsProps {
   accountData: ProxyAccount
   network: string
+  locale: string
 }
 
 export const AccountDetails = ({
   accountData,
-  network
+  network,
+  locale
 }: AccountDetailsProps) => {
   const { t } = useTranslation()
   const fields = [
@@ -32,9 +34,10 @@ export const AccountDetails = ({
     },
     {
       label: t('common.balance'),
-      value: `${formatNumber(
-        Number(accountData?.balance.total) / 1_000_000_000
-      )} MINA`,
+      value: `${formatNumber({
+        value: Number(accountData?.balance.total) / 1_000_000_000,
+        locale
+      })} MINA`,
       testId: 'account__balance'
     },
     {

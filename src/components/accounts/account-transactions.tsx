@@ -21,7 +21,7 @@ import {
 import { fetchAccountTransactions } from '@/data/accounts'
 import { getNetwork } from '@/data/network'
 import { formatDate } from '@/lib/date'
-import { getT } from '@/lib/i18n/server'
+import { getLocale, getT } from '@/lib/i18n/server'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { AppUrls } from '@/lib/url'
@@ -33,6 +33,7 @@ export const AccountTransactions = async ({
 }) => {
   const t = await getT()
   const network = getNetwork()
+  const locale = getLocale()
   const accountTransactions = await fetchAccountTransactions({
     publicKey,
     limit: 100,
@@ -149,11 +150,14 @@ export const AccountTransactions = async ({
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
                     {t('common.minaAmount', {
-                      amount: formatNumber(Number(tx.amount) / 1_000_000_000)
+                      amount: formatNumber({
+                        value: Number(tx.amount) / 1_000_000_000,
+                        locale
+                      })
                     })}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatDate(tx.dateTime)}
+                    {formatDate({ date: tx.dateTime, locale })}
                   </TableCell>
                 </TableRow>
               ))}

@@ -4,7 +4,7 @@ import { AccountDetails } from '@/components/accounts/account-details'
 import { AccountTransactions } from '@/components/accounts/account-transactions'
 import { fetchAccount } from '@/data/accounts'
 import { Network } from '@/data/api'
-import { getT } from '@/lib/i18n/server'
+import { getLocale, getT } from '@/lib/i18n/server'
 
 export const generateMetadata = async ({
   params
@@ -22,6 +22,7 @@ const AccountPage = async ({
   params: { publicKey: string; network: string }
 }) => {
   const t = await getT()
+  const locale = getLocale()
   const accountData = await fetchAccount({
     publicKey: params.publicKey,
     network: params.network as Network
@@ -29,7 +30,11 @@ const AccountPage = async ({
   return (
     <div className="flex flex-col gap-4 flex-1">
       <h1 className="text-2xl">{t('accounts.accountOverview')}</h1>
-      <AccountDetails accountData={accountData} network={params.network} />
+      <AccountDetails
+        accountData={accountData}
+        network={params.network}
+        locale={locale}
+      />
       <AccountTransactions publicKey={params.publicKey} />
     </div>
   )

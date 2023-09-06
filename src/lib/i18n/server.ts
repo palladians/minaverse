@@ -5,12 +5,12 @@ import { I18n } from '@/lib/i18n/types'
 import { appUrl } from '@/lib/url'
 
 export const getLocale = () => {
-  return cookies().get('minaverse-locale')?.value
+  return cookies().get('minaverse-locale')?.value || 'en'
 }
 
 // For React Server Components
 export const getTranslation = async () => {
-  const locale = getLocale() || 'en'
+  const locale = getLocale()
   const request = await fetch(appUrl(`/api/i18n/${locale}`), {
     credentials: 'include'
   })

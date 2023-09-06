@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const HomePage = async () => {
   const t = await getT()
-  const locale = getLocale() || 'en'
+  const locale = getLocale()
   const coinData = await fetchCoinData({ locale })
   return (
     <main className="flex-1 flex flex-col">
@@ -20,8 +20,12 @@ const HomePage = async () => {
         <h2 className="text-2xl font-semibold" data-testid="dashboard__header">
           {t('dashboard.header')}
         </h2>
-        <SummaryOverview />
-        <QuickStats prices={coinData.prices} marketCaps={coinData.marketCaps} />
+        <SummaryOverview locale={locale} />
+        <QuickStats
+          prices={coinData.prices}
+          marketCaps={coinData.marketCaps}
+          locale={locale}
+        />
       </div>
     </main>
   )

@@ -31,6 +31,7 @@ import { useAppStore } from '@/store/app'
 export const TransactionsWidget = ({ network }: { network: string }) => {
   const { t } = useTranslation()
   const publicKey = useAppStore((state) => state.currentAccountPublicKey)
+  const locale = useAppStore((state) => state.locale) || 'en'
   const { data: transactionsData, isLoading: transactionsLoading } =
     useAccountTransactions({
       publicKey,
@@ -101,11 +102,14 @@ export const TransactionsWidget = ({ network }: { network: string }) => {
                   </TableCell>
                   <TableCell>
                     {t('common.minaAmount', {
-                      amount: formatNumber(transaction.amount / 1_000_000_000)
+                      amount: formatNumber({
+                        value: transaction.amount / 1_000_000_000,
+                        locale
+                      })
                     })}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatDate(transaction.dateTime)}
+                    {formatDate({ date: transaction.dateTime, locale })}
                   </TableCell>
                 </TableRow>
               ))}

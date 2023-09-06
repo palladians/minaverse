@@ -27,6 +27,7 @@ export const localeSchema = z.object({
     to: z.string(),
     amount: z.string(),
     date: z.string(),
+    dateTime: z.string(),
     mina: z.string(),
     columns: z.string(),
     language: z.string(),
@@ -49,12 +50,15 @@ export const localeSchema = z.object({
     searchWithHash: z.string(),
     name: z.string(),
     delegates: z.string(),
-    chance: z.string(),
+    blockChance: z.string(),
     percentOfStake: z.string(),
     stake: z.string(),
     kind: z.string(),
     valueCopied: z.string(),
-    languages: z.string()
+    languages: z.string(),
+    actions: z.string(),
+    incoming: z.string(),
+    outgoing: z.string()
   }),
   accounts: z.object({
     accountOverview: z.string(),

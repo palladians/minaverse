@@ -8,6 +8,7 @@ import { formatDate } from '@/lib/date'
 import { useTranslation } from '@/lib/i18n/client'
 import { formatNumber } from '@/lib/number'
 import { AppUrls } from '@/lib/url'
+import { useAppStore } from '@/store/app'
 
 interface TransactionDetailsProps {
   transactionData: GraphqlTransaction
@@ -19,6 +20,7 @@ export const TransactionDetails = ({
   network
 }: TransactionDetailsProps) => {
   const { t } = useTranslation()
+  const locale = useAppStore((state) => state.locale) || 'en'
   const fields = [
     {
       label: t('common.hash'),
@@ -58,14 +60,18 @@ export const TransactionDetails = ({
     },
     {
       label: t('common.amount'),
-      value: `${formatNumber(
-        Number(transactionData?.amount) / 1_000_000_000
-      )} MINA`,
+      value: `${formatNumber({
+        value: Number(transactionData?.amount) / 1_000_000_000,
+        locale
+      })} MINA`,
       testId: 'transaction__amount'
     },
     {
       label: t('common.date'),
-      value: transactionData?.dateTime && formatDate(transactionData.dateTime),
+      value:
+        transactionData?.dateTime &&
+        locale &&
+        formatDate({ date: transactionData.dateTime, locale }),
       testId: 'transaction__date'
     }
   ]

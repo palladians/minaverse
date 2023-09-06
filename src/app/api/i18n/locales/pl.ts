@@ -27,6 +27,7 @@ const pl: Dictionary = {
     to: 'Do',
     amount: 'Kwota',
     date: 'Data',
+    dateTime: 'Data',
     mina: 'MINA',
     columns: 'Kolumny',
     language: 'Język',
@@ -49,12 +50,15 @@ const pl: Dictionary = {
     searchWithHash: 'Wyszukaj przez hash',
     name: 'Nazwa',
     delegates: 'Delegujący',
-    chance: 'Szansa',
+    blockChance: 'Szansa',
     percentOfStake: 'Część stawki',
     stake: 'Stawka',
     kind: 'Rodzaj',
     valueCopied: 'Wartość skopiowana do schowka.',
-    languages: 'Języki'
+    languages: 'Języki',
+    actions: 'Akcje',
+    incoming: 'Przychodzące',
+    outgoing: 'Wychodzące'
   },
   accounts: {
     accountOverview: 'Przegląd konta',

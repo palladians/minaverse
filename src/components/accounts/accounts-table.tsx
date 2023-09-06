@@ -1,6 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
+import camelcase from 'camelcase'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -46,7 +47,8 @@ export const AccountsTable = ({
   currentPage,
   pagesCount,
   query,
-  network
+  network,
+  locale
 }: {
   data: AccountShort[]
   accountsCount: number
@@ -54,6 +56,7 @@ export const AccountsTable = ({
   pagesCount: number
   query: string | null
   network: string
+  locale: string
 }) => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -62,7 +65,7 @@ export const AccountsTable = ({
     (state) => state.setCurrentAccountPublicKey
   )
   const { copyValue } = useClipboard()
-  const formattedCount = `(${formatNumber(accountsCount)})`
+  const formattedCount = `(${formatNumber({ value: accountsCount, locale })})`
 
   const columns: ColumnDef<AccountShort>[] = [
     {
@@ -132,8 +135,13 @@ export const AccountsTable = ({
       header: t('common.balance'),
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue('balance'))
-        const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div>{t('common.minaAmount', { amount: formatted })}</div>
+        return (
+          <div>
+            {t('common.minaAmount', {
+              amount: formatNumber({ value: amount, locale })
+            })}
+          </div>
+        )
       }
     },
     {
@@ -234,7 +242,7 @@ export const AccountsTable = ({
                           column.toggleVisibility(value)
                         }
                       >
-                        {column.id}
+                        {t(`common.${camelcase(column.id)}`)}
                       </DropdownMenuCheckboxItem>
                     )
                   })}

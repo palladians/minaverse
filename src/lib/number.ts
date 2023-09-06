@@ -1,5 +1,22 @@
-export const formatNumber = (value: number) =>
-  Intl.NumberFormat('us').format(value).toString()
+type FormatProps = {
+  value: number
+  locale: string
+  style?: string
+  currency?: string
+  compact?: boolean
+}
 
-export const formatNumberCompact = (value: number) =>
-  Intl.NumberFormat('us', { notation: 'compact' }).format(value).toString()
+export const formatNumber = ({
+  value,
+  locale,
+  style = 'decimal',
+  currency = 'usd',
+  compact = false
+}: FormatProps) =>
+  Intl.NumberFormat(locale, {
+    style,
+    currency,
+    notation: compact ? 'compact' : 'standard'
+  })
+    .format(value)
+    .toString()
