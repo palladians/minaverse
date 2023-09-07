@@ -123,7 +123,13 @@ export const AccountsTable = ({
     {
       accessorKey: 'username',
       header: t('common.username'),
-      cell: ({ row }) => <div>{row.getValue('username')}</div>
+      cell: ({ row }) => {
+        const username =
+          row.getValue('username') === 'Unknown'
+            ? t('common.unknown')
+            : String(row.getValue('username'))
+        return <div>{username}</div>
+      }
     },
     {
       accessorKey: 'nonce',
