@@ -1,4 +1,4 @@
-name: Minaverse CI
+name: Minaverse Integration
 on:
   push:
     branches: [main]
@@ -28,7 +28,7 @@ jobs:
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps chromium
     - name: Run Playwright tests
-      run: pnpm test:e2e
+      run: pnpm test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
