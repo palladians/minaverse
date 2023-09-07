@@ -52,7 +52,7 @@ const Providers = ({
   useEffect(() => {
     const handleLanguageParam = async () => {
       if (!nextLanguage) return
-      const correctLang = ['en', 'pl'].includes(nextLanguage)
+      const correctLang = ['en', 'pl', 'tr'].includes(nextLanguage)
       if (!correctLang) return
       await setLocale(nextLanguage)
       router.refresh()
