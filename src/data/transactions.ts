@@ -1,5 +1,5 @@
 import { ExplorerUrl, Network } from '@/data/api'
-import { env } from '@/env.mjs'
+import { appUrl } from '@/lib/url'
 
 export type Transaction = {
   amount: number
@@ -103,10 +103,9 @@ export const fetchTransaction = async ({
   hash,
   network
 }: FetchTransactionProps) => {
-  const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/transaction/${hash}`,
-    { headers: { 'minaverse-network': network } }
-  )
+  const request = await fetch(appUrl(`/api/transaction/${hash}`), {
+    headers: { 'minaverse-network': network }
+  })
   const response = (await request.json()) as TransactionResponse
   return response.transaction
 }

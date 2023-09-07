@@ -3,22 +3,20 @@
 import { useEffect } from 'react'
 
 import { reportError } from '@/data/error'
+import { useTranslation } from '@/lib/i18n/client'
 
-export default function Error({
-  error,
-  reset
-}: {
-  error: Error
-  reset: () => void
-}) {
+const Error = ({ error, reset }: { error: Error; reset: () => void }) => {
+  const { t } = useTranslation()
   useEffect(() => {
     reportError(error)
   }, [error])
 
   return (
     <div>
-      <h2 className="text-2xl text-semibold">Something went wrong!</h2>
-      <button onClick={() => reset()}>Try again</button>
+      <h2 className="text-2xl font-semibold">{t('somethingWentWrong')}</h2>
+      <button onClick={() => reset()}>{t('tryAgain')}</button>
     </div>
   )
 }
+
+export default Error

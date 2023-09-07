@@ -1,12 +1,13 @@
 {
   "extends": ["plugin:prettier/recommended", "eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:@next/next/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
+  "plugins": ["@typescript-eslint", "simple-import-sort", "import", "react"],
   "root": true,
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "@typescript-eslint/no-unused-vars": "error",
-    "import/no-extraneous-dependencies": "error"
+    "import/no-extraneous-dependencies": "error",
+    "react/jsx-no-literals": [2, {"noStrings": true, "ignoreProps":  true}]
   }
 }

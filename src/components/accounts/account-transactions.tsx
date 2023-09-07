@@ -21,15 +21,19 @@ import {
 import { fetchAccountTransactions } from '@/data/accounts'
 import { getNetwork } from '@/data/network'
 import { formatDate } from '@/lib/date'
+import { getLocale, getT } from '@/lib/i18n/server'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
+import { AppUrls } from '@/lib/url'
 
 export const AccountTransactions = async ({
   publicKey
 }: {
   publicKey: string
 }) => {
+  const t = await getT()
   const network = getNetwork()
+  const locale = getLocale()
   const accountTransactions = await fetchAccountTransactions({
     publicKey,
     limit: 100,
@@ -42,19 +46,25 @@ export const AccountTransactions = async ({
   return (
     <TooltipProvider>
       <div className="flex flex-col gap-4 mt-4 text-lg">
-        <h2 className="text-xl text-semibold">
-          Transactions ({transactionsCount})
+        <h2 className="text-xl font-semibold">
+          {t('transactions.transactionsCount', { count: transactionsCount })}
         </h2>
         <div className="border rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead />
-                <TableHead>Hash</TableHead>
-                <TableHead className="hidden md:table-cell">From</TableHead>
-                <TableHead className="hidden md:table-cell">To</TableHead>
-                <TableHead className="hidden md:table-cell">Amount</TableHead>
-                <TableHead className="text-right">Date</TableHead>
+                <TableHead>{t('common.hash')}</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  {t('common.from')}
+                </TableHead>
+                <TableHead className="hidden md:table-cell">
+                  {t('common.to')}
+                </TableHead>
+                <TableHead className="hidden md:table-cell">
+                  {t('common.amount')}
+                </TableHead>
+                <TableHead className="text-right">{t('common.date')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -74,7 +84,9 @@ export const AccountTransactions = async ({
                           className="capitalize p-0 h-auto"
                           asChild
                         >
-                          <NextLink href={`/transactions/${tx.hash}`}>
+                          <NextLink
+                            href={AppUrls.transaction({ network, id: tx.hash })}
+                          >
                             {truncateString({
                               value: tx.hash,
                               firstCharCount: 7,
@@ -96,7 +108,9 @@ export const AccountTransactions = async ({
                           className="capitalize p-0 h-auto"
                           asChild
                         >
-                          <NextLink href={`/accounts/${tx.from}`}>
+                          <NextLink
+                            href={AppUrls.account({ network, id: tx.from })}
+                          >
                             {truncateString({
                               value: tx.from,
                               firstCharCount: 7,
@@ -118,7 +132,9 @@ export const AccountTransactions = async ({
                           className="capitalize p-0 h-auto"
                           asChild
                         >
-                          <NextLink href={`/accounts/${tx.to}`}>
+                          <NextLink
+                            href={AppUrls.account({ network, id: tx.to })}
+                          >
                             {truncateString({
                               value: tx.to,
                               firstCharCount: 7,
@@ -133,10 +149,15 @@ export const AccountTransactions = async ({
                     </Tooltip>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {formatNumber(Number(tx.amount) / 1_000_000_000)} MINA
+                    {t('common.minaAmount', {
+                      amount: formatNumber({
+                        value: Number(tx.amount) / 1_000_000_000,
+                        locale
+                      })
+                    })}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatDate(tx.dateTime)}
+                    {formatDate({ date: tx.dateTime, locale })}
                   </TableCell>
                 </TableRow>
               ))}

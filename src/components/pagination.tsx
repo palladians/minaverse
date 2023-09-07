@@ -6,16 +6,20 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
+const FIRST_PAGE = '1'
+
 interface PaginationProps {
   currentPage: number
   pagesCount: number
   resource: string
+  network: string
 }
 
 export const Pagination = ({
   currentPage,
   pagesCount,
-  resource
+  resource,
+  network
 }: PaginationProps) => {
   const router = useRouter()
   return (
@@ -25,10 +29,12 @@ export const Pagination = ({
         size="sm"
         asChild
       >
-        <NextLink href={`/${resource}?page=0`}>1</NextLink>
+        <NextLink href={`/${network}/${resource}?page=0`}>
+          {FIRST_PAGE}
+        </NextLink>
       </Button>
       <Button variant="outline" size="sm" asChild>
-        <NextLink href={`/${resource}?page=${currentPage - 1}`}>
+        <NextLink href={`/${network}/${resource}?page=${currentPage - 1}`}>
           <ArrowLeftIcon size={16} />
         </NextLink>
       </Button>
@@ -37,11 +43,11 @@ export const Pagination = ({
         defaultValue={currentPage + 1}
         onBlur={(event) => {
           const nextPage = Number(event.target.value)
-          router.push(`/${resource}?page=${nextPage - 1}`)
+          router.push(`/${network}/${resource}?page=${nextPage - 1}`)
         }}
       />
       <Button variant="outline" size="sm" asChild>
-        <NextLink href={`/${resource}?page=${currentPage + 1}`}>
+        <NextLink href={`/${network}/${resource}?page=${currentPage + 1}`}>
           <ArrowRightIcon size={16} />
         </NextLink>
       </Button>
@@ -50,7 +56,7 @@ export const Pagination = ({
         variant={currentPage === pagesCount - 1 ? 'secondary' : 'outline'}
         asChild
       >
-        <NextLink href={`/${resource}?page=${pagesCount - 1}`}>
+        <NextLink href={`/${network}/${resource}?page=${pagesCount - 1}`}>
           {pagesCount}
         </NextLink>
       </Button>

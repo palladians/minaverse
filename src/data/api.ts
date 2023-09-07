@@ -1,4 +1,4 @@
-import { env } from '@/env.mjs'
+import { appUrl } from '@/lib/url'
 
 export enum Network {
   MAINNET = 'mainnet',
@@ -7,25 +7,25 @@ export enum Network {
 }
 
 export const ExplorerUrl = {
-  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/me`,
-  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/me`,
-  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/me`
+  [Network.MAINNET]: appUrl(`/me`),
+  [Network.DEVNET]: appUrl(`/devnet/me`),
+  [Network.BERKELEY]: appUrl(`/berkeley/me`)
 }
 
 export const ExplorerApiUrl = {
-  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/me/api`,
-  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/me/api`,
-  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/me/api`
+  [Network.MAINNET]: appUrl(`/me/api`),
+  [Network.DEVNET]: appUrl(`/devnet/me/api`),
+  [Network.BERKELEY]: appUrl(`/berkeley/me/api`)
 }
 
 export const GqlUrl = {
-  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/gql`,
-  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/gql`,
-  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/gql`
+  [Network.MAINNET]: appUrl(`/gql`),
+  [Network.DEVNET]: appUrl(`/devnet/gql`),
+  [Network.BERKELEY]: appUrl(`/berkeley/gql`)
 }
 
 export const ProxyUrl = {
-  [Network.MAINNET]: `${env.NEXT_PUBLIC_APP_URL}/proxy`,
-  [Network.DEVNET]: `${env.NEXT_PUBLIC_APP_URL}/devnet/proxy`,
-  [Network.BERKELEY]: `${env.NEXT_PUBLIC_APP_URL}/berkeley/proxy`
+  [Network.MAINNET]: appUrl(`/proxy`),
+  [Network.DEVNET]: appUrl(`/devnet/proxy`),
+  [Network.BERKELEY]: appUrl(`/berkeley/proxy`)
 }

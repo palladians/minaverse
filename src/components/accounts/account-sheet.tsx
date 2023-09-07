@@ -11,17 +11,21 @@ import { TransactionsWidget } from '@/components/transactions/transactions-widge
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useAccountDetails } from '@/data/hooks'
-import { env } from '@/env.mjs'
 import { useClipboard } from '@/lib/clipboard'
+import { useTranslation } from '@/lib/i18n/client'
+import { appUrl, AppUrls } from '@/lib/url'
 import { useAppStore } from '@/store/app'
 
 export const AccountSheet = () => {
+  const { t } = useTranslation()
   const currentAccountPublicKey = useAppStore(
     (state) => state.currentAccountPublicKey
   )
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
+  const network = useAppStore((state) => state.network) || 'mainnet'
+  const locale = useAppStore((state) => state.locale) || 'en'
   const { copyValue } = useClipboard()
   const { data: accountData, isLoading: accountLoading } = useAccountDetails({
     publicKey: currentAccountPublicKey
@@ -29,7 +33,7 @@ export const AccountSheet = () => {
   const handleCopy = () => {
     if (!accountData?.publicKey) return
     return copyValue({
-      value: `${env.NEXT_PUBLIC_APP_URL}/accounts/${accountData.publicKey}`
+      value: appUrl(AppUrls.account({ network, id: accountData.publicKey }))
     })
   }
   return (
@@ -39,13 +43,20 @@ export const AccountSheet = () => {
     >
       <SheetContent className="flex flex-col gap-8 w-full max-w-[64rem] sm:max-w-[40rem]">
         <SheetHeading
-          title="Account Overview"
+          title={t('accounts.accountOverview')}
           addons={
             <>
               <Button size="icon" variant="ghost" asChild>
-                <NextLink href={`/accounts/${accountData?.publicKey}`}>
-                  <ExternalLinkIcon size={20} />
-                </NextLink>
+                {accountData?.publicKey && (
+                  <NextLink
+                    href={AppUrls.account({
+                      network,
+                      id: accountData.publicKey
+                    })}
+                  >
+                    <ExternalLinkIcon size={20} />
+                  </NextLink>
+                )}
               </Button>
               <Button size="icon" variant="ghost" onClick={handleCopy}>
                 <LinkIcon size={20} />
@@ -56,9 +67,15 @@ export const AccountSheet = () => {
         {accountLoading ? (
           <SimpleSkeleton />
         ) : (
-          accountData && <AccountDetails accountData={accountData} />
+          accountData && (
+            <AccountDetails
+              accountData={accountData}
+              network={network}
+              locale={locale}
+            />
+          )
         )}
-        <TransactionsWidget />
+        <TransactionsWidget network={network} />
       </SheetContent>
     </Sheet>
   )

@@ -1,6 +1,7 @@
 'use client'
 
 import { ColumnDef, flexRender } from '@tanstack/react-table'
+import camelcase from 'camelcase'
 import { ChevronDown, ExternalLinkIcon, EyeIcon, LinkIcon } from 'lucide-react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -8,6 +9,7 @@ import React, { FormEvent, useState } from 'react'
 
 import { CopyValue } from '@/components/copy-value'
 import { Pagination } from '@/components/pagination'
+import { TableSearch } from '@/components/table-search'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,7 +17,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -31,11 +32,12 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip'
 import { Pool } from '@/data/staking'
-import { env } from '@/env.mjs'
 import { useClipboard } from '@/lib/clipboard'
+import { useTranslation } from '@/lib/i18n/client'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
 import { useCommonTable } from '@/lib/table'
+import { appUrl, AppUrls } from '@/lib/url'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
@@ -46,25 +48,31 @@ export const StakingTable = ({
   poolsCount,
   currentPage,
   pagesCount,
-  query
+  query,
+  network,
+  locale
 }: {
   data: ExtendedPool[]
   poolsCount: number
   currentPage: number
   pagesCount: number
   query: string | null
+  network: string
+  locale: string
 }) => {
+  const { t } = useTranslation()
   const router = useRouter()
   const [innerQuery, setInnerQuery] = useState(query)
   const setCurrentAccountPublicKey = useAppStore(
     (state) => state.setCurrentAccountPublicKey
   )
   const { copyValue } = useClipboard()
+  const poolsCountFormatted = `(${formatNumber({ value: poolsCount, locale })})`
 
   const columns: ColumnDef<Pool>[] = [
     {
       accessorKey: 'publicKey',
-      header: 'Delegate',
+      header: t('common.delegate'),
       cell: ({ row }) => (
         <Tooltip>
           <TooltipTrigger asChild>
@@ -90,31 +98,36 @@ export const StakingTable = ({
     },
     {
       accessorKey: 'name',
-      header: 'Name',
+      header: t('common.name'),
       cell: ({ row }) => <div>{row.getValue('name')}</div>
     },
     {
       accessorKey: 'delegates',
-      header: 'Delegates',
+      header: t('common.delegates'),
       cell: ({ row }) => <div>{row.getValue('delegates')}</div>
     },
     {
       accessorKey: 'blockChance',
-      header: 'Chance',
+      header: t('common.blockChance'),
       cell: ({ row }) => <div>{row.getValue('blockChance')}</div>
     },
     {
       accessorKey: 'percentOfStake',
-      header: '% of stake',
+      header: t('common.percentOfStake'),
       cell: ({ row }) => <div>{row.getValue('percentOfStake')}</div>
     },
     {
       accessorKey: 'stake',
-      header: 'Stake',
+      header: t('common.stake'),
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue('stake'))
-        const formatted = new Intl.NumberFormat('en-US').format(amount)
-        return <div>{formatted} MINA</div>
+        return (
+          <div>
+            {t('common.minaAmount', {
+              amount: formatNumber({ value: amount, locale })
+            })}
+          </div>
+        )
       }
     },
     {
@@ -138,7 +151,12 @@ export const StakingTable = ({
               size="icon"
               data-testid="staking__openExtended"
             >
-              <NextLink href={`/accounts/${row.getValue('publicKey')}`}>
+              <NextLink
+                href={AppUrls.account({
+                  network,
+                  id: row.getValue('publicKey')
+                })}
+              >
                 <ExternalLinkIcon size={16} />
               </NextLink>
             </Button>
@@ -147,9 +165,9 @@ export const StakingTable = ({
               size="icon"
               onClick={() =>
                 copyValue({
-                  value: `${env.NEXT_PUBLIC_APP_URL}/accounts/${row.getValue(
-                    'publicKey'
-                  )}`
+                  value: appUrl(
+                    AppUrls.account({ network, id: row.getValue('publicKey') })
+                  )
                 })
               }
               data-testid="staking__copyLink"
@@ -174,23 +192,25 @@ export const StakingTable = ({
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
           <div className="flex gap-2 items-center">
-            <h1 className="text-2xl" data-testid="staking__header">
-              Staking
+            <h1
+              className="text-2xl font-semibold"
+              data-testid="staking__header"
+            >
+              {t('common.staking')}
             </h1>
-            <p className="text-sm">({formatNumber(poolsCount)})</p>
+            <p className="text-sm">{poolsCountFormatted}</p>
           </div>
           <div className="flex gap-2">
-            <form onSubmit={handleQuerySubmit}>
-              <Input
-                placeholder="Search with public key"
-                defaultValue={innerQuery || ''}
-                onChange={(event) => setInnerQuery(event.target.value)}
-              />
-            </form>
+            <TableSearch
+              onSubmit={handleQuerySubmit}
+              placeholder={t('common.searchWithPublicKey')}
+              defaultValue={innerQuery || ''}
+              setValue={setInnerQuery}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="hidden md:flex">
-                  Columns <ChevronDown className="ml-2 h-4 w-4" />
+                  {t('common.columns')} <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -207,7 +227,7 @@ export const StakingTable = ({
                           column.toggleVisibility(value)
                         }
                       >
-                        {column.id}
+                        {t(`common.${camelcase(column.id)}`)}
                       </DropdownMenuCheckboxItem>
                     )
                   })}
@@ -273,7 +293,7 @@ export const StakingTable = ({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {t('common.noResults')}
                   </TableCell>
                 </TableRow>
               )}
@@ -284,6 +304,7 @@ export const StakingTable = ({
           currentPage={currentPage}
           pagesCount={pagesCount}
           resource="staking"
+          network={network}
         />
       </div>
     </TooltipProvider>

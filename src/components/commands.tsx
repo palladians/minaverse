@@ -11,9 +11,11 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command'
+import { useTranslation } from '@/lib/i18n/client'
 import { useAppStore } from '@/store/app'
 
 export const Commands = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const commandsOpen = useAppStore((state) => state.commandsOpen)
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
@@ -36,46 +38,50 @@ export const Commands = () => {
     setCommandsOpen(false)
   }
 
+  const COMMAND_ITEMS = [
+    {
+      label: t('common.dashboard'),
+      onSelect: () => router.push('/'),
+      testId: 'commands__dashboard'
+    },
+    {
+      label: t('common.accounts'),
+      onSelect: () => router.push('/accounts'),
+      testId: 'commands__accounts'
+    },
+    {
+      label: t('common.transactions'),
+      onSelect: () => router.push('/transactions'),
+      testId: 'commands__transactions'
+    },
+    {
+      label: t('common.staking'),
+      onSelect: () => router.push('/staking'),
+      testId: 'commands__staking'
+    },
+    {
+      label: t('common.settings'),
+      onSelect: () => setSettingsOpen(true),
+      testId: 'commands__settings'
+    }
+  ]
+
   return (
     <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder={t('common.typeCommand')} />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandItem
-          onSelect={() => handleSelect(() => router.push('/'))}
-          data-testid="commands__dashboard"
-        >
-          <ChevronRightIcon className="mr-2 h-4 w-4" />
-          <span>Dashboard</span>
-        </CommandItem>
-        <CommandItem
-          onSelect={() => handleSelect(() => router.push('/accounts'))}
-          data-testid="commands__accounts"
-        >
-          <ChevronRightIcon className="mr-2 h-4 w-4" />
-          <span>Accounts</span>
-        </CommandItem>
-        <CommandItem
-          onSelect={() => handleSelect(() => router.push('/transactions'))}
-          data-testid="commands__transactions"
-        >
-          <ChevronRightIcon className="mr-2 h-4 w-4" />
-          <span>Transactions</span>
-        </CommandItem>
-        <CommandItem
-          onSelect={() => handleSelect(() => router.push('/staking'))}
-          data-testid="commands__staking"
-        >
-          <ChevronRightIcon className="mr-2 h-4 w-4" />
-          <span>Staking</span>
-        </CommandItem>
-        <CommandItem
-          onSelect={() => handleSelect(() => setSettingsOpen(true))}
-          data-testid="commands__settings"
-        >
-          <ChevronRightIcon className="mr-2 h-4 w-4" />
-          <span>Settings</span>
-        </CommandItem>
+        <CommandEmpty>{t('common.noResults')}</CommandEmpty>
+        {COMMAND_ITEMS.map((item, i) => (
+          <CommandItem
+            key={i}
+            onSelect={() => handleSelect(item.onSelect)}
+            data-testid={item.testId}
+            className="cursor-pointer"
+          >
+            <ChevronRightIcon className="mr-2 h-4 w-4" />
+            <span>{item.label}</span>
+          </CommandItem>
+        ))}
       </CommandList>
     </CommandDialog>
   )

@@ -1,15 +1,11 @@
-'use client'
-
-import { SettingsIcon } from 'lucide-react'
 import NextImage from 'next/image'
 
+import { FooterOptions } from '@/components/footer-options'
 import { ServiceLinks } from '@/components/service-links'
-import { Socials } from '@/components/socials'
-import { Button } from '@/components/ui/button'
-import { useAppStore } from '@/store/app'
+import { getT } from '@/lib/i18n/server'
 
-export const Footer = () => {
-  const setSettingsOpen = useAppStore((state) => state.setSettingsOpen)
+export const Footer = async () => {
+  const t = await getT()
   return (
     <div className="hidden md:flex flex-col md:flex-row justify-between md:items-center border-t py-8 gap-8">
       <div className="flex flex-col gap-4">
@@ -20,14 +16,14 @@ export const Footer = () => {
           alt="Logo"
           className="dark:invert opacity-75"
         />
-        <p className="text-sm opacity-75">The truly open Mina Explorer.</p>
+        <p className="text-sm opacity-75">{t('common.trulyOpen')}</p>
         <a
           href="https://palladians.xyz"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm opacity-75"
         >
-          Created and maintained by Palladians.
+          {t('common.createdAndMaintained')}
         </a>
         <a
           href="https://pallad.xyz"
@@ -35,21 +31,11 @@ export const Footer = () => {
           rel="noopener noreferrer"
           className="text-sm opacity-75"
         >
-          Need a Mina wallet? Pallad 🦋 is coming soon.
+          {t('common.needWallet')}
         </a>
       </div>
       <div className="flex flex-col items-start md:items-end gap-2">
-        <div className="flex gap-2">
-          <Socials />
-          <Button
-            variant="outline"
-            title="Settings"
-            size="icon"
-            onClick={() => setSettingsOpen(true)}
-          >
-            <SettingsIcon size={20} />
-          </Button>
-        </div>
+        <FooterOptions />
         <ServiceLinks />
       </div>
     </div>

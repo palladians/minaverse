@@ -16,6 +16,7 @@ export const MobileNavigation = () => {
   const router = useRouter()
   const pathname = usePathname()
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
+  const network = useAppStore((state) => state.network)
   const MENU_ITEMS = [
     {
       label: 'Dashboard',
@@ -25,15 +26,15 @@ export const MobileNavigation = () => {
     },
     {
       label: 'Transactions',
-      url: '/transactions',
+      url: `/${network}/transactions`,
       icon: ArrowLeftRightIcon,
-      onClick: () => router.push('/transactions')
+      onClick: () => router.push(`/${network}/transactions`)
     },
     {
       label: 'Staking',
-      url: '/staking',
+      url: `/${network}/staking`,
       icon: CoinsIcon,
-      onClick: () => router.push('/staking')
+      onClick: () => router.push(`/${network}/staking`)
     },
     {
       label: 'Menu',
@@ -56,7 +57,7 @@ export const MobileNavigation = () => {
             variant="link"
             className={cn([
               'flex flex-col h-auto gap-1 py-1 px-2 justify-center items-center rounded-md decoration-transparent',
-              isActive && 'text-blue-800 dark:text-blue-300'
+              isActive && 'font-semibold text-blue-700 dark:text-blue-400'
             ])}
             onClick={menuItem.onClick}
           >

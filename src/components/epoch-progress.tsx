@@ -1,7 +1,7 @@
 'use client'
 
-import { Progress } from '@radix-ui/react-progress'
+import { ProgressBar } from '@tremor/react'
 
 export const EpochProgress = () => {
-  return <Progress value={50} color="teal" />
+  return <ProgressBar value={50} color="teal" />
 }

@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { formatDateShort } from '@/lib/date'
 
 const PRICES_URL =
   'https://api.coingecko.com/api/v3/coins/mina-protocol/market_chart?vs_currency=usd&days=6&interval=daily'
@@ -11,16 +11,16 @@ type PricesResponse = {
   total_volumes: NumericalData[]
 }
 
-export const fetchCoinData = async () => {
+export const fetchCoinData = async ({ locale }: { locale: string }) => {
   const pricesRequest = await fetch(PRICES_URL)
   const pricesData = (await pricesRequest.json()) as PricesResponse
   return {
     prices: pricesData.prices.map(([timestamp, price]) => ({
-      date: dayjs(timestamp).format('MMM DD'),
+      date: formatDateShort({ date: timestamp, locale }),
       price
     })),
     marketCaps: pricesData.market_caps.map(([timestamp, cap]) => ({
-      date: dayjs(timestamp).format('MMM DD'),
+      date: formatDateShort({ date: timestamp, locale }),
       cap
     }))
   }

@@ -1,11 +1,23 @@
-import { formatNumber, formatNumberCompact } from '@/lib/number'
+import { formatNumber } from '@/lib/number'
 
-export const formatCurrency = (number: number) => {
-  const formattedValue = formatNumber(number)
-  return `$${formattedValue}`
+type FormatProps = {
+  value: number
+  locale: string
+  currency: string
+  compact?: boolean
 }
 
-export const formatCurrencyCompact = (number: number) => {
-  const formattedValue = formatNumberCompact(number)
-  return `$${formattedValue}`
+export const formatCurrency = ({
+  value,
+  locale,
+  currency,
+  compact = false
+}: FormatProps) => {
+  return formatNumber({
+    value,
+    locale,
+    style: 'currency',
+    currency,
+    compact
+  })
 }

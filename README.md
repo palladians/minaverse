@@ -1,5 +1,7 @@
 # Minaverse
 
+[![Discord](https://img.shields.io/discord/1127906495409958953?label=Discord)](https://discord.gg/ExzzfTGUnB)
+
 <a href="https://minaverse.xyz">
   <img src="https://github.com/palladians/minaverse/blob/main/logo.png" />
 </a>

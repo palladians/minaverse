@@ -4,6 +4,7 @@ import { Network } from '@/data/api'
 
 type AppState = {
   network: Network | null
+  locale: string | null
   commandsOpen: boolean
   currentAccountPublicKey: null | string
   currentTransactionHash: null | string
@@ -12,6 +13,7 @@ type AppState = {
 
 type AppMutators = {
   setNetwork: (network: Network) => void
+  setLocale: (locale: string) => void
   setCommandsOpen: (commandsOpen: boolean) => void
   setCurrentAccountPublicKey: (currentAccountPublicKey: string | null) => void
   setCurrentTransactionHash: (currentTransactionHash: string | null) => void
@@ -25,8 +27,10 @@ export const useAppStore = create<AppStore>((set) => ({
   currentAccountPublicKey: null,
   currentTransactionHash: null,
   network: null,
+  locale: null,
   settingsOpen: false,
   setNetwork: (network) => set({ network }),
+  setLocale: (locale) => set({ locale }),
   setCommandsOpen: (commandsOpen) => set({ commandsOpen }),
   setCurrentAccountPublicKey: (currentAccountPublicKey) =>
     set({ currentAccountPublicKey }),

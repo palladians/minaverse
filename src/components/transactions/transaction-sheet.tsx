@@ -10,11 +10,13 @@ import { TransactionDetails } from '@/components/transactions/transaction-detail
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useTransactionDetails } from '@/data/hooks'
-import { env } from '@/env.mjs'
 import { useClipboard } from '@/lib/clipboard'
+import { useTranslation } from '@/lib/i18n/client'
+import { appUrl, AppUrls } from '@/lib/url'
 import { useAppStore } from '@/store/app'
 
-export const TransactionSheet = () => {
+export const TransactionSheet = ({ network }: { network: string }) => {
+  const { t } = useTranslation()
   const { copyValue } = useClipboard()
   const currentTransactionHash = useAppStore(
     (state) => state.currentTransactionHash
@@ -27,7 +29,7 @@ export const TransactionSheet = () => {
   const handleCopy = () => {
     if (!transactionData?.hash) return
     return copyValue({
-      value: `${env.NEXT_PUBLIC_APP_URL}/transactions/${transactionData.hash}`
+      value: appUrl(AppUrls.transaction({ network, id: transactionData.hash }))
     })
   }
   return (
@@ -37,13 +39,20 @@ export const TransactionSheet = () => {
     >
       <SheetContent className="flex flex-col gap-4 w-full max-w-[64rem] sm:max-w-[40rem]">
         <SheetHeading
-          title="Transaction Details"
+          title={t('transactions.transactionDetails')}
           addons={
             <>
               <Button size="icon" variant="ghost" asChild>
-                <NextLink href={`/transactions/${transactionData?.hash}`}>
-                  <ExternalLinkIcon size={20} />
-                </NextLink>
+                {transactionData?.hash && (
+                  <NextLink
+                    href={AppUrls.transaction({
+                      network,
+                      id: transactionData.hash
+                    })}
+                  >
+                    <ExternalLinkIcon size={20} />
+                  </NextLink>
+                )}
               </Button>
               <Button size="icon" variant="ghost" onClick={handleCopy}>
                 <LinkIcon size={20} />
@@ -55,7 +64,10 @@ export const TransactionSheet = () => {
           <SimpleSkeleton />
         ) : (
           transactionData && (
-            <TransactionDetails transactionData={transactionData} />
+            <TransactionDetails
+              transactionData={transactionData}
+              network={network}
+            />
           )
         )}
       </SheetContent>

@@ -1,5 +1,5 @@
 import { ExplorerUrl, Network } from '@/data/api'
-import { env } from '@/env.mjs'
+import { appUrl } from '@/lib/url'
 
 export type AccountShort = {
   pk: string
@@ -94,10 +94,9 @@ export const fetchAccount = async ({
   publicKey,
   network
 }: FetchAccountProps) => {
-  const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/account/${publicKey}`,
-    { headers: { 'minaverse-network': network } }
-  )
+  const request = await fetch(appUrl(`/api/account/${publicKey}`), {
+    headers: { 'minaverse-network': network }
+  })
   const response = (await request.json()) as ProxyAccountResponse
   return response.account
 }
@@ -108,9 +107,7 @@ export const fetchAccountTransactions = async ({
   network
 }: FetchAccountTransactionsProps) => {
   const request = await fetch(
-    `${env.NEXT_PUBLIC_APP_URL}/api/transactions/${publicKey}?limit=${String(
-      limit
-    )}`,
+    appUrl(`/api/transactions/${publicKey}?limit=${String(limit)}`),
     { headers: { 'minaverse-network': network } }
   )
   const response = (await request.json()) as AccountTransactionsResponse

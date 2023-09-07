@@ -1,6 +1,10 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
+import { useTranslation } from '@/lib/i18n/client'
 
 export const ServiceLinks = () => {
+  const { t } = useTranslation()
   return (
     <div className="flex items-start flex-col md:flex-row gap-0 md:gap-4">
       <Button variant="link" className="p-0" asChild>
@@ -9,7 +13,7 @@ export const ServiceLinks = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          Privacy Policy
+          {t('common.privacyPolicy')}
         </a>
       </Button>
       <Button variant="link" className="p-0" asChild>
@@ -18,7 +22,7 @@ export const ServiceLinks = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          Terms and Conditions
+          {t('common.termsAndConditions')}
         </a>
       </Button>
       <Button variant="link" className="p-0" asChild>
@@ -27,7 +31,7 @@ export const ServiceLinks = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          Service Status
+          {t('common.serviceStatus')}
         </a>
       </Button>
     </div>

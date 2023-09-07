@@ -22,12 +22,16 @@ import {
 } from '@/components/ui/tooltip'
 import { useAccountTransactions } from '@/data/hooks'
 import { formatDate } from '@/lib/date'
+import { useTranslation } from '@/lib/i18n/client'
 import { formatNumber } from '@/lib/number'
 import { truncateString } from '@/lib/string'
+import { AppUrls } from '@/lib/url'
 import { useAppStore } from '@/store/app'
 
-export const TransactionsWidget = () => {
+export const TransactionsWidget = ({ network }: { network: string }) => {
+  const { t } = useTranslation()
   const publicKey = useAppStore((state) => state.currentAccountPublicKey)
+  const locale = useAppStore((state) => state.locale) || 'en'
   const { data: transactionsData, isLoading: transactionsLoading } =
     useAccountTransactions({
       publicKey,
@@ -40,14 +44,18 @@ export const TransactionsWidget = () => {
     <TooltipProvider>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Latest transactions</h2>
+          <h2 className="text-lg font-semibold">
+            {t('transactions.latestTransactions')}
+          </h2>
           <Button variant="outline" asChild>
-            <NextLink
-              href={`/accounts/${publicKey}`}
-              data-testid="accountSheet__seeAllTransactions"
-            >
-              See All
-            </NextLink>
+            {publicKey && (
+              <NextLink
+                href={AppUrls.account({ network, id: publicKey })}
+                data-testid="accountSheet__seeAllTransactions"
+              >
+                {t('common.seeAll')}
+              </NextLink>
+            )}
           </Button>
         </div>
         <div className="rounded-md border">
@@ -55,9 +63,11 @@ export const TransactionsWidget = () => {
             <TableHeader>
               <TableRow>
                 <TableHead />
-                <TableHead className="hidden md:table-cell">Hash</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead className="text-right">Date</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  {t('common.hash')}
+                </TableHead>
+                <TableHead>{t('common.amount')}</TableHead>
+                <TableHead className="text-right">{t('common.date')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -72,7 +82,12 @@ export const TransactionsWidget = () => {
                   <TableCell className="hidden md:table-cell font-medium">
                     <Tooltip>
                       <TooltipTrigger>
-                        <NextLink href={`/transactions/${transaction.hash}`}>
+                        <NextLink
+                          href={AppUrls.transaction({
+                            network,
+                            id: transaction.hash
+                          })}
+                        >
                           {truncateString({
                             value: transaction.hash,
                             firstCharCount: 7,
@@ -86,10 +101,15 @@ export const TransactionsWidget = () => {
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    {`${formatNumber(transaction.amount / 1_000_000_000)} MINA`}
+                    {t('common.minaAmount', {
+                      amount: formatNumber({
+                        value: transaction.amount / 1_000_000_000,
+                        locale
+                      })
+                    })}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatDate(transaction.dateTime)}
+                    {formatDate({ date: transaction.dateTime, locale })}
                   </TableCell>
                 </TableRow>
               ))}
