@@ -5,9 +5,13 @@ import { QuickStats } from '@/components/dashboard/quick-stats'
 import { SummaryOverview } from '@/components/dashboard/summary-overview'
 import { fetchCoinData } from '@/data/coin'
 import { getLocale, getT } from '@/lib/i18n/server'
+import { titleTemplate } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'The universe of Mina Protocol - Minaverse'
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getT()
+  return {
+    title: titleTemplate(t('common.title'))
+  }
 }
 
 const HomePage = async () => {

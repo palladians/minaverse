@@ -8,7 +8,7 @@ const tr: Dictionary = {
     transactions: 'İşlemler',
     staking: 'Staking',
     settings: 'Ayarlar',
-    trulyOpen: 'Gerçek anlamda açık Mina Explorer',
+    trulyOpen: 'Gerçek anlamda açık Mina Explorer.',
     createdAndMaintained:
       "Palladian'lar tarafından geliştirildi ve sürdürülüyor.",
     needWallet:
@@ -60,7 +60,8 @@ const tr: Dictionary = {
     languages: 'Diller',
     actions: 'Eylemler',
     incoming: 'Gelen',
-    outgoing: 'Giden'
+    outgoing: 'Giden',
+    unknown: 'Bilinmeyen'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',

@@ -8,6 +8,7 @@
     "simple-import-sort/exports": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "import/no-extraneous-dependencies": "error",
-    "react/jsx-no-literals": [2, {"noStrings": true, "ignoreProps":  true}]
+    "react/jsx-no-literals": [2, {"noStrings": true, "ignoreProps":  true}],
+    "no-console": "error"
   }
 }
