@@ -22,13 +22,17 @@ type AppMutators = {
 
 type AppStore = AppState & AppMutators
 
-export const useAppStore = create<AppStore>((set) => ({
+export const initialState: AppState = {
   commandsOpen: false,
   currentAccountPublicKey: null,
   currentTransactionHash: null,
   network: null,
   locale: null,
-  settingsOpen: false,
+  settingsOpen: false
+}
+
+export const useAppStore = create<AppStore>((set) => ({
+  ...initialState,
   setNetwork: (network) => set({ network }),
   setLocale: (locale) => set({ locale }),
   setCommandsOpen: (commandsOpen) => set({ commandsOpen }),
