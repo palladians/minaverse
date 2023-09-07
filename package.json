@@ -13,6 +13,8 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\" && pnpm lint:fix",
     "test:e2e": "playwright test",
+    "test:unit": "vitest run",
+    "test": "pnpm test:unit && pnpm test:e2e",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm"
   },
@@ -85,7 +87,9 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.19",
     "@playwright/test": "^1.37.1",
+    "@testing-library/react": "^14.0.0",
     "@total-typescript/ts-reset": "^0.5.1",
+    "@types/jest": "^29.5.4",
     "@types/negotiator": "^0.6.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
@@ -95,7 +99,9 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "happy-dom": "^11.0.2",
     "husky": "^8.0.0",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.2",
+    "vitest": "^0.34.3"
   }
 }
