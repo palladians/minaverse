@@ -9,35 +9,37 @@ import {
 import { usePathname, useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
+import { useTranslation } from '@/lib/i18n/client'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/app'
 
 export const MobileNavigation = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const pathname = usePathname()
   const setCommandsOpen = useAppStore((state) => state.setCommandsOpen)
   const network = useAppStore((state) => state.network)
   const MENU_ITEMS = [
     {
-      label: 'Dashboard',
+      label: t('common.dashboard'),
       url: '/',
       icon: LayoutDashboardIcon,
       onClick: () => router.push('/')
     },
     {
-      label: 'Transactions',
+      label: t('common.transactions'),
       url: `/${network}/transactions`,
       icon: ArrowLeftRightIcon,
       onClick: () => router.push(`/${network}/transactions`)
     },
     {
-      label: 'Staking',
+      label: t('common.staking'),
       url: `/${network}/staking`,
       icon: CoinsIcon,
       onClick: () => router.push(`/${network}/staking`)
     },
     {
-      label: 'Menu',
+      label: t('common.menu'),
       icon: MenuIcon,
       onClick: () => setCommandsOpen(true)
     }

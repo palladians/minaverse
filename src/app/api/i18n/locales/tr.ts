@@ -8,9 +8,9 @@ const tr: Dictionary = {
     transactions: 'İşlemler',
     staking: 'Staking',
     settings: 'Ayarlar',
-    trulyOpen: 'Gerçek anlamda açık Mina Explorer.',
+    trulyOpen: 'Gerçek anlamda açık Mina Exploreri.',
     createdAndMaintained:
-      "Palladian'lar tarafından geliştirildi ve sürdürülüyor.",
+      'Palladian‘lar tarafından geliştirildi ve sürdürülüyor.',
     needWallet:
       'Bir Mina cüzdanına mı ihtiyaç duyuyorsun? Pallad \uD83E\uDD8B yakında geliyor.',
     privacyPolicy: 'Gizlilik Politikası',
@@ -18,10 +18,10 @@ const tr: Dictionary = {
     serviceStatus: 'Servis Durumu',
     typeCommand: 'Bir komut yazın veya arama yapın...',
     noResults: 'Sonuç bulunamadı.',
-    publicKey: 'Açık Anahtar',
+    publicKey: 'Public Key',
     balance: 'Bakiye',
     nonce: 'Nonce',
-    delegate: 'Delege',
+    delegate: 'Validatör',
     somethingWentWrong: 'Bir şeyler ters gitti!',
     tryAgain: 'Tekrar deneyin',
     hash: 'Hash',
@@ -48,10 +48,10 @@ const tr: Dictionary = {
     close: 'Kapat',
     minaAmount: '{amount} MINA',
     username: 'Kullanıcı Adı',
-    searchWithPublicKey: 'Açık anahtar ile ara',
+    searchWithPublicKey: 'Public Key ile ara',
     searchWithHash: 'Hash ile ara',
     name: 'Ad',
-    delegates: 'Delegeler',
+    delegates: 'Delegatörler',
     blockChance: 'Şans',
     percentOfStake: 'Stake yüzdesi',
     stake: 'Stake',
@@ -61,7 +61,8 @@ const tr: Dictionary = {
     actions: 'Eylemler',
     incoming: 'Gelen',
     outgoing: 'Giden',
-    unknown: 'Bilinmeyen'
+    unknown: 'Bilinmeyen',
+    menu: 'Menü'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',
