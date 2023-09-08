@@ -14,21 +14,16 @@ jobs:
       NEXT_PUBLIC_ERROR_REPORTING_APP_ID: ${{ vars.NEXT_PUBLIC_ERROR_REPORTING_APP_ID }}
     steps:
     - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 8
-    - uses: actions/setup-node@v3
-      with:
-        node-version-file: .nvmrc
-        cache: pnpm
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v1
     - name: Install dependencies
-      run: pnpm install
+      run: bun install
     - name: Build app
-      run: pnpm build
+      run: bun run build
     - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps chromium
+      run: bunx playwright install --with-deps chromium
     - name: Run Playwright tests
-      run: pnpm test
+      run: bun run test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
