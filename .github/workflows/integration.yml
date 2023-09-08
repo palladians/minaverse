@@ -21,7 +21,7 @@ jobs:
     - name: Build app
       run: bun run build
     - name: Install Playwright Browsers
-      run: bunx playwright install --with-deps chromium
+      run: npx playwright install --with-deps chromium
     - name: Run Playwright tests
       run: bun run test
     - uses: actions/upload-artifact@v3
