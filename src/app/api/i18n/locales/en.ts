@@ -59,7 +59,8 @@ const en: Dictionary = {
     actions: 'Actions',
     incoming: 'Incoming',
     outgoing: 'Outgoing',
-    unknown: 'Unknown'
+    unknown: 'Unknown',
+    menu: 'Menu'
   },
   accounts: {
     accountOverview: 'Account Overview',
