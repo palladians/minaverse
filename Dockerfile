@@ -1,4 +1,4 @@
-FROM jarredsumner/bun:edge
+FROM jarredsumner/bun:edge AS base
 
 # Install dependencies only when needed
 FROM base AS deps
