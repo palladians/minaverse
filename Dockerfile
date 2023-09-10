@@ -1,4 +1,4 @@
-FROM jarredsumner/bun:edge AS base
+FROM oven/bun:1.0 AS base
 
 # Install dependencies only when needed
 FROM base AS deps
