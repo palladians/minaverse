@@ -1,3 +1,2 @@
 [phases.setup]
-cmd = 'bun i --no-save'
 nixpkgsArchive = 'c054b2a07bce2be3b85fed85f45aea6a4b97f5cc'
