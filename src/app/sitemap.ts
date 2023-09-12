@@ -71,3 +71,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...routes.flat()
   ]
 }
+
+export const runtime = 'edge'
