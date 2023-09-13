@@ -24,6 +24,8 @@ export const metadata: Metadata = {
   title: 'Minaverse',
   description:
     'The truly open Mina Explorer. Get insight into the Mina Protocol.',
+  keywords:
+    'Mina, Blockchain, Explorer, Mina Protocol, Mina Price, Price of Mina, Mina Explorer, Market Cap, Mina Market Cap, zkApps, zkProofs, Succinct Blockchain',
   manifest: '/manifest.json',
   themeColor: '#1e3a8a'
 }
