@@ -6,7 +6,7 @@ import { useTranslation } from '@/lib/i18n/client'
 export const ServiceLinks = () => {
   const { t } = useTranslation()
   return (
-    <div className="flex items-start flex-col md:flex-row gap-0 md:gap-4">
+    <div className="flex items-start flex-col gap-2">
       <Button variant="link" className="p-0" asChild>
         <a
           href="https://palladians.xyz/privacy"
