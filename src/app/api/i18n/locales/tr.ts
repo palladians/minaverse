@@ -66,7 +66,19 @@ const tr: Dictionary = {
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',
-    accountsCount: 'Hesaplar ({count})'
+    accountsCount: 'Hesaplar ({count})',
+    warning: 'Warning!',
+    accountSuspicious:
+      'This account is marked as suspicious. Beware of scam attempts.'
+  },
+  accountReport: {
+    trigger: 'Report',
+    title: 'Report Account',
+    reason: 'Reason',
+    reasonDescription: 'Please describe behavior of this account',
+    evidence: 'Evidence attachment',
+    submit: 'Submit report',
+    toast: 'Your report has been sent'
   },
   dashboard: {
     header: 'Hızlı İstatistikler',

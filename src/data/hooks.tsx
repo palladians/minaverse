@@ -4,6 +4,8 @@ import { fetchAccount, fetchAccountTransactions } from '@/data/accounts'
 import { fetchTransaction } from '@/data/transactions'
 import { useAppStore } from '@/store/app'
 
+import { fetchRestrictions } from './restrictions'
+
 interface UseAccountDetailsProps {
   publicKey: string | null
 }
@@ -11,6 +13,10 @@ interface UseAccountDetailsProps {
 interface UseAccountTransactionsProps {
   publicKey: string | null
   limit: number
+}
+
+interface UseRestrictionsProps {
+  publicKey: string | null
 }
 
 export const useAccountDetails = ({ publicKey }: UseAccountDetailsProps) => {
@@ -42,5 +48,11 @@ export const useTransactionDetails = ({ hash }: { hash: string | null }) => {
     hash && network ? [network, 'transaction', hash] : null,
     async () =>
       hash && network ? await fetchTransaction({ hash, network }) : null
+  )
+}
+
+export const useRestrictions = ({ publicKey }: UseRestrictionsProps) => {
+  return useSWR(publicKey ? ['restrictions', publicKey] : null, async () =>
+    publicKey ? await fetchRestrictions({ publicKey }) : null
   )
 }
