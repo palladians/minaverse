@@ -27,7 +27,8 @@ const useSetLanguage = () => {
 const LANGUAGES = [
   { label: 'English', value: 'en' },
   { label: 'Türkçe', value: 'tr' },
-  { label: 'Polski', value: 'pl' }
+  { label: 'Polski', value: 'pl' },
+  { label: 'Українська', value: 'uk' }
 ]
 
 export const LanguageChoice = () => {
