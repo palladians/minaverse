@@ -18,21 +18,20 @@ Explore the universe of Mina Protocol.
 
 ### Prerequisite
 
-- NVM
-- PNPM
+- Bun
 
 ### Prepare
 
 ```bash
 cp .env.example .env # copy env variables
 # Adjust ENV variables in .env
-pnpm i # install dependencies
+bun i # install dependencies
 ```
 
 ### Dev server
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -40,13 +39,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Build app
 
 ```bash
-pnpm build
+bun run build
 ```
 
 ### Lint & format
 
 ```bash
-pnpm format
+bun format
 ```
 
 ## Contributors
