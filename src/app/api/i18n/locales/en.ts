@@ -60,7 +60,9 @@ const en: Dictionary = {
     incoming: 'Incoming',
     outgoing: 'Outgoing',
     unknown: 'Unknown',
-    menu: 'Menu'
+    menu: 'Menu',
+    blog: 'Blog',
+    glossary: 'Glossary'
   },
   accounts: {
     accountOverview: 'Account Overview',

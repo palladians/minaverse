@@ -60,7 +60,9 @@ const pl: Dictionary = {
     incoming: 'Przychodzące',
     outgoing: 'Wychodzące',
     unknown: 'Nieznana',
-    menu: 'Menu'
+    menu: 'Menu',
+    blog: 'Blog',
+    glossary: 'Słownik'
   },
   accounts: {
     accountOverview: 'Przegląd konta',
