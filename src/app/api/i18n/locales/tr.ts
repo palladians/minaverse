@@ -62,7 +62,9 @@ const tr: Dictionary = {
     incoming: 'Gelen',
     outgoing: 'Giden',
     unknown: 'Bilinmeyen',
-    menu: 'Menü'
+    menu: 'Menü',
+    blog: 'Blog',
+    glossary: 'Sözlük'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',

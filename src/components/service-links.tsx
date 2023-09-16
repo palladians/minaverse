@@ -7,7 +7,7 @@ export const ServiceLinks = () => {
   const { t } = useTranslation()
   return (
     <div className="flex items-start flex-col gap-2">
-      <Button variant="link" className="p-0" asChild>
+      <Button variant="link" className="p-0 text-md" asChild>
         <a
           href="https://palladians.xyz/privacy"
           target="_blank"
@@ -16,7 +16,7 @@ export const ServiceLinks = () => {
           {t('common.privacyPolicy')}
         </a>
       </Button>
-      <Button variant="link" className="p-0" asChild>
+      <Button variant="link" className="p-0 text-md" asChild>
         <a
           href="https://palladians.xyz/terms"
           target="_blank"
@@ -25,7 +25,7 @@ export const ServiceLinks = () => {
           {t('common.termsAndConditions')}
         </a>
       </Button>
-      <Button variant="link" className="p-0" asChild>
+      <Button variant="link" className="p-0 text-md" asChild>
         <a
           href="https://status.palladians.xyz/status/minaverse"
           target="_blank"

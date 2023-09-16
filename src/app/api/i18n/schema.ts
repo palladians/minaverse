@@ -60,7 +60,9 @@ export const localeSchema = z.object({
     incoming: z.string(),
     outgoing: z.string(),
     unknown: z.string(),
-    menu: z.string()
+    menu: z.string(),
+    blog: z.string(),
+    glossary: z.string()
   }),
   accounts: z.object({
     accountOverview: z.string(),

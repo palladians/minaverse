@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-literals */
 import NextImage from 'next/image'
+import NextLink from 'next/link'
 
 import { FooterOptions } from '@/components/footer-options'
 import { ServiceLinks } from '@/components/service-links'
@@ -20,12 +21,12 @@ export const Footer = async () => {
             alt="Logo"
             className="dark:invert opacity-75"
           />
-          <p className="text-sm opacity-75">{t('common.trulyOpen')}</p>
+          <p className="opacity-75">{t('common.trulyOpen')}</p>
           <a
             href="https://pallad.xyz"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm opacity-75"
+            className="opacity-75"
           >
             {t('common.needWallet')}
           </a>
@@ -37,16 +38,10 @@ export const Footer = async () => {
         </div>
         <div className="flex flex-1 flex-col gap-2 items-start">
           <h4 className="text-lg">Edu</h4>
-          <Button variant="link" className="p-0" asChild>
-            <a
-              href="https://pallad.xyz"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {t('common.blog')}
-            </a>
+          <Button variant="link" className="p-0 text-md" asChild>
+            <NextLink href="/blog">{t('common.blog')}</NextLink>
           </Button>
-          <Button variant="link" className="p-0" asChild>
+          <Button variant="link" className="p-0 text-md" asChild>
             <a
               href="https://pallad.xyz"
               target="_blank"
