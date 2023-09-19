@@ -1,9 +1,9 @@
 import NextImage from 'next/image'
 
 import { PostMeta } from '@/components/blog/post-meta'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Card } from '@/components/ui/card'
 import { pocketbase } from '@/lib/pocketbase'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { ApiPost } from '@/types'
 
 interface HighlightCardProps {
