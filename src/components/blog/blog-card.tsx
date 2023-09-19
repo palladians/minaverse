@@ -4,8 +4,8 @@ import { Card } from '@/components/ui/card'
 import { pocketbase } from '@/lib/pocketbase'
 import { ApiPost } from '@/types'
 
-import { PostMeta } from './post-meta'
 import { AspectRatio } from '../ui/aspect-ratio'
+import { PostMeta } from './post-meta'
 
 interface BlogCardProps {
   post: ApiPost
