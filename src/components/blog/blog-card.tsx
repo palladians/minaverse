@@ -1,44 +1,33 @@
-import dayjs from 'dayjs'
-import { CalendarIcon } from 'lucide-react'
+import NextImage from 'next/image'
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
+import { pocketbase } from '@/lib/pocketbase'
+import { ApiPost } from '@/types'
+
+import { PostMeta } from './post-meta'
+import { AspectRatio } from '../ui/aspect-ratio'
 
 interface BlogCardProps {
-  coverUrl: string
-  title: string
-  author: string
-  publishedAt: string
-  excerpt: string
+  post: ApiPost
 }
 
-export const BlogCard = ({
-  coverUrl,
-  title,
-  author,
-  publishedAt,
-  excerpt
-}: BlogCardProps) => {
-  const publishedDate = dayjs(publishedAt).format('MMM DD')
+export const BlogCard = ({ post }: BlogCardProps) => {
+  const highlightCoverImage = pocketbase.files.getUrl(post, post.coverImage)
   return (
     <Card>
-      <img src={coverUrl} className="rounded-t" />
+      <AspectRatio ratio={2.25}>
+        <NextImage
+          src={highlightCoverImage}
+          className="rounded-t-lg h-full w-full object-cover"
+          width={300}
+          height={200}
+          alt={post.title}
+        />
+      </AspectRatio>
       <div className="flex flex-col p-4 gap-2">
-        <h3 className="text-xl font-semibold">{title}</h3>
-        <div className="flex gap-2">
-          <Badge>
-            <Avatar className="w-4 h-4 mr-1">
-              <AvatarFallback className="bg-blue-800" />
-            </Avatar>
-            {author}
-          </Badge>
-          <Badge>
-            <CalendarIcon size={14} className="mr-1" />
-            {publishedDate}
-          </Badge>
-        </div>
-        <p>{excerpt}</p>
+        <h3 className="text-xl font-semibold">{post.title}</h3>
+        <PostMeta post={post} />
+        <p className="leading-7">{post.excerpt}</p>
       </div>
     </Card>
   )

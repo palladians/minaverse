@@ -30,7 +30,7 @@ export const NavbarLinks = ({ network = 'mainnet' }: { network: string }) => {
   ]
   return (
     <div className="hidden md:flex justify-center items-center">
-      <Menubar>
+      <Menubar className="border-none">
         {NAV_LINKS.map((link) => (
           <Button
             key={link.url}
