@@ -42,11 +42,13 @@ const Providers = ({
     setStoreLocale(locale)
   }, [locale])
   useEffect(() => {
-    window.addEventListener('unhandledrejection', reportError)
-    window.addEventListener('error', reportError)
+    const errorHandler = (event: ErrorEvent | PromiseRejectionEvent) =>
+      reportError({ payload: event, context: { locale, network } })
+    window.addEventListener('unhandledrejection', errorHandler)
+    window.addEventListener('error', errorHandler)
     return () => {
-      window.removeEventListener('unhandledrejection', reportError)
-      window.removeEventListener('error', reportError)
+      window.removeEventListener('unhandledrejection', errorHandler)
+      window.removeEventListener('error', errorHandler)
     }
   }, [])
   useEffect(() => {
