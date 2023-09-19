@@ -59,7 +59,7 @@ export default function RootLayout({
         <meta property="og:image:height" content="630" />
       </head>
       <body>
-        <div className="flex flex-col container min-h-screen pb-24 gap-16 md:pb-0">
+        <div className="flex flex-col min-h-screen pb-24 gap-20 md:pb-0">
           <Providers locale={locale} network={network}>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Commands />
@@ -76,7 +76,7 @@ export default function RootLayout({
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Navbar />
             </Suspense>
-            <div className="flex flex-1">{children}</div>
+            <div className="container flex flex-1 pt-[8rem]">{children}</div>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Footer />
             </Suspense>

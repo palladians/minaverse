@@ -2,22 +2,30 @@ import './src/env.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.palladians.xyz'
+      }
+    ]
+  },
   async redirects() {
     return [
       {
         source: '/accounts/:path*',
         destination: '/mainnet/accounts/:path*',
-        permanent: true,
+        permanent: true
       },
       {
         source: '/staking/:path*',
         destination: '/mainnet/staking/:path*',
-        permanent: true,
+        permanent: true
       },
       {
         source: '/transactions/:path*',
         destination: '/mainnet/transactions/:path*',
-        permanent: true,
+        permanent: true
       },
     ]
   },

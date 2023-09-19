@@ -152,6 +152,9 @@ dependencies:
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@13.4.18)(react-dom@18.2.0)(react@18.2.0)
+  pocketbase:
+    specifier: ^0.18.0
+    version: 0.18.0
   postcss:
     specifier: 8.4.28
     version: 8.4.28
@@ -173,6 +176,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.45.4
     version: 7.45.4(react@18.2.0)
+  reading-time-estimator:
+    specifier: ^1.9.0
+    version: 1.9.0
   server-only:
     specifier: ^0.0.1
     version: 0.0.1
@@ -4862,6 +4868,10 @@ packages:
     hasBin: true
     dev: true
 
+  /pocketbase@0.18.0:
+    resolution: {integrity: sha512-09ri0Rnm4JjboU4OJeibd6pgvKi4DPg/r/Uu/QI3mKSZsrROoMT75zyiOldbBBMWZUDG1TRlv6BjQj30SFsrVw==}
+    dev: false
+
   /postcss-import@15.1.0(postcss@8.4.28):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
     engines: {node: '>=14.0.0'}
@@ -5188,6 +5198,10 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: false
+
+  /reading-time-estimator@1.9.0:
+    resolution: {integrity: sha512-fVuTlAfcYXE9A4KrTOq0Ao4vn9vJxYVFpATjS6KFA5xCK5RTmq6q74ICrO7ykF3Mg2XTgL9mBrwADgXQgEolIw==}
     dev: false
 
   /recharts-scale@0.4.5:

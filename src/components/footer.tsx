@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 
 import { FooterOptions } from '@/components/footer-options'
 import { ServiceLinks } from '@/components/service-links'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { getT } from '@/lib/i18n/server'
 
@@ -12,7 +13,7 @@ export const Footer = async () => {
   const t = await getT()
   return (
     <div className="hidden md:flex flex-col border-t py-20 gap-12">
-      <div className="grid grid-cols-[2fr_1fr_1fr] items-start gap-8">
+      <div className="container grid grid-cols-[2fr_1fr_1fr] items-start gap-8">
         <div className="flex flex-3 flex-col gap-8">
           <NextImage
             src="/logo.svg"
@@ -41,15 +42,12 @@ export const Footer = async () => {
           <Button variant="link" className="p-0 text-md" asChild>
             <NextLink href="/blog">{t('common.blog')}</NextLink>
           </Button>
-          <Button variant="link" className="p-0 text-md" asChild>
-            <a
-              href="https://pallad.xyz"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          <div className="flex items-center gap-2">
+            <Button variant="link" className="p-0 text-md">
               {t('common.glossary')}
-            </a>
-          </Button>
+            </Button>
+            <Badge>Coming Soon</Badge>
+          </div>
         </div>
       </div>
       <div className="text-center py-2">

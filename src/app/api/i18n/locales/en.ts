@@ -62,7 +62,8 @@ const en: Dictionary = {
     unknown: 'Unknown',
     menu: 'Menu',
     blog: 'Blog',
-    glossary: 'Glossary'
+    glossary: 'Glossary',
+    minRead: '{min} min read'
   },
   accounts: {
     accountOverview: 'Account Overview',

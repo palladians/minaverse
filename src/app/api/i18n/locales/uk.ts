@@ -60,7 +60,10 @@ const uk: Dictionary = {
     incoming: 'Вхідна',
     outgoing: 'Вихідна',
     unknown: 'Невідомо',
-    menu: 'Меню'
+    menu: 'Меню',
+    blog: 'Блог',
+    glossary: 'Глосарій',
+    minRead: '{min} хв читати'
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',
