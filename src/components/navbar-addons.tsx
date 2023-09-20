@@ -11,7 +11,11 @@ export const NavbarAddons = () => {
   const { t } = useTranslation()
   return (
     <div className="flex">
-      <Button variant={pathname === '/blog' ? 'secondary' : 'ghost'} asChild>
+      <Button
+        variant={pathname === '/blog' ? 'secondary' : 'ghost'}
+        size="sm"
+        asChild
+      >
         <NextLink href="/blog">{t('common.blog')}</NextLink>
       </Button>
     </div>

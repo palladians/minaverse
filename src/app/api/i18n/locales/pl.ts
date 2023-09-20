@@ -63,7 +63,7 @@ const pl: Dictionary = {
     menu: 'Menu',
     blog: 'Blog',
     glossary: 'Słownik',
-    minRead: '{min} min czytania'
+    minRead: '{min} min'
   },
   accounts: {
     accountOverview: 'Przegląd konta',
