@@ -63,7 +63,7 @@ const uk: Dictionary = {
     menu: 'Меню',
     blog: 'Блог',
     glossary: 'Глосарій',
-    minRead: '{min} хв читати'
+    minRead: '{min} хв'
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',

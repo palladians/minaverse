@@ -60,6 +60,11 @@ export const Commands = () => {
       testId: 'commands__staking'
     },
     {
+      label: t('common.blog'),
+      onSelect: () => router.push('/blog'),
+      testId: 'commands__blog'
+    },
+    {
       label: t('common.settings'),
       onSelect: () => setSettingsOpen(true),
       testId: 'commands__settings'
