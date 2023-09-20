@@ -1,9 +1,9 @@
 'use client'
 
-import { CommandIcon, AlignRightIcon } from 'lucide-react'
+import { AlignRightIcon, CommandIcon } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/store/app'
 
 const K_KEY = 'K'
