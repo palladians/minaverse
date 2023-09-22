@@ -7,4 +7,4 @@ export const Collections = {
   restrictions: 'restrictions'
 }
 
-export const pb = new PocketBase(env.NEXT_PUBLIC_POCKETBASE_URL)
+export const pb = new PocketBase(env.NEXT_PUBLIC_POCKETBASE_SENTINEL_URL)

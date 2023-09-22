@@ -12,6 +12,7 @@ jobs:
       NEXT_PUBLIC_APP_URL: http://localhost:3000
       NEXT_PUBLIC_ERROR_REPORTING_URL: ${{ vars.NEXT_PUBLIC_ERROR_REPORTING_URL }}
       NEXT_PUBLIC_ERROR_REPORTING_APP_ID: ${{ vars.NEXT_PUBLIC_ERROR_REPORTING_APP_ID }}
+      NEXT_PUBLIC_POCKETBASE_SENTINEL_URL: ${{ vars.NEXT_PUBLIC_POCKETBASE_SENTINEL_URL }}
     steps:
     - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2
