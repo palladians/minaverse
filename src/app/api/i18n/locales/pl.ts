@@ -64,7 +64,19 @@ const pl: Dictionary = {
   },
   accounts: {
     accountOverview: 'Przegląd konta',
-    accountsCount: 'Konta ({count})'
+    accountsCount: 'Konta ({count})',
+    warning: 'Ostrzeżenie!',
+    accountSuspicious:
+      'To konto jest oznaczone jako podejrzane. Uważaj na próby oszustwa.'
+  },
+  accountReport: {
+    trigger: 'Zgłoś',
+    title: 'Zgłoś konto',
+    reason: 'Powód',
+    reasonDescription: 'Opisz podejrzane zachowanie tego konta',
+    evidence: 'Załącznik',
+    submit: 'Wyślij zgłoszenie',
+    toast: 'Twoje zgłoszenie zostało wysłane'
   },
   dashboard: {
     header: 'Statystyki',
