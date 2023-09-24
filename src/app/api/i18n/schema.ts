@@ -67,7 +67,18 @@ export const localeSchema = z.object({
   }),
   accounts: z.object({
     accountOverview: z.string(),
-    accountsCount: z.string()
+    accountsCount: z.string(),
+    warning: z.string(),
+    accountSuspicious: z.string()
+  }),
+  accountReport: z.object({
+    trigger: z.string(),
+    title: z.string(),
+    reason: z.string(),
+    reasonDescription: z.string(),
+    evidence: z.string(),
+    submit: z.string(),
+    toast: z.string()
   }),
   dashboard: z.object({
     header: z.string(),

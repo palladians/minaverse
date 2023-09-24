@@ -67,7 +67,19 @@ const uk: Dictionary = {
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',
-    accountsCount: 'Аккаунтів ({count})'
+    accountsCount: 'Аккаунтів ({count})',
+    warning: 'Обережно!',
+    accountSuspicious:
+      'Цей обліковий запис позначено як підозрілий. Остерігайтеся спроб шахрайства.'
+  },
+  accountReport: {
+    trigger: 'Звіт',
+    title: 'Повідомити про рахунок',
+    reason: 'Причина',
+    reasonDescription: 'Будь ласка, опишіть поведінку цього облікового запису',
+    evidence: 'Приєднання доказів',
+    submit: 'Надіслати звіт',
+    toast: 'Ваш звіт відправлено'
   },
   dashboard: {
     header: 'Коротка статистика',
