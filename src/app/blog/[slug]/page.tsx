@@ -18,8 +18,10 @@ export const generateMetadata = async ({
     .getFirstListItem(`slug="${params.slug}"`, { expand: 'author' })
   return {
     title: `${post.title} - Minaverse Blog`,
+    description: post.excerpt,
     openGraph: {
-      images: pocketbase.files.getUrl(post, post.coverImage)
+      images: pocketbase.files.getUrl(post, post.coverImage),
+      description: post.excerpt
     }
   }
 }
