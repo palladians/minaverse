@@ -1,6 +1,7 @@
 'use client'
 
 import { ExternalLinkIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -72,8 +73,13 @@ const AddAccountDialog = ({ open, setOpen }: AddAccountDialogProps) => {
   )
 }
 
-const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
+type AccountsTableProps = {
+  accounts: ProxyAccount[]
+}
+
+const AccountsTable = ({ accounts }: AccountsTableProps) => {
   const { t } = useTranslation()
+  const network = useAppStore((state) => state.network) || 'mainnet'
   const locale = useAppStore((state) => state.locale) || 'en'
   const removeAccount = useAppStore((state) => state.removeAccount)
   const parseBalance = (balance: string) => parseInt(balance) / 1_000_000_000
@@ -102,20 +108,25 @@ const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
             value: parseBalance(account.balance.total),
             locale
           })} MINA`
+          const accountUrl = `/${network}/accounts/${account.publicKey}`
           return (
             <TableRow key={account.publicKey}>
               <TableCell className="font-semibold">
-                {truncateString({
-                  value: account.publicKey,
-                  firstCharCount: 7,
-                  endCharCount: 6
-                })}
+                <NextLink href={accountUrl}>
+                  {truncateString({
+                    value: account.publicKey,
+                    firstCharCount: 7,
+                    endCharCount: 6
+                  })}
+                </NextLink>
               </TableCell>
               <TableCell className="hidden lg:table-cell">{balance}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
-                  <Button size="icon" variant="outline">
-                    <ExternalLinkIcon size={16} />
+                  <Button size="icon" variant="outline" asChild>
+                    <NextLink href={accountUrl}>
+                      <ExternalLinkIcon size={16} />
+                    </NextLink>
                   </Button>
                   <Button
                     size="icon"
