@@ -15,7 +15,10 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const post: ApiPost = await pocketbase
     .collection('blog_posts')
-    .getFirstListItem(`slug="${params.slug}"`, { expand: 'author' })
+    .getFirstListItem(`slug="${params.slug}"`, {
+      expand: 'author',
+      requestKey: null
+    })
   return {
     title: `${post.title} - Minaverse Blog`,
     description: post.excerpt,
