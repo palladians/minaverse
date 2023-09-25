@@ -75,6 +75,7 @@ const AddAccountDialog = ({ open, setOpen }: AddAccountDialogProps) => {
 const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
   const { t } = useTranslation()
   const locale = useAppStore((state) => state.locale) || 'en'
+  const removeAccount = useAppStore((state) => state.removeAccount)
   const parseBalance = (balance: string) => parseInt(balance) / 1_000_000_000
   const totalBalance = accounts.reduce(
     (acc, account) => acc + parseBalance(account.balance.total),
@@ -116,7 +117,11 @@ const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
                   <Button size="icon" variant="outline">
                     <ExternalLinkIcon size={16} />
                   </Button>
-                  <Button size="icon" variant="outline">
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={() => removeAccount(account.publicKey)}
+                  >
                     <TrashIcon size={16} />
                   </Button>
                 </div>
