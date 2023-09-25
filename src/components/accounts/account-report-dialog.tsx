@@ -95,7 +95,9 @@ export const AccountReportDialog = ({
               accept={AllowedFileTypes.join(', ')}
             />
           </div>
-          <Button className="w-full">{t('accountReport.submit')}</Button>
+          <Button variant="secondary" className="w-full">
+            {t('accountReport.submit')}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

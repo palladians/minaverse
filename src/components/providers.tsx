@@ -5,7 +5,7 @@ import { ThemeProvider } from 'next-themes'
 import React, { ReactNode, useEffect } from 'react'
 
 import { Network } from '@/data/api'
-import { reportError } from '@/data/error'
+// import { reportError } from '@/data/error'
 import { setLocale } from '@/lib/i18n/common'
 import { useAppStore } from '@/store/app'
 
@@ -41,16 +41,16 @@ const Providers = ({
   useEffect(() => {
     setStoreLocale(locale)
   }, [locale])
-  useEffect(() => {
-    const errorHandler = (event: ErrorEvent | PromiseRejectionEvent) =>
-      reportError({ payload: event, context: { locale, network } })
-    window.addEventListener('unhandledrejection', errorHandler)
-    window.addEventListener('error', errorHandler)
-    return () => {
-      window.removeEventListener('unhandledrejection', errorHandler)
-      window.removeEventListener('error', errorHandler)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const errorHandler = (event: ErrorEvent | PromiseRejectionEvent) =>
+  //     reportError({ payload: event, context: { locale, network } })
+  //   window.addEventListener('unhandledrejection', errorHandler)
+  //   window.addEventListener('error', errorHandler)
+  //   return () => {
+  //     window.removeEventListener('unhandledrejection', errorHandler)
+  //     window.removeEventListener('error', errorHandler)
+  //   }
+  // }, [])
   useEffect(() => {
     const handleLanguageParam = async () => {
       if (!nextLanguage) return

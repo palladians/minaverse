@@ -63,7 +63,10 @@ const pl: Dictionary = {
     menu: 'Menu',
     blog: 'Blog',
     glossary: 'Słownik',
-    minRead: '{min} min'
+    minRead: '{min} min',
+    myAccounts: 'Moje konta',
+    addAccount: 'Dodaj konto',
+    totalBalance: 'Całkowity balans'
   },
   accounts: {
     accountOverview: 'Przegląd konta',
