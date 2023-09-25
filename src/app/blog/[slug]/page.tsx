@@ -19,14 +19,7 @@ export const generateMetadata = async ({
   return {
     title: `${post.title} - Minaverse Blog`,
     openGraph: {
-      images: [
-        {
-          url: pocketbase.files.getUrl(post, post.coverImage),
-          width: 600,
-          height: 400,
-          alt: post.title
-        }
-      ]
+      images: pocketbase.files.getUrl(post, post.coverImage)
     }
   }
 }

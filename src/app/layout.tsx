@@ -27,7 +27,10 @@ export const metadata: Metadata = {
   keywords:
     'Mina, Blockchain, Explorer, Mina Protocol, Mina Price, Price of Mina, Mina Explorer, Market Cap, Mina Market Cap, zkApps, zkProofs, Succinct Blockchain',
   manifest: '/manifest.json',
-  themeColor: '#1e3a8a'
+  themeColor: '#1e3a8a',
+  openGraph: {
+    images: 'https://minaverse.xyz/og.jpg'
+  }
 }
 
 export default function RootLayout({
@@ -52,11 +55,6 @@ export default function RootLayout({
           data-ackee-server="https://ackee.sh.palladians.xyz"
           data-ackee-domain-id="a9e7a3ac-8c7c-4f25-91b8-34975a33b9e7"
         />
-        <meta property="og:image" content="https://minaverse.xyz/og.jpg" />
-        <meta property="og:image:alt" content="Minaverse Cover" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
       </head>
       <body>
         <div className="flex flex-col min-h-screen pb-24 gap-20 md:pb-0">
