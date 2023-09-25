@@ -167,9 +167,19 @@ export const MyAccounts = () => {
     const fetchAccountsData = async () => {
       setFetching(true)
       const result = (await Promise.all(
-        myAccounts.map(
-          async (account) => await fetchAccount({ publicKey: account, network })
-        )
+        myAccounts.map(async (account) => {
+          try {
+            const data = await fetchAccount({ publicKey: account, network })
+            return data
+          } catch {
+            return {
+              publicKey: account,
+              balance: {
+                total: '0'
+              }
+            }
+          }
+        })
       )) as never[]
       setAccountsData(result)
       setFetching(false)
