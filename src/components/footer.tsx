@@ -46,7 +46,7 @@ export const Footer = async () => {
             <Button variant="link" className="p-0 text-md">
               {t('common.glossary')}
             </Button>
-            <Badge>Coming Soon</Badge>
+            <Badge>{t('common.comingSoon')}</Badge>
           </div>
         </div>
       </div>

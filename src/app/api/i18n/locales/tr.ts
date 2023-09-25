@@ -65,7 +65,10 @@ const tr: Dictionary = {
     menu: 'Menü',
     blog: 'Blog',
     glossary: 'Sözlük',
-    minRead: '{min} dk'
+    minRead: '{min} dk',
+    myAccounts: 'Hesaplarım',
+    addAccount: 'Hesap Ekle',
+    totalBalance: 'Toplam Bakiye'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',

@@ -20,7 +20,7 @@ const BlogPage = async () => {
       <NextLink href={`/blog/${highlight.slug}`}>
         <HighlightCard post={highlight} />
       </NextLink>
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {restOfPosts?.map((post) => (
           <NextLink key={post.id} href={`/blog/${post.slug}`}>
             <BlogCard post={post} />

@@ -4,6 +4,8 @@ import { fetchAccounts } from '@/data/accounts'
 import { Network } from '@/data/api'
 import { fetchStaking } from '@/data/staking'
 import { env } from '@/env.mjs'
+import { pocketbase } from '@/lib/pocketbase'
+import { ApiPost } from '@/types'
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL
 
@@ -60,7 +62,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = (await Promise.all(
     networks.map(async (network) => await getNetworkRoutes(network))
   )) as MetadataRoute.Sitemap[]
-
+  const postsRaw: ApiPost[] = await pocketbase
+    .collection('blog_posts')
+    .getFullList({ sort: '-publishedAt' })
+  const posts = postsRaw.map((post) => ({
+    url: `${APP_URL}/blog/${post.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as never,
+    priority: 0.8
+  }))
   return [
     {
       url: APP_URL,
@@ -68,6 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 1
     },
+    ...posts,
     ...routes.flat()
   ]
 }

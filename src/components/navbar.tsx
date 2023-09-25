@@ -10,7 +10,7 @@ import { NavbarAddons } from './navbar-addons'
 export const Navbar = async () => {
   const network = getNetwork()
   return (
-    <div className="hidden bg-background md:flex fixed top-0 left-0 right-0 py-2 border-b z-10">
+    <div className="hidden bg-slate-950 bg-opacity-50 backdrop-blur-lg md:flex fixed top-0 left-0 right-0 py-2 border-b z-10">
       <div className="container grid-cols-[1fr,2fr,1fr] gap-2 justify-between items-center flex">
         <div className="flex gap-8">
           <NextLink
@@ -30,7 +30,7 @@ export const Navbar = async () => {
           </NextLink>
           <NavbarAddons />
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-8 items-center">
           <NavbarLinks network={network} />
           <CommandsButton />
         </div>
