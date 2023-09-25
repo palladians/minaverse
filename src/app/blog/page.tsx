@@ -1,10 +1,19 @@
+import { Metadata } from 'next'
 import NextLink from 'next/link'
 
 import { BlogCard } from '@/components/blog/blog-card'
 import { HighlightCard } from '@/components/blog/highlight-card'
 import { getT } from '@/lib/i18n/server'
+import { titleTemplate } from '@/lib/metadata'
 import { pocketbase } from '@/lib/pocketbase'
 import { ApiPost } from '@/types'
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getT()
+  return {
+    title: titleTemplate(t('common.blog'))
+  }
+}
 
 const BlogPage = async () => {
   const t = await getT()

@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import NextImage from 'next/image'
 
 import { PostMeta } from '@/components/blog/post-meta'
@@ -6,6 +7,29 @@ import { pocketbase } from '@/lib/pocketbase'
 import { ApiPost } from '@/types'
 
 import styles from './styles.module.css'
+
+export const generateMetadata = async ({
+  params
+}: {
+  params: { slug: string }
+}): Promise<Metadata> => {
+  const post: ApiPost = await pocketbase
+    .collection('blog_posts')
+    .getFirstListItem(`slug="${params.slug}"`, { expand: 'author' })
+  return {
+    title: `${post.title} - Minaverse Blog`,
+    openGraph: {
+      images: [
+        {
+          url: pocketbase.files.getUrl(post, post.coverImage),
+          width: 600,
+          height: 400,
+          alt: post.title
+        }
+      ]
+    }
+  }
+}
 
 interface BlogPostPageProps {
   params: { slug: string }
