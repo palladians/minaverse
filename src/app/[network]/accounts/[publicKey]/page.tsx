@@ -43,6 +43,7 @@ const AccountPage = async ({
         <AccountSuspiciousAlert
           title={t('accounts.warning')}
           description={t('accounts.accountSuspicious')}
+          reason={restrictions.items[0].reason}
         />
       )}
       <AccountDetails

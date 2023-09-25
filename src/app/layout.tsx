@@ -76,7 +76,9 @@ export default function RootLayout({
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Navbar />
             </Suspense>
-            <div className="container flex flex-1 pt-[8rem]">{children}</div>
+            <div className="container flex flex-1 pt-4 md:pt-[8rem]">
+              {children}
+            </div>
             <Suspense fallback={<Skeleton className="w-full h-4" />}>
               <Footer />
             </Suspense>

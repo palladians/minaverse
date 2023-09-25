@@ -76,6 +76,7 @@ export const AccountSheet = () => {
           <AccountSuspiciousAlert
             title={t('accounts.warning')}
             description={t('accounts.accountSuspicious')}
+            reason={restrictionsData?.items[0].reason || ''}
           />
         )}
         {accountLoading ? (
