@@ -42,7 +42,11 @@ type AddAccountDialogProps = {
 const AddAccountDialog = ({ open, setOpen }: AddAccountDialogProps) => {
   const { t } = useTranslation()
   const addAccount = useAppStore((state) => state.addAccount)
-  const { register, handleSubmit } = useForm<AddAccountForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<AddAccountForm>({
     defaultValues: { publicKey: '' }
   })
   const onSubmit: SubmitHandler<AddAccountForm> = (data) => {
@@ -62,8 +66,11 @@ const AddAccountDialog = ({ open, setOpen }: AddAccountDialogProps) => {
         >
           <Input
             placeholder={t('common.publicKey')}
-            {...register('publicKey')}
+            {...register('publicKey', { minLength: 55, maxLength: 55 })}
           />
+          {errors.publicKey && (
+            <p className="text-red-700 text-sm">{t('common.invalidAddress')}</p>
+          )}
           <Button variant="secondary" type="submit">
             {t('common.addAccount')}
           </Button>
