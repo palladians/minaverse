@@ -1,7 +1,8 @@
 'use client'
 
-import { CommandIcon, MenuIcon } from 'lucide-react'
+import { AlignRightIcon, CommandIcon } from 'lucide-react'
 
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/store/app'
 
@@ -12,17 +13,18 @@ export const CommandsButton = () => {
   return (
     <div className="flex items-center justify-end gap-2 flex-1">
       <Button
-        variant="outline"
+        variant="ghost"
+        size="sm"
         onClick={() => setCommandsOpen(true)}
         title="Search"
-        className="flex items-center justify-center h-11"
+        className="flex items-center gap-2 justify-center"
         data-testid="navigation__commands"
       >
-        <MenuIcon size={16} />
-        <div className="items-center hidden md:flex ml-2 font-semibold">
+        <AlignRightIcon size={24} />
+        <Badge variant="outline">
           <CommandIcon size={12} />
           <span>{K_KEY}</span>
-        </div>
+        </Badge>
       </Button>
     </div>
   )

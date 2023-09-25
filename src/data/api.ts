@@ -29,3 +29,9 @@ export const ProxyUrl = {
   [Network.DEVNET]: appUrl(`/devnet/proxy`),
   [Network.BERKELEY]: appUrl(`/berkeley/proxy`)
 }
+
+export type SearchResults = {
+  found: boolean
+  type?: 'account' | 'transaction'
+  id?: string
+}

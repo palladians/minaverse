@@ -60,11 +60,31 @@ const uk: Dictionary = {
     incoming: 'Вхідна',
     outgoing: 'Вихідна',
     unknown: 'Невідомо',
-    menu: 'Меню'
+    menu: 'Меню',
+    blog: 'Блог',
+    glossary: 'Глосарій',
+    minRead: '{min} хв',
+    myAccounts: 'Мої аккаунти',
+    addAccount: 'Додати аккаунт',
+    totalBalance: 'Загальний баланс',
+    noAccounts: 'Немає аккаунтів',
+    invalidAddress: 'Неправильна адреса'
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',
-    accountsCount: 'Аккаунтів ({count})'
+    accountsCount: 'Аккаунтів ({count})',
+    warning: 'Обережно!',
+    accountSuspicious:
+      'Цей обліковий запис позначено як підозрілий. Остерігайтеся спроб шахрайства.'
+  },
+  accountReport: {
+    trigger: 'Звіт',
+    title: 'Повідомити про рахунок',
+    reason: 'Причина',
+    reasonDescription: 'Будь ласка, опишіть поведінку цього облікового запису',
+    evidence: 'Приєднання доказів',
+    submit: 'Надіслати звіт',
+    toast: 'Ваш звіт відправлено'
   },
   dashboard: {
     header: 'Коротка статистика',

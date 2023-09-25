@@ -1,20 +1,29 @@
 'use client'
 
 import { ChevronRightIcon } from 'lucide-react'
+import { matchSorter } from 'match-sorter'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   CommandDialog,
-  CommandEmpty,
   CommandInput,
   CommandItem,
   CommandList
 } from '@/components/ui/command'
+import { SearchResults } from '@/data/api'
 import { useTranslation } from '@/lib/i18n/client'
+import { truncateString } from '@/lib/string'
+import { appUrl } from '@/lib/url'
 import { useAppStore } from '@/store/app'
 
+import { SimpleSkeleton } from './simple-skeleton'
+
 export const Commands = () => {
+  const [fetching, setFetching] = useState(false)
+  const [query, setQuery] = useState<string | undefined>(undefined)
+  const [searchResult, setSearchResult] = useState<SearchResults | null>(null)
+  const network = useAppStore((state) => state.network)
   const { t } = useTranslation()
   const router = useRouter()
   const commandsOpen = useAppStore((state) => state.commandsOpen)
@@ -60,18 +69,74 @@ export const Commands = () => {
       testId: 'commands__staking'
     },
     {
+      label: t('common.blog'),
+      onSelect: () => router.push('/blog'),
+      testId: 'commands__blog'
+    },
+    {
       label: t('common.settings'),
       onSelect: () => setSettingsOpen(true),
       testId: 'commands__settings'
     }
   ]
 
+  useEffect(() => {
+    const fetchSearchResult = async () => {
+      if (!query) return setSearchResult(null)
+      if (query.length < 48) return setSearchResult(null)
+      setFetching(true)
+      const request = await fetch(appUrl(`/api/search?query=${query}`))
+      const result = await request.json()
+      setSearchResult(result as never)
+      setFetching(false)
+    }
+    fetchSearchResult()
+  }, [query])
+
+  const filteredItems = matchSorter(COMMAND_ITEMS, query || '', {
+    keys: ['label']
+  })
+
+  const truncatedId =
+    searchResult &&
+    truncateString({
+      value: searchResult.id || '',
+      firstCharCount: 7,
+      endCharCount: 6
+    })
+
+  const searchResultLabel =
+    searchResult && `${searchResult.type} (${truncatedId})`
+
+  const searchResultUrl =
+    searchResult && `/${network}/${searchResult.type}/${searchResult.id}`
+
   return (
     <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>
-      <CommandInput placeholder={t('common.typeCommand')} />
+      <CommandInput
+        placeholder={t('common.typeCommand')}
+        value={query}
+        onValueChange={setQuery}
+      />
       <CommandList>
-        <CommandEmpty>{t('common.noResults')}</CommandEmpty>
-        {COMMAND_ITEMS.map((item, i) => (
+        {fetching && (
+          <div className="p-2">
+            <SimpleSkeleton />
+          </div>
+        )}
+        {searchResult?.found && (
+          <CommandItem
+            onSelect={() =>
+              handleSelect(() => router.push(searchResultUrl || ''))
+            }
+            data-testid="commands__searchResult"
+            className="cursor-pointer"
+          >
+            <ChevronRightIcon className="mr-2 h-4 w-4" />
+            <span className="capitalize">{searchResultLabel}</span>
+          </CommandItem>
+        )}
+        {filteredItems.map((item, i) => (
           <CommandItem
             key={i}
             onSelect={() => handleSelect(item.onSelect)}

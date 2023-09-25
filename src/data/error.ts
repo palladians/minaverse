@@ -1,13 +1,15 @@
 import { env } from '@/env.mjs'
+import { pocketbase } from '@/lib/pocketbase'
 
-export const reportError = (
+interface ReportErrorProps {
   payload: Error | PromiseRejectionEvent | ErrorEvent
-) => {
-  return fetch(env.NEXT_PUBLIC_ERROR_REPORTING_URL, {
-    method: 'POST',
-    body: JSON.stringify({
-      appId: env.NEXT_PUBLIC_ERROR_REPORTING_APP_ID,
-      stacktrace: JSON.stringify(payload, Object.getOwnPropertyNames(payload))
-    })
+  context: Record<string, string>
+}
+
+export const reportError = ({ payload, context }: ReportErrorProps) => {
+  return pocketbase.collection('error_reports').create({
+    appId: env.NEXT_PUBLIC_APP_ID,
+    stacktrace: JSON.stringify(payload, Object.getOwnPropertyNames(payload)),
+    context
   })
 }

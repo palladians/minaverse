@@ -60,11 +60,31 @@ const pl: Dictionary = {
     incoming: 'Przychodzące',
     outgoing: 'Wychodzące',
     unknown: 'Nieznana',
-    menu: 'Menu'
+    menu: 'Menu',
+    blog: 'Blog',
+    glossary: 'Słownik',
+    minRead: '{min} min',
+    myAccounts: 'Moje konta',
+    addAccount: 'Dodaj konto',
+    totalBalance: 'Całkowity balans',
+    noAccounts: 'Brak kont',
+    invalidAddress: 'Nieprawidłowy adres'
   },
   accounts: {
     accountOverview: 'Przegląd konta',
-    accountsCount: 'Konta ({count})'
+    accountsCount: 'Konta ({count})',
+    warning: 'Ostrzeżenie!',
+    accountSuspicious:
+      'To konto jest oznaczone jako podejrzane. Uważaj na próby oszustwa.'
+  },
+  accountReport: {
+    trigger: 'Zgłoś',
+    title: 'Zgłoś konto',
+    reason: 'Powód',
+    reasonDescription: 'Opisz podejrzane zachowanie tego konta',
+    evidence: 'Załącznik',
+    submit: 'Wyślij zgłoszenie',
+    toast: 'Twoje zgłoszenie zostało wysłane'
   },
   dashboard: {
     header: 'Statystyki',

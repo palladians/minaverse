@@ -32,6 +32,7 @@ export type ProxyAccount = {
     total: string
   }
   publicKey: string
+  totalTx: number
   token: string
   nonce: string
   stakingActive: boolean
