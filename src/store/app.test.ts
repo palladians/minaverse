@@ -104,7 +104,7 @@ describe('AppStore', () => {
     expect(result.current.myAccounts).toEqual([
       'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9',
       'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g2ny8',
-      'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g3ny7'
+      'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g2ny7'
     ])
   })
 })
