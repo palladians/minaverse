@@ -39,7 +39,9 @@ export const SettingsSheet = () => {
           <div className="flex flex-col gap-2">
             <h2>{t('common.fiatCurrency')}</h2>
             <div>
-              <Badge>{t('common.comingSoon')}</Badge>
+              <Badge className="pointer-events-none">
+                {t('common.comingSoon')}
+              </Badge>
             </div>
           </div>
           <div className="flex flex-col gap-2">

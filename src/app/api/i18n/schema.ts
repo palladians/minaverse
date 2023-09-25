@@ -60,11 +60,30 @@ export const localeSchema = z.object({
     incoming: z.string(),
     outgoing: z.string(),
     unknown: z.string(),
-    menu: z.string()
+    menu: z.string(),
+    blog: z.string(),
+    glossary: z.string(),
+    minRead: z.string(),
+    myAccounts: z.string(),
+    addAccount: z.string(),
+    totalBalance: z.string(),
+    noAccounts: z.string(),
+    invalidAddress: z.string()
   }),
   accounts: z.object({
     accountOverview: z.string(),
-    accountsCount: z.string()
+    accountsCount: z.string(),
+    warning: z.string(),
+    accountSuspicious: z.string()
+  }),
+  accountReport: z.object({
+    trigger: z.string(),
+    title: z.string(),
+    reason: z.string(),
+    reasonDescription: z.string(),
+    evidence: z.string(),
+    submit: z.string(),
+    toast: z.string()
   }),
   dashboard: z.object({
     header: z.string(),

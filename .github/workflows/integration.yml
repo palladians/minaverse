@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_APP_URL: http://localhost:3000
-      NEXT_PUBLIC_ERROR_REPORTING_URL: ${{ vars.NEXT_PUBLIC_ERROR_REPORTING_URL }}
-      NEXT_PUBLIC_ERROR_REPORTING_APP_ID: ${{ vars.NEXT_PUBLIC_ERROR_REPORTING_APP_ID }}
+      NEXT_PUBLIC_CONTENT_API_URL: ${{ vars.NEXT_PUBLIC_CONTENT_API_URL }}
+      NEXT_PUBLIC_APP_ID: ${{ vars.NEXT_PUBLIC_APP_ID }}
+      NEXT_PUBLIC_SENTINEL_API_URL: ${{ vars.NEXT_PUBLIC_SENTINEL_API_URL }}
     steps:
     - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2

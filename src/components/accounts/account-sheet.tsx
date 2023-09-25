@@ -5,12 +5,14 @@ import NextLink from 'next/link'
 import React from 'react'
 
 import { AccountDetails } from '@/components/accounts/account-details'
+import { AccountReportDialog } from '@/components/accounts/account-report-dialog'
+import { AccountSuspiciousAlert } from '@/components/accounts/account-suspicious-alert'
 import { SheetHeading } from '@/components/sheet-heading'
 import { SimpleSkeleton } from '@/components/simple-skeleton'
 import { TransactionsWidget } from '@/components/transactions/transactions-widget'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { useAccountDetails } from '@/data/hooks'
+import { useAccountDetails, useRestrictions } from '@/data/hooks'
 import { useClipboard } from '@/lib/clipboard'
 import { useTranslation } from '@/lib/i18n/client'
 import { appUrl, AppUrls } from '@/lib/url'
@@ -30,6 +32,12 @@ export const AccountSheet = () => {
   const { data: accountData, isLoading: accountLoading } = useAccountDetails({
     publicKey: currentAccountPublicKey
   })
+  const { data: restrictionsData } = useRestrictions({
+    publicKey: currentAccountPublicKey
+  })
+  const hasRestrictions = restrictionsData
+    ? restrictionsData.items.length > 0
+    : false
   const handleCopy = () => {
     if (!accountData?.publicKey) return
     return copyValue({
@@ -64,6 +72,13 @@ export const AccountSheet = () => {
             </>
           }
         />
+        {hasRestrictions && (
+          <AccountSuspiciousAlert
+            title={t('accounts.warning')}
+            description={t('accounts.accountSuspicious')}
+            reason={restrictionsData?.items[0].reason || ''}
+          />
+        )}
         {accountLoading ? (
           <SimpleSkeleton />
         ) : (
@@ -76,6 +91,7 @@ export const AccountSheet = () => {
           )
         )}
         <TransactionsWidget network={network} />
+        <AccountReportDialog publicKey={currentAccountPublicKey || ''} />
       </SheetContent>
     </Sheet>
   )

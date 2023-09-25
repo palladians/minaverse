@@ -60,11 +60,31 @@ const en: Dictionary = {
     incoming: 'Incoming',
     outgoing: 'Outgoing',
     unknown: 'Unknown',
-    menu: 'Menu'
+    menu: 'Menu',
+    blog: 'Blog',
+    glossary: 'Glossary',
+    minRead: '{min} min',
+    myAccounts: 'My Accounts',
+    addAccount: 'Add Account',
+    totalBalance: 'Total Balance',
+    noAccounts: 'No accounts',
+    invalidAddress: 'Invalid address'
   },
   accounts: {
     accountOverview: 'Account Overview',
-    accountsCount: 'Accounts ({count})'
+    accountsCount: 'Accounts ({count})',
+    warning: 'Warning!',
+    accountSuspicious:
+      'This account is marked as suspicious. Beware of scam attempts.'
+  },
+  accountReport: {
+    trigger: 'Report',
+    title: 'Report account',
+    reason: 'Reason',
+    reasonDescription: 'Please describe behavior of this account',
+    evidence: 'Evidence attachment',
+    submit: 'Submit report',
+    toast: 'Your report has been sent'
   },
   dashboard: {
     header: 'Quick Stats',

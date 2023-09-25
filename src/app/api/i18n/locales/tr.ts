@@ -62,11 +62,31 @@ const tr: Dictionary = {
     incoming: 'Gelen',
     outgoing: 'Giden',
     unknown: 'Bilinmeyen',
-    menu: 'Menü'
+    menu: 'Menü',
+    blog: 'Blog',
+    glossary: 'Sözlük',
+    minRead: '{min} dk',
+    myAccounts: 'Hesaplarım',
+    addAccount: 'Hesap Ekle',
+    totalBalance: 'Toplam Bakiye',
+    noAccounts: 'Hesap bulunamadı',
+    invalidAddress: 'Geçersiz adres'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',
-    accountsCount: 'Hesaplar ({count})'
+    accountsCount: 'Hesaplar ({count})',
+    warning: 'Uyarı!',
+    accountSuspicious:
+      'Bu hesap şüpheli olarak işaretlenmiştir. Dolandırıcılık girişimlerine dikkat edin.'
+  },
+  accountReport: {
+    trigger: 'Rapor',
+    title: 'Hesap raporu',
+    reason: 'Sebep',
+    reasonDescription: 'Lütfen bu hesabın davranışını açıklayın',
+    evidence: 'Kanıt eki',
+    submit: 'Rapor gönderin',
+    toast: 'Raporunuz gönderildi'
   },
   dashboard: {
     header: 'Hızlı İstatistikler',

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import React from 'react'
 
+import { MyAccounts } from '@/components/dashboard/my-accounts'
 import { QuickStats } from '@/components/dashboard/quick-stats'
 import { SummaryOverview } from '@/components/dashboard/summary-overview'
 import { fetchCoinData } from '@/data/coin'
@@ -30,6 +31,7 @@ const HomePage = async () => {
           marketCaps={coinData.marketCaps}
           locale={locale}
         />
+        <MyAccounts />
       </div>
     </main>
   )
