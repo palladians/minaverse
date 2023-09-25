@@ -66,7 +66,8 @@ const pl: Dictionary = {
     minRead: '{min} min',
     myAccounts: 'Moje konta',
     addAccount: 'Dodaj konto',
-    totalBalance: 'Całkowity balans'
+    totalBalance: 'Całkowity balans',
+    noAccounts: 'Brak kont'
   },
   accounts: {
     accountOverview: 'Przegląd konta',

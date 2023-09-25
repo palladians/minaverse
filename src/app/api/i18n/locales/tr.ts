@@ -68,7 +68,8 @@ const tr: Dictionary = {
     minRead: '{min} dk',
     myAccounts: 'Hesaplarım',
     addAccount: 'Hesap Ekle',
-    totalBalance: 'Toplam Bakiye'
+    totalBalance: 'Toplam Bakiye',
+    noAccounts: 'Hesap bulunamadı'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',

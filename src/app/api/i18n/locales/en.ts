@@ -66,7 +66,8 @@ const en: Dictionary = {
     minRead: '{min} min',
     myAccounts: 'My Accounts',
     addAccount: 'Add Account',
-    totalBalance: 'Total Balance'
+    totalBalance: 'Total Balance',
+    noAccounts: 'No accounts'
   },
   accounts: {
     accountOverview: 'Account Overview',

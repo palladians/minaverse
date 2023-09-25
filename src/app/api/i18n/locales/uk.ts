@@ -66,7 +66,8 @@ const uk: Dictionary = {
     minRead: '{min} хв',
     myAccounts: 'Мої аккаунти',
     addAccount: 'Додати аккаунт',
-    totalBalance: 'Загальний баланс'
+    totalBalance: 'Загальний баланс',
+    noAccounts: 'Немає аккаунтів'
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',

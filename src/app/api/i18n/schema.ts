@@ -66,7 +66,8 @@ export const localeSchema = z.object({
     minRead: z.string(),
     myAccounts: z.string(),
     addAccount: z.string(),
-    totalBalance: z.string()
+    totalBalance: z.string(),
+    noAccounts: z.string()
   }),
   accounts: z.object({
     accountOverview: z.string(),
