@@ -69,7 +69,8 @@ const tr: Dictionary = {
     myAccounts: 'Hesaplarım',
     addAccount: 'Hesap Ekle',
     totalBalance: 'Toplam Bakiye',
-    noAccounts: 'Hesap bulunamadı'
+    noAccounts: 'Hesap bulunamadı',
+    invalidAddress: 'Geçersiz adres'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',
