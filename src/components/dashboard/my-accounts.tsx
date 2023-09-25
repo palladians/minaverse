@@ -89,7 +89,9 @@ const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
       <TableHeader>
         <TableRow>
           <TableHead>{t('common.publicKey')}</TableHead>
-          <TableHead>{t('common.balance')}</TableHead>
+          <TableHead className="hidden lg:table-cell">
+            {t('common.balance')}
+          </TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
@@ -108,7 +110,7 @@ const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
                   endCharCount: 6
                 })}
               </TableCell>
-              <TableCell>{balance}</TableCell>
+              <TableCell className="hidden lg:table-cell">{balance}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
                   <Button size="icon" variant="outline">
@@ -123,7 +125,7 @@ const AccountsTable = ({ accounts }: { accounts: ProxyAccount[] }) => {
           )
         })}
         {accounts.length > 0 ? (
-          <TableRow>
+          <TableRow className="hidden lg:table-row">
             <TableCell className="font-semibold">
               {t('common.totalBalance')}
             </TableCell>
