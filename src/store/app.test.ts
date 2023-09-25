@@ -63,6 +63,7 @@ describe('AppStore', () => {
   it('should add an account', () => {
     const { result } = renderHook(() => useAppStore())
     act(() => {
+      result.current.resetAccounts()
       result.current.addAccount(
         'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
       )
@@ -75,6 +76,7 @@ describe('AppStore', () => {
   it('should remove an account', () => {
     const { result } = renderHook(() => useAppStore())
     act(() => {
+      result.current.resetAccounts()
       result.current.addAccount(
         'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
       )
@@ -88,6 +90,7 @@ describe('AppStore', () => {
   it('should not add more than 3 accounts', () => {
     const { result } = renderHook(() => useAppStore())
     act(() => {
+      result.current.resetAccounts()
       result.current.addAccount(
         'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
       )
@@ -105,6 +108,22 @@ describe('AppStore', () => {
       'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9',
       'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g2ny8',
       'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g2ny7'
+    ])
+  })
+
+  it('should not add the same account twice', () => {
+    const { result } = renderHook(() => useAppStore())
+    act(() => {
+      result.current.resetAccounts()
+      result.current.addAccount(
+        'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
+      )
+      result.current.addAccount(
+        'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
+      )
+    })
+    expect(result.current.myAccounts).toEqual([
+      'B62qrQKS9ghd91shs73TCmBJRW9GzvTJK443DPx2YbqcyoLc56g1ny9'
     ])
   })
 })
