@@ -19,7 +19,11 @@ const BlogPage = async () => {
   const t = await getT()
   const posts: ApiPost[] = await pocketbase
     .collection('blog_posts')
-    .getFullList({ expand: 'author', sort: '-publishedAt' })
+    .getFullList({
+      expand: 'author',
+      sort: '-publishedAt',
+      filter: 'published = true'
+    })
   const [highlight, ...restOfPosts] = posts
   return (
     <div className="max-w-[72rem] mx-auto flex flex-1 flex-col gap-8">
