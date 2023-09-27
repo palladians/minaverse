@@ -22,7 +22,8 @@ const BlogPage = async () => {
     .getFullList({
       expand: 'author',
       sort: '-publishedAt',
-      filter: 'published = true'
+      filter: 'published = true',
+      requestKey: null
     })
   const [highlight, ...restOfPosts] = posts
   return (
