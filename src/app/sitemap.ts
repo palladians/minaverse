@@ -64,7 +64,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )) as MetadataRoute.Sitemap[]
   const postsRaw: ApiPost[] = await pocketbase
     .collection('blog_posts')
-    .getFullList({ sort: '-publishedAt', filter: 'published = true' })
+    .getFullList({
+      sort: '-publishedAt',
+      filter: 'published = true',
+      requestKey: null
+    })
   const posts = postsRaw.map((post) => ({
     url: `${APP_URL}/blog/${post.slug}`,
     lastModified: new Date(),
