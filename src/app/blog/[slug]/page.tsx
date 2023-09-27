@@ -36,7 +36,10 @@ interface BlogPostPageProps {
 const BlogPostPage = async ({ params }: BlogPostPageProps) => {
   const post: ApiPost = await pocketbase
     .collection('blog_posts')
-    .getFirstListItem(`slug="${params.slug}"`, { expand: 'author' })
+    .getFirstListItem(`slug="${params.slug}"`, {
+      expand: 'author',
+      requestKey: null
+    })
   const highlightCoverImage = pocketbase.files.getUrl(post, post.coverImage)
   return (
     <div className="max-w-[48rem] mx-auto flex flex-1 flex-col gap-8">
