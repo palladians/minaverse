@@ -35,3 +35,8 @@
     list-style: auto !important;
     padding-left: 1.125rem;
 }
+
+.article img {
+    margin: 0 auto;
+    border-radius: 0.25rem;
+}
