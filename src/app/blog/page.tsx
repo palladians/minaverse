@@ -23,7 +23,8 @@ const BlogPage = async () => {
       expand: 'author',
       sort: '-publishedAt',
       filter: 'published = true',
-      requestKey: null
+      requestKey: null,
+      cache: 'no-cache'
     })
   const [highlight, ...restOfPosts] = posts
   return (

@@ -17,7 +17,8 @@ export const generateMetadata = async ({
     .collection('blog_posts')
     .getFirstListItem(`slug="${params.slug}"`, {
       expand: 'author',
-      requestKey: null
+      requestKey: null,
+      cache: 'no-cache'
     })
   return {
     title: `${post.title} - Minaverse Blog`,
