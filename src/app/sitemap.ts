@@ -67,7 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .getFullList({
       sort: '-publishedAt',
       filter: 'published = true',
-      requestKey: null
+      requestKey: null,
+      cache: 'no-cache'
     })
   const posts = postsRaw.map((post) => ({
     url: `${APP_URL}/blog/${post.slug}`,
