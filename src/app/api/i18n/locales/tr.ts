@@ -70,7 +70,8 @@ const tr: Dictionary = {
     addAccount: 'Hesap Ekle',
     totalBalance: 'Toplam Bakiye',
     noAccounts: 'Hesap bulunamadı',
-    invalidAddress: 'Geçersiz adres'
+    invalidAddress: 'Geçersiz adres',
+    curatedBy: 'Küratör'
   },
   accounts: {
     accountOverview: 'Hesaba Genel Bakış',
