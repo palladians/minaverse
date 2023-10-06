@@ -13,6 +13,8 @@ import { env } from '@/env.mjs'
 import { getT } from '@/lib/i18n/server'
 import { titleTemplate } from '@/lib/metadata'
 
+const HANDLE = '@DancingMoodman'
+
 type Term = {
   term: string
   definition: string
@@ -76,6 +78,16 @@ const GlossaryPage = async ({ searchParams }: GlossaryPageProps) => {
           </div>
         )
       })}
+      <div className="flex gap-2">
+        <span>{t('common.curatedBy')}</span>
+        <a
+          href="https://twitter.com/DancingMoodman"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {HANDLE}
+        </a>
+      </div>
     </div>
   )
 }

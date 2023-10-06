@@ -68,7 +68,8 @@ const uk: Dictionary = {
     addAccount: 'Додати аккаунт',
     totalBalance: 'Загальний баланс',
     noAccounts: 'Немає аккаунтів',
-    invalidAddress: 'Неправильна адреса'
+    invalidAddress: 'Неправильна адреса',
+    curatedBy: 'Курирується'
   },
   accounts: {
     accountOverview: 'Огляд аккаунта',
