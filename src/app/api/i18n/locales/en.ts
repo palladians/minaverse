@@ -68,7 +68,8 @@ const en: Dictionary = {
     addAccount: 'Add Account',
     totalBalance: 'Total Balance',
     noAccounts: 'No accounts',
-    invalidAddress: 'Invalid address'
+    invalidAddress: 'Invalid address',
+    curatedBy: 'Curated by'
   },
   accounts: {
     accountOverview: 'Account Overview',

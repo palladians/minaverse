@@ -68,7 +68,8 @@ const pl: Dictionary = {
     addAccount: 'Dodaj konto',
     totalBalance: 'Całkowity balans',
     noAccounts: 'Brak kont',
-    invalidAddress: 'Nieprawidłowy adres'
+    invalidAddress: 'Nieprawidłowy adres',
+    curatedBy: 'Przygotowane przez'
   },
   accounts: {
     accountOverview: 'Przegląd konta',
