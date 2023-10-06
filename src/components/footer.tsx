@@ -4,7 +4,6 @@ import NextLink from 'next/link'
 
 import { FooterOptions } from '@/components/footer-options'
 import { ServiceLinks } from '@/components/service-links'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { getT } from '@/lib/i18n/server'
 
@@ -42,12 +41,9 @@ export const Footer = async () => {
           <Button variant="link" className="p-0 text-md" asChild>
             <NextLink href="/blog">{t('common.blog')}</NextLink>
           </Button>
-          <div className="flex items-center gap-2">
-            <Button variant="link" className="p-0 text-md">
-              {t('common.glossary')}
-            </Button>
-            <Badge>{t('common.comingSoon')}</Badge>
-          </div>
+          <Button variant="link" className="p-0 text-md">
+            <NextLink href="/glossary">{t('common.glossary')}</NextLink>
+          </Button>
         </div>
       </div>
       <div className="text-center py-2">
