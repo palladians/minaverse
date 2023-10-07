@@ -173,6 +173,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-highlight-words:
+    specifier: ^0.20.0
+    version: 0.20.0(react@18.2.0)
   react-hook-form:
     specifier: ^7.45.4
     version: 7.45.4(react@18.2.0)
@@ -200,6 +203,9 @@ dependencies:
   typescript:
     specifier: 5.2.2
     version: 5.2.2
+  use-debounce:
+    specifier: ^9.0.4
+    version: 9.0.4(react@18.2.0)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -223,6 +229,9 @@ devDependencies:
   '@types/jest':
     specifier: ^29.5.4
     version: 29.5.4
+  '@types/react-highlight-words':
+    specifier: ^0.16.5
+    version: 0.16.5
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.4.0
     version: 6.4.0(@typescript-eslint/parser@6.4.0)(eslint@8.47.0)(typescript@5.2.2)
@@ -2395,6 +2404,12 @@ packages:
     dependencies:
       '@types/react': 18.2.20
 
+  /@types/react-highlight-words@0.16.5:
+    resolution: {integrity: sha512-5vUJpVzB3G15nwXB8OEfWgAhEnwAlDXkm8SH6qF8i5jCSTEG2JOygKMJIsvetgYBJS6Sq1I8x3YQcAUDMjKxzg==}
+    dependencies:
+      '@types/react': 18.2.20
+    dev: true
+
   /@types/react@18.2.20:
     resolution: {integrity: sha512-WKNtmsLWJM/3D5mG4U84cysVY31ivmyw85dE84fOCk5Hx78wezB/XEjVPWl2JTZ5FkEeaTJf+VgUAUn3PE7Isw==}
     dependencies:
@@ -4169,6 +4184,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
+  /highlight-words-core@1.2.2:
+    resolution: {integrity: sha512-BXUKIkUuh6cmmxzi5OIbUJxrG8OAk2MqoL1DtO3Wo9D2faJg2ph5ntyuQeLqaHJmzER6H5tllCDA9ZnNe9BVGg==}
+    dev: false
+
   /human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
@@ -4626,6 +4645,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.10
       remove-accents: 0.4.2
+    dev: false
+
+  /memoize-one@4.0.3:
+    resolution: {integrity: sha512-QmpUu4KqDmX0plH4u+tf0riMc1KHE1+lw95cMrLlXQAFOx/xnBtwhZ52XJxd9X2O6kwKBqX32kmhbhlobD0cuw==}
     dev: false
 
   /merge-stream@2.0.0:
@@ -5222,6 +5245,17 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-highlight-words@0.20.0(react@18.2.0):
+    resolution: {integrity: sha512-asCxy+jCehDVhusNmCBoxDf2mm1AJ//D+EzDx1m5K7EqsMBIHdZ5G4LdwbSEXqZq1Ros0G0UySWmAtntSph7XA==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+    dependencies:
+      highlight-words-core: 1.2.2
+      memoize-one: 4.0.3
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /react-hook-form@7.45.4(react@18.2.0):
     resolution: {integrity: sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==}
@@ -6062,6 +6096,15 @@ packages:
       '@types/react': 18.2.20
       react: 18.2.0
       tslib: 2.6.1
+    dev: false
+
+  /use-debounce@9.0.4(react@18.2.0):
+    resolution: {integrity: sha512-6X8H/mikbrt0XE8e+JXRtZ8yYVvKkdYRfmIhWZYsP8rcNs9hk3APV8Ua2mFkKRLcJKVdnX2/Vwrmg2GWKUQEaQ==}
+    engines: {node: '>= 10.0.0'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /use-sidecar@1.1.2(@types/react@18.2.20)(react@18.2.0):

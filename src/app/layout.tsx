@@ -30,7 +30,16 @@ export const metadata: Metadata = {
   themeColor: '#1e3a8a',
   openGraph: {
     images: 'https://minaverse.xyz/og.jpg'
-  }
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Minaverse',
+    description:
+      'The truly open Mina Explorer. Get insight into the Mina Protocol.',
+    creator: '@minaverse_xyz',
+    images: ['https://minaverse.xyz/og.jpg']
+  },
+  metadataBase: new URL('https://minaverse.xyz')
 }
 
 export default function RootLayout({

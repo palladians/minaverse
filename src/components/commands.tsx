@@ -4,6 +4,7 @@ import { ChevronRightIcon } from 'lucide-react'
 import { matchSorter } from 'match-sorter'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { useDebounce } from 'use-debounce'
 
 import {
   CommandDialog,
@@ -22,6 +23,7 @@ import { SimpleSkeleton } from './simple-skeleton'
 export const Commands = () => {
   const [fetching, setFetching] = useState(false)
   const [query, setQuery] = useState<string | undefined>(undefined)
+  const [debouncedQuery] = useDebounce(query, 500)
   const [searchResult, setSearchResult] = useState<SearchResults | null>(null)
   const network = useAppStore((state) => state.network)
   const { t } = useTranslation()
@@ -74,6 +76,11 @@ export const Commands = () => {
       testId: 'commands__blog'
     },
     {
+      label: t('common.glossary'),
+      onSelect: () => router.push('/glossary'),
+      testId: 'commands__glossary'
+    },
+    {
       label: t('common.settings'),
       onSelect: () => setSettingsOpen(true),
       testId: 'commands__settings'
@@ -82,16 +89,16 @@ export const Commands = () => {
 
   useEffect(() => {
     const fetchSearchResult = async () => {
-      if (!query) return setSearchResult(null)
-      if (query.length < 48) return setSearchResult(null)
+      if (!debouncedQuery) return setSearchResult(null)
+      if (debouncedQuery.length < 3) return setSearchResult(null)
       setFetching(true)
-      const request = await fetch(appUrl(`/api/search?query=${query}`))
+      const request = await fetch(appUrl(`/api/search?query=${debouncedQuery}`))
       const result = await request.json()
       setSearchResult(result as never)
       setFetching(false)
     }
     fetchSearchResult()
-  }, [query])
+  }, [debouncedQuery])
 
   const filteredItems = matchSorter(COMMAND_ITEMS, query || '', {
     keys: ['label']
@@ -106,10 +113,16 @@ export const Commands = () => {
     })
 
   const searchResultLabel =
-    searchResult && `${searchResult.type} (${truncatedId})`
+    searchResult &&
+    ['accounts', 'transactions'].includes(searchResult.type || '')
+      ? `${searchResult.type} (${truncatedId})`
+      : `${searchResult?.type} (${searchResult?.id})`
 
   const searchResultUrl =
-    searchResult && `/${network}/${searchResult.type}/${searchResult.id}`
+    searchResult &&
+    ['accounts', 'transactions'].includes(searchResult.type || '')
+      ? `/${network}/${searchResult.type}/${searchResult.id}`
+      : `/glossary?search=${searchResult?.id}`
 
   return (
     <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>
