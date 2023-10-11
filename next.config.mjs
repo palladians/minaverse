@@ -26,7 +26,7 @@ const nextConfig = {
         source: '/transactions/:path*',
         destination: '/mainnet/transactions/:path*',
         permanent: true
-      },
+      }
     ]
   },
   async rewrites() {
@@ -62,6 +62,22 @@ const nextConfig = {
       {
         source: '/berkeley/proxy/:path*',
         destination: 'https://proxy.berkeley.minaexplorer.com/:path*'
+      },
+      {
+        source: '/testworld/me/:path*',
+        destination: 'https://testworld.minaexplorer.com/:path*'
+      },
+      {
+        source: '/testworld/me/api/:path*',
+        destination: 'https://testworld.api.minaexplorer.com/:path*'
+      },
+      {
+        source: '/testworld/gql/:path*',
+        destination: 'https://testworld.graphql.minaexplorer.com/:path*'
+      },
+      {
+        source: '/testworld/proxy/:path*',
+        destination: 'https://proxy.testworld.minaexplorer.com/:path*'
       },
       {
         source: '/me/api/:path*',
