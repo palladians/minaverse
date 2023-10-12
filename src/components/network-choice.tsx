@@ -18,7 +18,8 @@ import { useAppStore } from '@/store/app'
 const NETWORKS = [
   { label: 'Mainnet', value: 'mainnet' },
   { label: 'Devnet', value: 'devnet' },
-  { label: 'Berkeley', value: 'berkeley' }
+  { label: 'Berkeley', value: 'berkeley' },
+  { label: 'TestWorld 2.0', value: 'testworld' }
 ]
 
 export const NetworkChoice = () => {
