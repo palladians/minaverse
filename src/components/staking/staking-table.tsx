@@ -254,9 +254,9 @@ export const StakingTable = ({
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     )
                   })}
@@ -301,6 +301,7 @@ export const StakingTable = ({
           </Table>
         </div>
         <Pagination
+          key={currentPage}
           currentPage={currentPage}
           pagesCount={pagesCount}
           resource="staking"
