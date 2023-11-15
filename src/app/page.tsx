@@ -18,7 +18,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const HomePage = async () => {
   const t = await getT()
   const locale = getLocale()
-  const coinData = await fetchCoinData({ locale })
+  let coinData
+  try {
+    coinData = await fetchCoinData({ locale })
+  } catch {
+    coinData = { prices: [], marketCaps: [] }
+  }
   return (
     <main className="flex-1 flex flex-col">
       <div className="flex flex-col gap-4 md:gap-8">

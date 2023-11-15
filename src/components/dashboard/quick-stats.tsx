@@ -22,13 +22,13 @@ export const QuickStats = async ({
 }: QuickStatsProps) => {
   const t = await getT()
   const priceDelta =
-    prices[6].price &&
-    Math.abs(Number(prices[6].price) - Number(prices[5].price)) /
-      Number(prices[6].price)
+    prices?.[6]?.price &&
+    Math.abs(Number(prices?.[6]?.price) - Number(prices?.[5]?.price)) /
+      Number(prices?.[6]?.price)
   const capDelta =
-    marketCaps[6].cap &&
-    Math.abs(Number(marketCaps[6].cap) - Number(marketCaps[5].cap)) /
-      Number(marketCaps[6].cap)
+    marketCaps?.[6]?.cap &&
+    Math.abs(Number(marketCaps?.[6]?.cap) - Number(marketCaps?.[5]?.cap)) /
+      Number(marketCaps?.[6]?.cap)
   return (
     <div className="flex gap-4 md:gap-8 md:flex-row flex-col">
       <Card className="flex flex-col flex-1 gap-4 p-4">
@@ -38,16 +38,17 @@ export const QuickStats = async ({
               {t('dashboard.minaPrice')}
             </h3>
             <p className="text-xl font-semibold">
-              {formatCurrency({
-                value: Number(prices[6].price),
-                locale,
-                currency: 'USD'
-              })}
+              {prices?.[6]?.price &&
+                formatCurrency({
+                  value: Number(prices?.[6]?.price),
+                  locale,
+                  currency: 'USD'
+                })}
             </p>
           </div>
           <Badge variant="outline">
             {ONE_DAY_CHANGE}
-            {prices[6].price > prices[5].price ? '+' : '-'}
+            {prices?.[6]?.price > prices?.[5]?.price ? '+' : '-'}
             {toPercent(priceDelta || 0)}
           </Badge>
         </div>
@@ -60,17 +61,18 @@ export const QuickStats = async ({
               {t('dashboard.minaMarketCap')}
             </h3>
             <p className="text-xl font-semibold">
-              {formatCurrency({
-                value: Number(marketCaps[6].cap),
-                locale,
-                compact: true,
-                currency: 'USD'
-              })}
+              {prices?.[6]?.price &&
+                formatCurrency({
+                  value: Number(marketCaps?.[6]?.cap),
+                  locale,
+                  compact: true,
+                  currency: 'USD'
+                })}
             </p>
           </div>
           <Badge variant="outline">
             {ONE_DAY_CHANGE}
-            {marketCaps[6].cap > marketCaps[5].cap ? '+' : '-'}
+            {marketCaps?.[6]?.cap > marketCaps?.[5]?.cap ? '+' : '-'}
             {toPercent(capDelta || 0)}
           </Badge>
         </div>

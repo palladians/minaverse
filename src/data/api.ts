@@ -29,7 +29,7 @@ export const GqlUrl = {
 }
 
 export const ProxyUrl = {
-  [Network.MAINNET]: appUrl(`/proxy`),
+  [Network.MAINNET]: appUrl(`/proxy/graphql`),
   [Network.DEVNET]: appUrl(`/devnet/proxy`),
   [Network.BERKELEY]: appUrl(`/berkeley/proxy`),
   [Network.TESTWORLD]: appUrl(`/testworld/proxy`)
