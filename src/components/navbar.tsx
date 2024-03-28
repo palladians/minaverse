@@ -5,8 +5,6 @@ import { CommandsButton } from '@/components/commands-button'
 import { NavbarLinks } from '@/components/navbar-links'
 import { getNetwork } from '@/data/network'
 
-import { NavbarAddons } from './navbar-addons'
-
 export const Navbar = async () => {
   const network = getNetwork()
   return (
@@ -28,7 +26,6 @@ export const Navbar = async () => {
               />
             </div>
           </NextLink>
-          <NavbarAddons />
         </div>
         <div className="flex gap-8 items-center">
           <NavbarLinks network={network} />
