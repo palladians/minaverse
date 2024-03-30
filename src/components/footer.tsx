@@ -1,10 +1,8 @@
 /* eslint-disable react/jsx-no-literals */
 import NextImage from 'next/image'
-import NextLink from 'next/link'
 
 import { FooterOptions } from '@/components/footer-options'
 import { ServiceLinks } from '@/components/service-links'
-import { Button } from '@/components/ui/button'
 import { getT } from '@/lib/i18n/server'
 
 export const Footer = async () => {
@@ -38,12 +36,6 @@ export const Footer = async () => {
         </div>
         <div className="flex flex-1 flex-col gap-2 items-start">
           <h4 className="text-lg">Edu</h4>
-          <Button variant="link" className="p-0 text-md" asChild>
-            <NextLink href="/blog">{t('common.blog')}</NextLink>
-          </Button>
-          <Button variant="link" className="p-0 text-md">
-            <NextLink href="/glossary">{t('common.glossary')}</NextLink>
-          </Button>
         </div>
       </div>
       <div className="text-center py-2">

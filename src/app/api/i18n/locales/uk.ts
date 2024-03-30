@@ -62,7 +62,6 @@ const uk: Dictionary = {
     unknown: 'Невідомо',
     menu: 'Меню',
     blog: 'Блог',
-    glossary: 'Глосарій',
     minRead: '{min} хв',
     myAccounts: 'Мої аккаунти',
     addAccount: 'Додати аккаунт',

@@ -71,16 +71,6 @@ export const Commands = () => {
       testId: 'commands__staking'
     },
     {
-      label: t('common.blog'),
-      onSelect: () => router.push('/blog'),
-      testId: 'commands__blog'
-    },
-    {
-      label: t('common.glossary'),
-      onSelect: () => router.push('/glossary'),
-      testId: 'commands__glossary'
-    },
-    {
       label: t('common.settings'),
       onSelect: () => setSettingsOpen(true),
       testId: 'commands__settings'
@@ -119,10 +109,7 @@ export const Commands = () => {
       : `${searchResult?.type} (${searchResult?.id})`
 
   const searchResultUrl =
-    searchResult &&
-    ['accounts', 'transactions'].includes(searchResult.type || '')
-      ? `/${network}/${searchResult.type}/${searchResult.id}`
-      : `/glossary?search=${searchResult?.id}`
+    searchResult && `/${network}/${searchResult?.type}/${searchResult?.id}`
 
   return (
     <CommandDialog open={commandsOpen} onOpenChange={setCommandsOpen}>

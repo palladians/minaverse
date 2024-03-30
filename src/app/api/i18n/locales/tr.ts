@@ -64,7 +64,6 @@ const tr: Dictionary = {
     unknown: 'Bilinmeyen',
     menu: 'Menü',
     blog: 'Blog',
-    glossary: 'Sözlük',
     minRead: '{min} dk',
     myAccounts: 'Hesaplarım',
     addAccount: 'Hesap Ekle',
